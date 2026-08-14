@@ -13,6 +13,64 @@
         <span>启用专注阅读</span>
         <input id="focus-enabled" type="checkbox" checked />
       </label>
+
+      <section class="appearance-settings" aria-labelledby="appearance-title">
+        <h2 id="appearance-title">阅读外观</h2>
+
+        <fieldset>
+          <legend>阅读背景</legend>
+          <div class="background-options">
+            <label class="background-option">
+              <input type="radio" name="reading-background" value="default" />
+              <span class="color-swatch color-swatch-default" aria-hidden="true"></span>
+              <span>默认</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-background" value="warm" />
+              <span class="color-swatch color-swatch-warm" aria-hidden="true"></span>
+              <span>暖纸</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-background" value="gray" />
+              <span class="color-swatch color-swatch-gray" aria-hidden="true"></span>
+              <span>柔灰</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-background" value="green" />
+              <span class="color-swatch color-swatch-green" aria-hidden="true"></span>
+              <span>护眼绿</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-background" value="blue" />
+              <span class="color-swatch color-swatch-blue" aria-hidden="true"></span>
+              <span>雾蓝</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-background" value="lavender" />
+              <span class="color-swatch color-swatch-lavender" aria-hidden="true"></span>
+              <span>淡紫灰</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <label class="range-setting" for="reading-font-size">
+          <span class="range-heading">
+            <span>正文字号</span>
+            <output id="reading-font-size-value" for="reading-font-size">16px</output>
+          </span>
+          <input id="reading-font-size" type="range" min="14" max="22" step="1" value="16" />
+        </label>
+
+        <label class="range-setting" for="reading-width">
+          <span class="range-heading">
+            <span>内容宽度</span>
+            <output id="reading-width-value" for="reading-width">780px</output>
+          </span>
+          <input id="reading-width" type="range" min="680" max="1100" step="20" value="780" />
+        </label>
+      </section>
+
+      <button id="restore-defaults" type="button">恢复默认</button>
     </main>
     <script src="popup.js"></script>
   </body>

@@ -4,7 +4,7 @@
 }
 
 body {
-  min-width: 240px;
+  min-width: 300px;
   margin: 0;
   color: #1f2329;
   background: #ffffff;
@@ -35,4 +35,138 @@ input[type='checkbox'] {
   margin: 0;
   accent-color: #1772f6;
   cursor: pointer;
+}
+
+.appearance-settings {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #ebedf0;
+}
+
+h2,
+legend {
+  color: #444b54;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+h2 {
+  margin: 0 0 14px;
+}
+
+fieldset {
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+}
+
+legend {
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.background-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.background-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 8px;
+  border: 1px solid #dfe3e8;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.background-option:has(input:checked) {
+  border-color: #1772f6;
+  background: #f3f7ff;
+}
+
+.background-option:has(input:focus-visible) {
+  outline: 2px solid rgba(23, 114, 246, 0.28);
+  outline-offset: 1px;
+}
+
+.background-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.color-swatch {
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.color-swatch-default {
+  background: #ffffff;
+}
+
+.color-swatch-warm {
+  background: #f5f0e5;
+}
+
+.color-swatch-gray {
+  background: #eef0f2;
+}
+
+.color-swatch-green {
+  background: #e8efe6;
+}
+
+.color-swatch-blue {
+  background: #e8eef4;
+}
+
+.color-swatch-lavender {
+  background: #eeeaf2;
+}
+
+.range-setting {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.range-heading {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: #444b54;
+  font-size: 13px;
+}
+
+.range-heading output {
+  color: #1772f6;
+  font-variant-numeric: tabular-nums;
+}
+
+input[type='range'] {
+  width: 100%;
+  margin: 0;
+  accent-color: #1772f6;
+  cursor: pointer;
+}
+
+#restore-defaults {
+  width: 100%;
+  padding: 7px 12px;
+  border: 1px solid #dfe3e8;
+  border-radius: 6px;
+  color: #59636e;
+  background: #ffffff;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+#restore-defaults:hover {
+  background: #f7f8fa;
 }

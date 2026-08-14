@@ -6,8 +6,8 @@ html.zhihu-focus-enabled .QuestionHeader-side {
 
 html.zhihu-focus-enabled .QuestionHeader-content,
 html.zhihu-focus-enabled .Question-main {
-  width: min(780px, calc(100% - 32px)) !important;
-  max-width: 780px !important;
+  width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
+  max-width: var(--zf-content-width, 780px) !important;
   margin-right: auto !important;
   margin-left: auto !important;
   box-sizing: border-box !important;
@@ -17,11 +17,11 @@ html.zhihu-focus-enabled .Question-main {
 html.zhihu-focus-enabled .QuestionHeader-main,
 html.zhihu-focus-enabled .Question-mainColumn {
   width: 100% !important;
-  max-width: 780px !important;
+  max-width: var(--zf-content-width, 780px) !important;
   min-width: 0 !important;
   margin-right: auto !important;
   margin-left: auto !important;
-  flex: 0 1 780px !important;
+  flex: 0 1 var(--zf-content-width, 780px) !important;
   box-sizing: border-box !important;
 }
 
@@ -43,8 +43,8 @@ html.zhihu-focus-enabled .QuestionHeader-main {
 }
 
 html.zhihu-focus-enabled .QuestionHeader-footer-inner {
-  width: min(780px, calc(100% - 32px)) !important;
-  max-width: 780px !important;
+  width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
+  max-width: var(--zf-content-width, 780px) !important;
   margin-right: auto !important;
   margin-left: auto !important;
   padding-right: 20px !important;
@@ -55,8 +55,8 @@ html.zhihu-focus-enabled .QuestionHeader-footer-inner {
 /* Article pages use their own layout and do not share Question rules. */
 html.zhihu-focus-enabled body.PostIndex-body .Post-content > div:has(.Post-Main) {
   display: block !important;
-  width: min(780px, calc(100% - 32px)) !important;
-  max-width: 780px !important;
+  width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
+  max-width: var(--zf-content-width, 780px) !important;
   margin-right: auto !important;
   margin-left: auto !important;
   box-sizing: border-box !important;
@@ -73,7 +73,7 @@ html.zhihu-focus-enabled body.PostIndex-body
   > div:has(> .Post-Main),
 html.zhihu-focus-enabled body.PostIndex-body .Post-Main {
   width: 100% !important;
-  max-width: 780px !important;
+  max-width: var(--zf-content-width, 780px) !important;
   min-width: 0 !important;
   margin-right: auto !important;
   margin-left: auto !important;
@@ -165,8 +165,11 @@ html.zhihu-focus-enabled .Topstory-container {
 }
 
 html.zhihu-focus-enabled .Topstory-mainColumn {
+  width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
+  max-width: var(--zf-content-width, 780px) !important;
   margin-right: auto !important;
   margin-left: auto !important;
+  box-sizing: border-box !important;
 }
 
 /* Search results: the side column has a dynamic class but owns the page footer. */
@@ -184,8 +187,104 @@ html.zhihu-focus-enabled .Search-container {
 }
 
 html.zhihu-focus-enabled .Search-container > .SearchMain {
+  width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
+  max-width: var(--zf-content-width, 780px) !important;
   margin-right: auto !important;
   margin-left: auto !important;
+  box-sizing: border-box !important;
+}
+
+/* Reading backgrounds. The default theme adds no color overrides. */
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  ),
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  ) body {
+  background: var(--zf-page-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  ) :is(
+    .Topstory,
+    .Topstory-container,
+    .Search-container,
+    .Question-main,
+    body.PostIndex-body .Post-content
+  ) {
+  background-color: var(--zf-page-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  ) :is(
+    .AppHeader,
+    .AppHeader > div,
+    .Topstory-mainColumn,
+    .Topstory-mainColumn > .Card,
+    .TopstoryItem,
+    .Topstory-mainColumn .ContentItem-actions,
+    .SearchTabs,
+    .SearchMain,
+    .SearchMain > .Card,
+    .SearchMain .Card,
+    .SearchResult-Card,
+    .SearchItem,
+    .SearchMain .KfeCollection-PcCollegeCard-wrapper,
+    .SearchMain .KfeCollection-PcCollegeCard-root,
+    .SearchMain .ContentItem-actions,
+    .QuestionHeader,
+    .QuestionHeader-content,
+    .QuestionHeader-footer,
+    .QuestionHeader-footer-inner,
+    .Question-mainColumn,
+    .Question-mainColumn .Card,
+    .AnswerItem,
+    .Question-mainColumn .ContentItem-actions,
+    .Question-mainColumn .Comments-container,
+    .Question-mainColumn .CommentsV2,
+    .Question-mainColumn .CommentItem,
+    .Question-mainColumn .CommentItemV2,
+    body.PostIndex-body .Post-content > div:has(.Post-Main),
+    body.PostIndex-body .Post-content > div:has(.Post-Main) > div:has(.Post-Main),
+    body.PostIndex-body
+      .Post-content
+      > div:has(.Post-Main)
+      > div:has(.Post-Main)
+      > div:has(> .Post-Main),
+    body.PostIndex-body .Post-Main,
+    body.PostIndex-body .ContentItem-actions
+  ) {
+  background-color: var(--zf-surface-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  ) :has(> .AppHeader) {
+  background-color: var(--zf-surface-background) !important;
+}
+
+html.zhihu-focus-enabled .TopstoryItem .RichContent-inner,
+html.zhihu-focus-enabled .TopstoryItem .RichContent-inner .RichText,
+html.zhihu-focus-enabled .SearchItem .RichContent-inner,
+html.zhihu-focus-enabled .SearchItem .RichContent-inner .RichText,
+html.zhihu-focus-enabled .Question-mainColumn .AnswerItem .RichContent-inner,
+html.zhihu-focus-enabled .Question-mainColumn .AnswerItem .RichContent-inner .RichText,
+html.zhihu-focus-enabled body.PostIndex-body .Post-RichText {
+  font-size: var(--zf-reading-font-size, 16px) !important;
+}
+
+html.zhihu-focus-enabled :is(
+    .Topstory-mainColumn,
+    .SearchMain,
+    .QuestionHeader-content,
+    .QuestionHeader-footer-inner,
+    .Question-mainColumn,
+    body.PostIndex-body .Post-Main
+  ) img {
+  max-width: 100% !important;
+  height: auto !important;
 }
 
 /* Known entry points whose sole purpose is to pull readers out of the page. */
