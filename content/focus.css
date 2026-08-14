@@ -98,12 +98,12 @@ html.zhihu-focus-enabled body.PostIndex-body .KanshanCornerButton {
 
 /* Minimal native header for Home, Question, and Article pages only. */
 html.zhihu-focus-enabled :has(> .AppHeader) {
-  position: fixed !important;
-  top: 0 !important;
-  right: 0 !important;
-  left: 0 !important;
-  z-index: 1000 !important;
-  transform: none !important;
+  transition: transform 160ms ease !important;
+}
+
+html.zhihu-focus-enabled.zhihu-focus-header-hidden :has(> .AppHeader) {
+  transform: translateY(-100%) !important;
+  pointer-events: none !important;
 }
 
 html.zhihu-focus-enabled .AppHeader :has(.SearchBar) {
@@ -111,7 +111,6 @@ html.zhihu-focus-enabled .AppHeader :has(.SearchBar) {
   max-width: none !important;
   margin-right: 0 !important;
   margin-left: 0 !important;
-  transform: none !important;
   box-sizing: border-box !important;
 }
 
