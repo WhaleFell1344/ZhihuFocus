@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "ZhihuFocus",
+  "version": "0.1.0",
+  "description": "为知乎问题、回答与文章页面提供简洁的专注阅读布局。",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://www.zhihu.com/*",
+    "https://zhuanlan.zhihu.com/*"
+  ],
+  "action": {
+    "default_title": "ZhihuFocus",
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.zhihu.com/question/*",
+        "https://www.zhihu.com/search*",
+        "https://zhuanlan.zhihu.com/p/*"
+      ],
+      "css": ["content/focus.css"],
+      "js": ["content/focus.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.zhihu.com/*"],
+      "include_globs": [
+        "https://www.zhihu.com/",
+        "https://www.zhihu.com/?*"
+      ],
+      "css": ["content/focus.css"],
+      "js": ["content/focus.js"],
+      "run_at": "document_start"
+    }
+  ]
+}

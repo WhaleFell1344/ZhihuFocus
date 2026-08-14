@@ -1,0 +1,199 @@
+/* All page changes are reversible by removing this class from <html>. */
+html.zhihu-focus-enabled .Question-sideColumn,
+html.zhihu-focus-enabled .QuestionHeader-side {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled .QuestionHeader-content,
+html.zhihu-focus-enabled .Question-main {
+  width: min(780px, calc(100% - 32px)) !important;
+  max-width: 780px !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  box-sizing: border-box !important;
+  justify-content: center !important;
+}
+
+html.zhihu-focus-enabled .QuestionHeader-main,
+html.zhihu-focus-enabled .Question-mainColumn {
+  width: 100% !important;
+  max-width: 780px !important;
+  min-width: 0 !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  flex: 0 1 780px !important;
+  box-sizing: border-box !important;
+}
+
+/* Collapse the question header's former two-column flex layout only. */
+html.zhihu-focus-enabled .QuestionHeader-content {
+  display: block !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+html.zhihu-focus-enabled .QuestionHeader-main {
+  width: 100% !important;
+  max-width: none !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  padding-right: 20px !important;
+  padding-left: 20px !important;
+  flex: none !important;
+}
+
+html.zhihu-focus-enabled .QuestionHeader-footer-inner {
+  width: min(780px, calc(100% - 32px)) !important;
+  max-width: 780px !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  padding-right: 20px !important;
+  padding-left: 20px !important;
+  box-sizing: border-box !important;
+}
+
+/* Article pages use their own layout and do not share Question rules. */
+html.zhihu-focus-enabled body.PostIndex-body .Post-content > div:has(.Post-Main) {
+  display: block !important;
+  width: min(780px, calc(100% - 32px)) !important;
+  max-width: 780px !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  box-sizing: border-box !important;
+}
+
+html.zhihu-focus-enabled body.PostIndex-body
+  .Post-content
+  > div:has(.Post-Main)
+  > div:has(.Post-Main),
+html.zhihu-focus-enabled body.PostIndex-body
+  .Post-content
+  > div:has(.Post-Main)
+  > div:has(.Post-Main)
+  > div:has(> .Post-Main),
+html.zhihu-focus-enabled body.PostIndex-body .Post-Main {
+  width: 100% !important;
+  max-width: 780px !important;
+  min-width: 0 !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  box-sizing: border-box !important;
+}
+
+html.zhihu-focus-enabled body.PostIndex-body
+  .Post-content
+  > div:has(.Post-Main)
+  > div:has(.AuthorCard) {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled body.PostIndex-body .Post-RichText img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+html.zhihu-focus-enabled body.PostIndex-body .KanshanCornerButton {
+  display: none !important;
+}
+
+/* Minimal native header for Home, Question, and Article pages only. */
+html.zhihu-focus-enabled .AppHeader :has(.SearchBar) {
+  width: 100% !important;
+  max-width: none !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  transform: none !important;
+  box-sizing: border-box !important;
+}
+
+html.zhihu-focus-enabled
+  .AppHeader
+  :has(.SearchBar)
+  > :not(:has(.SearchBar)):not(.SearchBar) {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled .AppHeader :has(> .SearchBar) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+html.zhihu-focus-enabled
+  .AppHeader
+  .SearchBar
+  > :not(.SearchBar-tool) {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled .AppHeader .SearchBar {
+  width: min(420px, calc(100vw - 32px)) !important;
+  max-width: 420px !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+html.zhihu-focus-enabled
+  .AppHeader
+  :is(.SearchBar-tool, .SearchBar-tool > div, .SearchBar-tool .Popover, .SearchBar-input) {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+}
+
+/* Home feed: remove creation surfaces and center the existing-width feed. */
+html.zhihu-focus-enabled .TopstoryHeader,
+html.zhihu-focus-enabled .Topstory-mainColumn > .WriteArea,
+html.zhihu-focus-enabled
+  .Topstory-mainColumn
+  > :has(.TopstoryHeader),
+html.zhihu-focus-enabled .Topstory-sideColumn,
+html.zhihu-focus-enabled .Topstory :has(> [aria-label='边栏锚点']) {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled .Topstory-container {
+  justify-content: center !important;
+}
+
+html.zhihu-focus-enabled .Topstory-mainColumn {
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+/* Search results: the side column has a dynamic class but owns the page footer. */
+html.zhihu-focus-enabled
+  .Search-container
+  > :has(footer),
+html.zhihu-focus-enabled
+  .Search-container
+  > :has([role='contentinfo']) {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled .Search-container {
+  justify-content: center !important;
+}
+
+html.zhihu-focus-enabled .Search-container > .SearchMain {
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+/* Known entry points whose sole purpose is to pull readers out of the page. */
+html.zhihu-focus-enabled .OpenInAppButton,
+html.zhihu-focus-enabled .AppBanner,
+html.zhihu-focus-enabled .DownloadApp,
+html.zhihu-focus-enabled [data-za-detail-view-element_name='OpenInApp'],
+html.zhihu-focus-enabled [data-za-detail-view-element_name='FloatingOpenInApp'] {
+  display: none !important;
+}
+
+@media (max-width: 812px) {
+  html.zhihu-focus-enabled .QuestionHeader-content,
+  html.zhihu-focus-enabled .QuestionHeader-footer-inner,
+  html.zhihu-focus-enabled .Question-main,
+  html.zhihu-focus-enabled body.PostIndex-body .Post-content > div:has(.Post-Main) {
+    width: calc(100% - 24px) !important;
+  }
+}
