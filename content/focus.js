@@ -3,7 +3,10 @@ const HEADER_HIDDEN_CLASS = 'zhihu-focus-header-hidden';
 const DEFAULT_SETTINGS = {
   focusEnabled: true,
   readingBackground: 'default',
+  readingFontFamily: 'default',
   readingFontSize: 16,
+  readingLineHeight: 1.7,
+  readingParagraphSpacing: 0.6,
   readingWidth: 780
 };
 const BACKGROUND_COLORS = {
@@ -30,6 +33,13 @@ const BACKGROUND_COLORS = {
   }
 };
 const BACKGROUNDS = new Set(Object.keys(BACKGROUND_COLORS));
+const FONT_FAMILIES = {
+  default: null,
+  sans: '-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif',
+  serif: '"Songti SC", "STSong", "SimSun", serif',
+  kai: '"Kaiti SC", "STKaiti", "KaiTi", serif'
+};
+const FONT_FAMILY_NAMES = new Set(Object.keys(FONT_FAMILIES));
 let lastScrollY = window.scrollY;
 
 function applyFocusState(enabled) {
@@ -50,13 +60,38 @@ function applyAppearance(settings) {
   const background = BACKGROUNDS.has(settings.readingBackground)
     ? settings.readingBackground
     : DEFAULT_SETTINGS.readingBackground;
+  const fontFamily = FONT_FAMILY_NAMES.has(settings.readingFontFamily)
+    ? settings.readingFontFamily
+    : DEFAULT_SETTINGS.readingFontFamily;
   const fontSize = clampNumber(settings.readingFontSize, 14, 22, DEFAULT_SETTINGS.readingFontSize);
+  const lineHeight = clampNumber(
+    settings.readingLineHeight,
+    1.4,
+    2.2,
+    DEFAULT_SETTINGS.readingLineHeight
+  );
+  const paragraphSpacing = clampNumber(
+    settings.readingParagraphSpacing,
+    0,
+    1.5,
+    DEFAULT_SETTINGS.readingParagraphSpacing
+  );
   const readingWidth = clampNumber(settings.readingWidth, 680, 1100, DEFAULT_SETTINGS.readingWidth);
   const colors = BACKGROUND_COLORS[background];
+  const fontStack = FONT_FAMILIES[fontFamily];
 
   root.dataset.zfReadingBackground = background;
+  root.dataset.zfReadingFontFamily = fontFamily;
   root.style.setProperty('--zf-reading-font-size', `${fontSize}px`);
+  root.style.setProperty('--zf-reading-line-height', String(lineHeight));
+  root.style.setProperty('--zf-paragraph-spacing', `${paragraphSpacing}em`);
   root.style.setProperty('--zf-content-width', `${readingWidth}px`);
+
+  if (fontStack) {
+    root.style.setProperty('--zf-reading-font-family', fontStack);
+  } else {
+    root.style.removeProperty('--zf-reading-font-family');
+  }
 
   if (colors) {
     root.style.setProperty('--zf-page-background', colors.page);
@@ -101,7 +136,14 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     applyFocusState(changes.focusEnabled.newValue !== false);
   }
 
-  if (changes.readingBackground || changes.readingFontSize || changes.readingWidth) {
+  if (
+    changes.readingBackground ||
+    changes.readingFontFamily ||
+    changes.readingFontSize ||
+    changes.readingLineHeight ||
+    changes.readingParagraphSpacing ||
+    changes.readingWidth
+  ) {
     chrome.storage.sync.get(DEFAULT_SETTINGS, applyAppearance);
   }
 });

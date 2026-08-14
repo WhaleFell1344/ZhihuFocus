@@ -5,9 +5,11 @@
 
 body {
   min-width: 300px;
+  max-height: 560px;
   margin: 0;
   color: #1f2329;
   background: #ffffff;
+  overflow-y: auto;
 }
 
 main {
@@ -93,6 +95,39 @@ legend {
 }
 
 .background-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.font-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.font-option {
+  position: relative;
+  padding: 7px 8px;
+  border: 1px solid #dfe3e8;
+  border-radius: 6px;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.font-option:has(input:checked) {
+  border-color: #1772f6;
+  color: #1769d2;
+  background: #f3f7ff;
+}
+
+.font-option:has(input:focus-visible) {
+  outline: 2px solid rgba(23, 114, 246, 0.28);
+  outline-offset: 1px;
+}
+
+.font-option input {
   position: absolute;
   opacity: 0;
   pointer-events: none;

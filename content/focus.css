@@ -160,6 +160,10 @@ html.zhihu-focus-enabled .Topstory :has(> [aria-label='边栏锚点']) {
   display: none !important;
 }
 
+html.zhihu-focus-enabled .Topstory-mainColumn .TopstoryItem--advertCard {
+  display: none !important;
+}
+
 html.zhihu-focus-enabled .Topstory-container {
   justify-content: center !important;
 }
@@ -269,10 +273,65 @@ html.zhihu-focus-enabled .TopstoryItem .RichContent-inner,
 html.zhihu-focus-enabled .TopstoryItem .RichContent-inner .RichText,
 html.zhihu-focus-enabled .SearchItem .RichContent-inner,
 html.zhihu-focus-enabled .SearchItem .RichContent-inner .RichText,
+html.zhihu-focus-enabled .SearchMain .SearchResult-Card .RichContent-inner,
+html.zhihu-focus-enabled .SearchMain .SearchResult-Card .RichContent-inner .RichText,
 html.zhihu-focus-enabled .Question-mainColumn .AnswerItem .RichContent-inner,
 html.zhihu-focus-enabled .Question-mainColumn .AnswerItem .RichContent-inner .RichText,
 html.zhihu-focus-enabled body.PostIndex-body .Post-RichText {
   font-size: var(--zf-reading-font-size, 16px) !important;
+  line-height: var(--zf-reading-line-height, 1.7) !important;
+}
+
+html.zhihu-focus-enabled
+  :is(
+    .TopstoryItem .RichContent-inner,
+    .SearchItem .RichContent-inner,
+    .SearchMain .SearchResult-Card .RichContent-inner,
+    .Question-mainColumn .AnswerItem .RichContent-inner,
+    body.PostIndex-body .Post-RichText
+  )
+  :is(p, blockquote, li, a) {
+  line-height: var(--zf-reading-line-height, 1.7) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-font-family]:not(
+    [data-zf-reading-font-family='default']
+  )
+  :is(
+    .TopstoryItem .RichContent-inner,
+    .TopstoryItem .RichContent-inner .RichText,
+    .SearchItem .RichContent-inner,
+    .SearchItem .RichContent-inner .RichText,
+    .SearchMain .SearchResult-Card .RichContent-inner,
+    .SearchMain .SearchResult-Card .RichContent-inner .RichText,
+    .Question-mainColumn .AnswerItem .RichContent-inner,
+    .Question-mainColumn .AnswerItem .RichContent-inner .RichText,
+    body.PostIndex-body .Post-RichText
+  ),
+html.zhihu-focus-enabled[data-zf-reading-font-family]:not(
+    [data-zf-reading-font-family='default']
+  )
+  :is(
+    .TopstoryItem .RichContent-inner,
+    .SearchItem .RichContent-inner,
+    .SearchMain .SearchResult-Card .RichContent-inner,
+    .Question-mainColumn .AnswerItem .RichContent-inner,
+    body.PostIndex-body .Post-RichText
+  )
+  :is(p, blockquote, li, a) {
+  font-family: var(--zf-reading-font-family) !important;
+}
+
+html.zhihu-focus-enabled
+  :is(
+    .TopstoryItem .RichContent-inner,
+    .SearchItem .RichContent-inner,
+    .SearchMain .SearchResult-Card .RichContent-inner,
+    .Question-mainColumn .AnswerItem .RichContent-inner,
+    body.PostIndex-body .Post-RichText
+  )
+  :is(p, blockquote):not(:last-child) {
+  margin-block-end: var(--zf-paragraph-spacing, 0.6em) !important;
 }
 
 html.zhihu-focus-enabled :is(
