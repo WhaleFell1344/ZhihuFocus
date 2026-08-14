@@ -1,4 +1,4 @@
-/* Loaded only on supported Douban subject detail pages. */
+/* Loaded only on supported Douban home, search, and subject detail pages. */
 html.zhihu-focus-enabled #content > .grid-16-8 > .aside {
   display: none !important;
 }
