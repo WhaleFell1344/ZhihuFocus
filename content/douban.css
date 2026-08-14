@@ -5,6 +5,7 @@ html.zhihu-focus-enabled #content > .grid-16-8 > .aside {
 
 html.zhihu-focus-enabled #content > .grid-16-8 > .article {
   float: none !important;
+  padding-right: 0 !important;
   margin-right: auto !important;
   margin-left: auto !important;
 }
@@ -152,14 +153,14 @@ html.zhihu-focus-enabled #pt > .zf-douban-home-search > button::after {
 }
 
 html.zhihu-focus-enabled #content > :is(h1, .top250) {
-  width: 715px !important;
+  width: 675px !important;
   margin-right: auto !important;
   margin-left: auto !important;
   box-sizing: border-box !important;
 }
 
 html.zhihu-focus-enabled:has(.nav-secondary > .movieannual) #content > .rank-label {
-  margin-left: calc((100% - 715px) / 2) !important;
+  margin-left: calc((100% - 675px) / 2) !important;
 }
 
 /* Movie subject header only: keep the logo and native search form as one centered row. */
@@ -215,12 +216,12 @@ html.zhihu-focus-enabled .nav-secondary:has(> .bookannual) > .nav-items {
 }
 
 html.zhihu-focus-enabled:has(.nav-secondary > .bookannual) #wrapper > h1.title {
-  width: 715px !important;
+  width: 675px !important;
   margin-right: auto !important;
   margin-left: auto !important;
   box-sizing: border-box !important;
 }
 
 html.zhihu-focus-enabled:has(.nav-secondary > .bookannual) #wrapper > .rank-label {
-  margin-left: calc((100% - 715px) / 2) !important;
+  margin-left: calc((100% - 675px) / 2) !important;
 }
