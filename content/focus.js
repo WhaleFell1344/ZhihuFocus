@@ -40,7 +40,55 @@ const FONT_FAMILIES = {
   kai: '"Kaiti SC", "STKaiti", "KaiTi", serif'
 };
 const FONT_FAMILY_NAMES = new Set(Object.keys(FONT_FAMILIES));
+const IS_DOUBAN_HOME =
+  window.location.hostname === 'www.douban.com' && window.location.pathname === '/';
 let lastScrollY = window.scrollY;
+
+function initializeDoubanHomeSearch() {
+  let attempts = 0;
+
+  function applyWhenReady() {
+    attempts += 1;
+    const container = document.querySelector('#pt');
+    const nativeEditor = container?.querySelector('.DRE-personal-topic-editor');
+
+    if ((!container || !nativeEditor) && attempts < 20) {
+      window.setTimeout(applyWhenReady, 100);
+      return;
+    }
+
+    if (!container || !nativeEditor || container.querySelector('.zf-douban-home-search')) {
+      return;
+    }
+
+    const form = document.createElement('form');
+    const input = document.createElement('input');
+    const source = document.createElement('input');
+    const submit = document.createElement('button');
+
+    form.className = 'zf-douban-home-search';
+    form.action = 'https://www.douban.com/search';
+    form.method = 'get';
+    form.setAttribute('role', 'search');
+
+    input.type = 'search';
+    input.name = 'q';
+    input.placeholder = '搜索你感兴趣的内容和人...';
+    input.setAttribute('aria-label', input.placeholder);
+
+    source.type = 'hidden';
+    source.name = 'source';
+    source.value = 'suggest';
+
+    submit.type = 'submit';
+    submit.setAttribute('aria-label', '搜索');
+
+    form.append(input, source, submit);
+    container.append(form);
+  }
+
+  applyWhenReady();
+}
 
 function applyFocusState(enabled) {
   document.documentElement.classList.toggle(FOCUS_CLASS, enabled);
@@ -149,3 +197,11 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
 });
 
 window.addEventListener('scroll', updateHeaderVisibility, { passive: true });
+
+if (IS_DOUBAN_HOME) {
+  document.addEventListener(
+    'DOMContentLoaded',
+    initializeDoubanHomeSearch,
+    { once: true }
+  );
+}

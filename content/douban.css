@@ -9,6 +9,100 @@ html.zhihu-focus-enabled #content > .grid-16-8 > .article {
   margin-left: auto !important;
 }
 
+/* Douban community home and search: center the logo/navigation group. */
+html.zhihu-focus-enabled #db-nav-sns .nav-primary {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 13px !important;
+}
+
+html.zhihu-focus-enabled #db-nav-sns .nav-primary > .nav-search {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled #db-nav-sns .nav-primary > :is(.nav-logo, .nav-items) {
+  position: static !important;
+  float: none !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
+html.zhihu-focus-enabled #db-nav-sns .nav-primary > .nav-logo {
+  flex: 0 0 184px !important;
+}
+
+html.zhihu-focus-enabled #db-nav-sns .nav-primary > .nav-items {
+  flex: 0 0 316px !important;
+}
+
+/* Home only: replace the composer visually with a standard search form. */
+html.zhihu-focus-enabled #pt {
+  position: relative !important;
+}
+
+.zf-douban-home-search {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled #pt > .DRE-personal-topic-editor {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled #pt > .zf-douban-home-search {
+  display: flex !important;
+  height: 46px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled #pt > .zf-douban-home-search > input[type="search"] {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0 16px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #111;
+  font: inherit;
+}
+
+html.zhihu-focus-enabled #pt > .zf-douban-home-search > button {
+  position: relative;
+  flex: 0 0 44px;
+  width: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+html.zhihu-focus-enabled #pt > .zf-douban-home-search > button::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 13px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #b8b8b8;
+  border-radius: 50%;
+}
+
+html.zhihu-focus-enabled #pt > .zf-douban-home-search > button::after {
+  content: "";
+  position: absolute;
+  top: 27px;
+  left: 25px;
+  width: 7px;
+  height: 2px;
+  background: #b8b8b8;
+  transform: rotate(45deg);
+  transform-origin: left center;
+}
+
 html.zhihu-focus-enabled #content > :is(h1, .top250) {
   width: 715px !important;
   margin-right: auto !important;
