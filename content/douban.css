@@ -1,4 +1,4 @@
-/* Loaded only on supported Douban home, search, and subject detail pages. */
+/* Loaded only on supported Douban home, search, subject, and movie review pages. */
 html.zhihu-focus-enabled #content > .grid-16-8 > .aside {
   display: none !important;
 }
@@ -7,6 +7,39 @@ html.zhihu-focus-enabled #content > .grid-16-8 > .article {
   float: none !important;
   margin-right: auto !important;
   margin-left: auto !important;
+}
+
+/* Supported Douban pages: keep the centered wrapper as a white reading sheet. */
+html.zhihu-focus-enabled:has(#db-nav-sns) #wrapper,
+html.zhihu-focus-enabled:has(.nav-secondary > .movieannual) #wrapper,
+html.zhihu-focus-enabled:has(.nav-secondary > .bookannual) #wrapper {
+  position: relative;
+  isolation: isolate;
+  min-height: calc(100vh - 120px);
+  background-color: transparent !important;
+}
+
+html.zhihu-focus-enabled:has(#db-nav-sns) #wrapper::before,
+html.zhihu-focus-enabled:has(.nav-secondary > .movieannual) #wrapper::before,
+html.zhihu-focus-enabled:has(.nav-secondary > .bookannual) #wrapper::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: min(755px, 100%);
+  background-color: #fff;
+  box-shadow:
+    -1px 0 0 rgba(0, 0, 0, 0.1),
+    1px 0 0 rgba(0, 0, 0, 0.1);
+  transform: translateX(-50%);
+}
+
+/* Non-default themes tint only the area outside the white wrapper. */
+html.zhihu-focus-enabled:not([data-zf-reading-background="default"]),
+html.zhihu-focus-enabled:not([data-zf-reading-background="default"]) body {
+  background-color: var(--zf-page-background) !important;
 }
 
 /* Douban community home and search: center the logo/navigation group. */

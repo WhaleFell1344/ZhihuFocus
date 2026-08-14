@@ -39,7 +39,8 @@
     {
       "matches": [
         "https://movie.douban.com/subject/*",
-        "https://book.douban.com/subject/*"
+        "https://book.douban.com/subject/*",
+        "https://movie.douban.com/review/*"
       ],
       "css": ["content/douban.css"],
       "js": ["content/focus.js"],
