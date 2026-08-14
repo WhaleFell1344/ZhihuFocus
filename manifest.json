@@ -6,7 +6,9 @@
   "permissions": ["storage"],
   "host_permissions": [
     "https://www.zhihu.com/*",
-    "https://zhuanlan.zhihu.com/*"
+    "https://zhuanlan.zhihu.com/*",
+    "https://movie.douban.com/*",
+    "https://book.douban.com/*"
   ],
   "action": {
     "default_title": "ZhihuFocus",
@@ -30,6 +32,15 @@
         "https://www.zhihu.com/?*"
       ],
       "css": ["content/focus.css"],
+      "js": ["content/focus.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://movie.douban.com/subject/*",
+        "https://book.douban.com/subject/*"
+      ],
+      "css": ["content/douban.css"],
       "js": ["content/focus.js"],
       "run_at": "document_start"
     }
