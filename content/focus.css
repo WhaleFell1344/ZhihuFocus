@@ -269,6 +269,27 @@ html.zhihu-focus-enabled[data-zf-reading-background]:not(
   background-color: var(--zf-surface-background) !important;
 }
 
+/* Keep the comment-reply modal calm without recoloring unrelated dialogs. */
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  .Modal-content:has(.CommentContent),
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  .Modal-content:has(.CommentContent)
+  div:has(> div > .CommentContent) {
+  background-color: var(--zf-surface-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  .Modal-content:has(.CommentContent)
+  .InputLike {
+  background-color: var(--zf-page-background) !important;
+}
+
 html.zhihu-focus-enabled .TopstoryItem .RichContent-inner,
 html.zhihu-focus-enabled .TopstoryItem .RichContent-inner .RichText,
 html.zhihu-focus-enabled .SearchItem .RichContent-inner,
