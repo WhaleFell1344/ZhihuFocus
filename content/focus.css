@@ -197,6 +197,36 @@ html.zhihu-focus-enabled .Topstory-mainColumn {
   box-sizing: border-box !important;
 }
 
+/* Zhihu offsets feed actions by 20px although feed cards use 16px padding. */
+html.zhihu-focus-enabled
+  .Topstory-mainColumn
+  .TopstoryItem
+  .ContentItem-actions {
+  margin-right: -16px !important;
+  margin-left: -16px !important;
+}
+
+/* Match the Home feed's inline featured-comment preview to Focus themes. */
+html.zhihu-focus-enabled
+  .Topstory-mainColumn
+  .AnswerItem
+  > [tabindex='0']:has(a[href*='/people/']) {
+  border-radius: 6px !important;
+  box-shadow: inset 0 0 0 1px rgba(132, 145, 165, 0.18) !important;
+  overflow: hidden !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  .Topstory-mainColumn
+  .AnswerItem
+  > [tabindex='0']:has(a[href*='/people/']) {
+  background-color: var(--zf-page-background) !important;
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--zf-page-background) 72%, #8491a5 28%) !important;
+}
+
 /* Search results: the side column has a dynamic class but owns the page footer. */
 html.zhihu-focus-enabled
   .Search-container
