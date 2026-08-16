@@ -4,6 +4,14 @@ html.zhihu-focus-enabled .QuestionHeader-side {
   display: none !important;
 }
 
+/* Remove the occasional promoted banner inserted between Question answers. */
+html.zhihu-focus-enabled .Question-mainColumn .QuestionAdBanner,
+html.zhihu-focus-enabled
+  .Question-mainColumn
+  .List-item:has(.QuestionAdBanner) {
+  display: none !important;
+}
+
 html.zhihu-focus-enabled .QuestionHeader-content,
 html.zhihu-focus-enabled .Question-main {
   width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
@@ -288,6 +296,17 @@ html.zhihu-focus-enabled[data-zf-reading-background]:not(
   background-color: var(--zf-page-background) !important;
   box-shadow: inset 0 0 0 1px
     color-mix(in srgb, var(--zf-page-background) 72%, #8491a5 28%) !important;
+}
+
+/* Continue the preview color through its 4px margin and 16px list padding. */
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  .Question-mainColumn
+  .List-item:has(
+    > div > .AnswerItem > [tabindex='0']:has(a[href*='/people/'])
+  ) {
+  box-shadow: inset 0 -20px 0 var(--zf-page-background) !important;
 }
 
 /* Keep the comment-reply modal calm without recoloring unrelated dialogs. */
