@@ -206,6 +206,14 @@ html.zhihu-focus-enabled
   margin-left: -16px !important;
 }
 
+html.zhihu-focus-enabled
+  .Topstory-mainColumn
+  .ContentItem-actions--hasHotComment
+  button.ContentItem-action::after {
+  display: none !important;
+  content: none !important;
+}
+
 /* Match the Home feed's inline featured-comment preview to Focus themes. */
 html.zhihu-focus-enabled
   .Topstory-mainColumn
