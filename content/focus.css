@@ -6,9 +6,13 @@ html.zhihu-focus-enabled .QuestionHeader-side {
 
 /* Remove the occasional promoted banner inserted between Question answers. */
 html.zhihu-focus-enabled .Question-mainColumn .QuestionAdBanner,
+html.zhihu-focus-enabled .Question-mainColumn .pc-article-answer,
 html.zhihu-focus-enabled
   .Question-mainColumn
-  .List-item:has(.QuestionAdBanner) {
+  .List-item:has(.QuestionAdBanner),
+html.zhihu-focus-enabled
+  .Question-mainColumn
+  > div:has(> .pc-article-answer) {
   display: none !important;
 }
 
@@ -168,7 +172,14 @@ html.zhihu-focus-enabled .Topstory :has(> [aria-label='边栏锚点']) {
   display: none !important;
 }
 
-html.zhihu-focus-enabled .Topstory-mainColumn .TopstoryItem--advertCard {
+html.zhihu-focus-enabled .Topstory-mainColumn .TopstoryItem--advertCard,
+html.zhihu-focus-enabled .Topstory-mainColumn .pc-article-answer,
+html.zhihu-focus-enabled
+  .Topstory-mainColumn
+  .TopstoryItem:has(.pc-article-answer),
+html.zhihu-focus-enabled
+  .Topstory-mainColumn
+  > :has(> .pc-article-answer) {
   display: none !important;
 }
 
