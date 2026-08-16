@@ -269,6 +269,31 @@ html.zhihu-focus-enabled[data-zf-reading-background]:not(
   background-color: var(--zf-surface-background) !important;
 }
 
+/* Give the inline featured-comment preview a quiet boundary of its own. */
+html.zhihu-focus-enabled
+  .Question-mainColumn
+  .AnswerItem
+  > [tabindex='0']:has(a[href*='/people/']) {
+  border-radius: 6px !important;
+  box-shadow: inset 0 0 0 1px rgba(132, 145, 165, 0.18) !important;
+  overflow: hidden !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  .Question-mainColumn
+  .AnswerItem
+  > [tabindex='0']:has(a[href*='/people/']) {
+  background-color: color-mix(
+    in srgb,
+    var(--zf-surface-background) 72%,
+    var(--zf-page-background) 28%
+  ) !important;
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--zf-page-background) 78%, #8491a5 22%) !important;
+}
+
 /* Keep the comment-reply modal calm without recoloring unrelated dialogs. */
 html.zhihu-focus-enabled[data-zf-reading-background]:not(
     [data-zf-reading-background='default']
