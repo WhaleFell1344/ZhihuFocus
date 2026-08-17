@@ -328,6 +328,67 @@ html.zhihu-focus-enabled[data-zf-reading-background]:not(
   background-color: var(--zf-surface-background) !important;
 }
 
+/* Keep the shared Home/Question comment sorter distinct but low contrast. */
+html.zhihu-focus-enabled .Comments-container .css-u3vsx3 {
+  overflow: hidden !important;
+  border: 1px solid rgba(132, 145, 165, 0.28) !important;
+  border-radius: 6px !important;
+  background-color: rgba(132, 145, 165, 0.08) !important;
+}
+
+html.zhihu-focus-enabled .Comments-container .css-u3vsx3 > div {
+  box-sizing: border-box !important;
+}
+
+html.zhihu-focus-enabled .Comments-container .css-u3vsx3 > div + div {
+  border-left: 1px solid rgba(132, 145, 165, 0.28) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  .Comments-container
+  .css-u3vsx3 {
+  border-color: color-mix(
+    in srgb,
+    var(--zf-page-background) 68%,
+    #8491a5 32%
+  ) !important;
+  background-color: var(--zf-page-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  .Comments-container
+  .css-u3vsx3
+  > .css-m0zh86 {
+  background-color: var(--zf-surface-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  .Comments-container
+  .css-u3vsx3
+  > .css-1fjr6cy {
+  background-color: transparent !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  .Comments-container
+  .css-u3vsx3
+  > div
+  + div {
+  border-left-color: color-mix(
+    in srgb,
+    var(--zf-page-background) 68%,
+    #8491a5 32%
+  ) !important;
+}
+
 /* Give the inline featured-comment preview a quiet boundary of its own. */
 html.zhihu-focus-enabled
   .Question-mainColumn
