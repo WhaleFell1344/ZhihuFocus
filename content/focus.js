@@ -40,9 +40,82 @@ const FONT_FAMILIES = {
   kai: '"Kaiti SC", "STKaiti", "KaiTi", serif'
 };
 const FONT_FAMILY_NAMES = new Set(Object.keys(FONT_FAMILIES));
+const IS_ZHIHU_HOME =
+  window.location.hostname === 'www.zhihu.com' && window.location.pathname === '/';
 const IS_DOUBAN_HOME =
   window.location.hostname === 'www.douban.com' && window.location.pathname === '/';
 let lastScrollY = window.scrollY;
+
+function getZhihuFeedSignature() {
+  const firstItem = document.querySelector('.Topstory-mainColumn .TopstoryItem');
+  const title = firstItem?.querySelector('h2 a')?.getAttribute('href') || '';
+  const itemId = firstItem?.getAttribute('data-za-detail-view-id') || '';
+
+  return `${itemId}|${title}|${firstItem?.textContent?.slice(0, 80) || ''}`;
+}
+
+function refreshZhihuHomeFeed(button) {
+  const recommendationLink = document.querySelector(
+    ".TopstoryHeader a[href='https://www.zhihu.com/'], a.is-active[href='https://www.zhihu.com/']"
+  );
+
+  if (!recommendationLink || button.disabled) {
+    return;
+  }
+
+  const previousSignature = getZhihuFeedSignature();
+  let checks = 0;
+
+  button.disabled = true;
+  button.classList.add('is-refreshing');
+  recommendationLink.click();
+
+  const completionCheck = window.setInterval(() => {
+    checks += 1;
+    const feedChanged = getZhihuFeedSignature() !== previousSignature;
+
+    if (!feedChanged && checks < 25) {
+      return;
+    }
+
+    window.clearInterval(completionCheck);
+    button.disabled = false;
+    button.classList.remove('is-refreshing');
+
+    if (feedChanged) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, 200);
+}
+
+function initializeZhihuHomeRefresh() {
+  let attempts = 0;
+
+  function applyWhenReady() {
+    attempts += 1;
+    const mainColumn = document.querySelector('.Topstory-mainColumn');
+
+    if (!mainColumn && attempts < 30) {
+      window.setTimeout(applyWhenReady, 100);
+      return;
+    }
+
+    if (!mainColumn || document.querySelector('.zf-home-feed-refresh')) {
+      return;
+    }
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'zf-home-feed-refresh';
+    button.setAttribute('aria-label', '刷新中间信息流');
+    button.title = '刷新中间信息流';
+    button.textContent = '↻';
+    button.addEventListener('click', () => refreshZhihuHomeFeed(button));
+    document.body.append(button);
+  }
+
+  applyWhenReady();
+}
 
 function initializeDoubanHomeSearch() {
   let attempts = 0;
@@ -197,6 +270,14 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
 });
 
 window.addEventListener('scroll', updateHeaderVisibility, { passive: true });
+
+if (IS_ZHIHU_HOME) {
+  document.addEventListener(
+    'DOMContentLoaded',
+    initializeZhihuHomeRefresh,
+    { once: true }
+  );
+}
 
 if (IS_DOUBAN_HOME) {
   document.addEventListener(
