@@ -203,13 +203,13 @@ html.zhihu-focus-enabled .Topstory-mainColumn {
   box-sizing: border-box !important;
 }
 
-html.zhihu-focus-enabled .zf-home-feed-refresh {
+html.zhihu-focus-enabled
+  :is(.zf-home-feed-refresh, .zf-return-home) {
   position: fixed;
   right: max(
     16px,
     calc((100vw - var(--zf-content-width, 780px)) / 2 - 56px)
   );
-  bottom: 28px;
   z-index: 100;
   display: grid;
   width: 44px;
@@ -225,12 +225,23 @@ html.zhihu-focus-enabled .zf-home-feed-refresh {
   cursor: pointer;
 }
 
-html.zhihu-focus-enabled .zf-home-feed-refresh:hover {
+html.zhihu-focus-enabled .zf-home-feed-refresh {
+  bottom: 76px;
+}
+
+html.zhihu-focus-enabled .zf-return-home {
+  bottom: 128px;
+  font-size: 25px;
+}
+
+html.zhihu-focus-enabled
+  :is(.zf-home-feed-refresh, .zf-return-home):hover {
   border-color: rgba(23, 81, 153, 0.42);
   color: #056de8;
 }
 
-html.zhihu-focus-enabled .zf-home-feed-refresh:focus-visible {
+html.zhihu-focus-enabled
+  :is(.zf-home-feed-refresh, .zf-return-home):focus-visible {
   outline: 2px solid rgba(5, 109, 232, 0.45);
   outline-offset: 2px;
 }
@@ -243,7 +254,7 @@ html.zhihu-focus-enabled .zf-home-feed-refresh.is-refreshing {
 html.zhihu-focus-enabled[data-zf-reading-background]:not(
     [data-zf-reading-background='default']
   )
-  .zf-home-feed-refresh {
+  :is(.zf-home-feed-refresh, .zf-return-home) {
   border-color: color-mix(
     in srgb,
     var(--zf-page-background) 68%,
@@ -252,7 +263,8 @@ html.zhihu-focus-enabled[data-zf-reading-background]:not(
   background: var(--zf-surface-background);
 }
 
-html:not(.zhihu-focus-enabled) .zf-home-feed-refresh {
+html:not(.zhihu-focus-enabled)
+  :is(.zf-home-feed-refresh, .zf-return-home) {
   display: none;
 }
 

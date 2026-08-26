@@ -40,8 +40,12 @@ const FONT_FAMILIES = {
   kai: '"Kaiti SC", "STKaiti", "KaiTi", serif'
 };
 const FONT_FAMILY_NAMES = new Set(Object.keys(FONT_FAMILIES));
+const IS_ZHIHU =
+  window.location.hostname === 'www.zhihu.com' ||
+  window.location.hostname === 'zhuanlan.zhihu.com';
 const IS_ZHIHU_HOME =
   window.location.hostname === 'www.zhihu.com' && window.location.pathname === '/';
+const IS_ZHIHU_NON_HOME = IS_ZHIHU && !IS_ZHIHU_HOME;
 const IS_DOUBAN_HOME =
   window.location.hostname === 'www.douban.com' && window.location.pathname === '/';
 let lastScrollY = window.scrollY;
@@ -115,6 +119,23 @@ function initializeZhihuHomeRefresh() {
   }
 
   applyWhenReady();
+}
+
+function initializeZhihuReturnHome() {
+  if (document.querySelector('.zf-return-home')) {
+    return;
+  }
+
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'zf-return-home';
+  button.setAttribute('aria-label', '回到知乎首页');
+  button.title = '回到知乎首页';
+  button.textContent = '⌂';
+  button.addEventListener('click', () => {
+    window.location.assign('https://www.zhihu.com/');
+  });
+  document.body.append(button);
 }
 
 function initializeDoubanHomeSearch() {
@@ -275,6 +296,14 @@ if (IS_ZHIHU_HOME) {
   document.addEventListener(
     'DOMContentLoaded',
     initializeZhihuHomeRefresh,
+    { once: true }
+  );
+}
+
+if (IS_ZHIHU_NON_HOME) {
+  document.addEventListener(
+    'DOMContentLoaded',
+    initializeZhihuReturnHome,
     { once: true }
   );
 }
