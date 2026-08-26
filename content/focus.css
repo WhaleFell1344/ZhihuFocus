@@ -219,10 +219,15 @@ html.zhihu-focus-enabled
   border: 1px solid rgba(132, 145, 165, 0.28);
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 4px 14px rgba(18, 18, 18, 0.12);
+  box-shadow: 0 3px 10px rgba(18, 18, 18, 0.1);
   color: #175199;
   font: 28px/1 system-ui, sans-serif;
   cursor: pointer;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    color 140ms ease;
 }
 
 html.zhihu-focus-enabled .zf-home-feed-refresh {
@@ -231,13 +236,34 @@ html.zhihu-focus-enabled .zf-home-feed-refresh {
 
 html.zhihu-focus-enabled .zf-return-home {
   bottom: 128px;
-  font-size: 25px;
+}
+
+html.zhihu-focus-enabled .zf-return-home svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 html.zhihu-focus-enabled
   :is(.zf-home-feed-refresh, .zf-return-home):hover {
   border-color: rgba(23, 81, 153, 0.42);
+  box-shadow: 0 5px 14px rgba(18, 18, 18, 0.13);
   color: #056de8;
+}
+
+html.zhihu-focus-enabled
+  :is(.zf-home-feed-refresh, .zf-return-home):not(.is-refreshing):hover {
+  transform: translateY(-1px);
+}
+
+html.zhihu-focus-enabled
+  :is(.zf-home-feed-refresh, .zf-return-home):not(.is-refreshing):active {
+  transform: translateY(0) scale(0.96);
+  box-shadow: 0 2px 7px rgba(18, 18, 18, 0.1);
 }
 
 html.zhihu-focus-enabled

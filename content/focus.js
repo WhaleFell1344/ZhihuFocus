@@ -131,7 +131,12 @@ function initializeZhihuReturnHome() {
   button.className = 'zf-return-home';
   button.setAttribute('aria-label', '回到知乎首页');
   button.title = '回到知乎首页';
-  button.textContent = '⌂';
+  button.innerHTML = `
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M4 10.5 12 3l8 7.5v8.25A1.25 1.25 0 0 1 18.75 20H5.25A1.25 1.25 0 0 1 4 18.75V10.5Z"></path>
+      <path d="M9.5 20v-6h5v6"></path>
+    </svg>
+  `;
   button.addEventListener('click', () => {
     window.location.assign('https://www.zhihu.com/');
   });
