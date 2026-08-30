@@ -2,7 +2,13 @@
   "manifest_version": 3,
   "name": "ZhihuFocus",
   "version": "0.1.0",
-  "description": "为知乎问题、回答与文章页面提供简洁的专注阅读布局。",
+  "description": "为知乎和豆瓣页面提供简洁、可调节的专注阅读布局。",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "permissions": ["storage"],
   "host_permissions": [
     "https://www.zhihu.com/*",
@@ -13,7 +19,11 @@
   ],
   "action": {
     "default_title": "ZhihuFocus",
-    "default_popup": "popup/popup.html"
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
   },
   "content_scripts": [
     {
