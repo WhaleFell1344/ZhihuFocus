@@ -10,10 +10,7 @@ html.zhihu-focus-enabled .Question-mainColumn .pc-article-answer,
 html.zhihu-focus-enabled .Question-mainColumn .pc-article-answer-big-img,
 html.zhihu-focus-enabled
   .Question-mainColumn
-  .List-item:has(.QuestionAdBanner),
-html.zhihu-focus-enabled
-  .Question-mainColumn
-  > div:has(> .pc-article-answer) {
+  .List-item:has(.QuestionAdBanner) {
   display: none !important;
 }
 
@@ -96,7 +93,7 @@ html.zhihu-focus-enabled body.PostIndex-body .Post-Main {
 html.zhihu-focus-enabled body.PostIndex-body
   .Post-content
   > div:has(.Post-Main)
-  > div:has(.AuthorCard) {
+  > div:has(.AuthorCard):not(:has(.Post-Main)) {
   display: none !important;
 }
 
@@ -165,29 +162,24 @@ html.zhihu-focus-enabled
 /* Home feed: remove creation surfaces and center the existing-width feed. */
 html.zhihu-focus-enabled .TopstoryHeader,
 html.zhihu-focus-enabled .Topstory-mainColumn > .WriteArea,
-html.zhihu-focus-enabled
-  .Topstory-mainColumn
-  > :has(.TopstoryHeader),
 html.zhihu-focus-enabled .Topstory-sideColumn,
-html.zhihu-focus-enabled .Topstory :has(> [aria-label='边栏锚点']) {
+html.zhihu-focus-enabled
+  .Topstory-container
+  > :has(> [aria-label='边栏锚点']) {
   display: none !important;
 }
 
+/* Keep selectors scoped to concrete cards. The feed wrapper is reused while
+   Home loads and must never be hidden because of one dynamic descendant. */
 html.zhihu-focus-enabled .Topstory-mainColumn .TopstoryItem--advertCard,
 html.zhihu-focus-enabled
   .Topstory-mainColumn
   .Pc-Business-Card-PcTopFeedBanner,
-html.zhihu-focus-enabled
-  .Topstory-mainColumn
-  > :has(a[href*='sugar.zhihu.com/glory_adreaper']),
 html.zhihu-focus-enabled .Topstory-mainColumn .pc-article-answer,
 html.zhihu-focus-enabled .Topstory-mainColumn .pc-article-answer-big-img,
 html.zhihu-focus-enabled
   .Topstory-mainColumn
-  .TopstoryItem:has(.pc-article-answer),
-html.zhihu-focus-enabled
-  .Topstory-mainColumn
-  > :has(> .pc-article-answer) {
+  .TopstoryItem:has(.pc-article-answer) {
   display: none !important;
 }
 
@@ -341,10 +333,10 @@ html.zhihu-focus-enabled[data-zf-reading-background]:not(
 /* Search results: the side column has a dynamic class but owns the page footer. */
 html.zhihu-focus-enabled
   .Search-container
-  > :has(footer),
+  > :not(.SearchMain):not(:has(.SearchMain)):has(footer),
 html.zhihu-focus-enabled
   .Search-container
-  > :has([role='contentinfo']) {
+  > :not(.SearchMain):not(:has(.SearchMain)):has([role='contentinfo']) {
   display: none !important;
 }
 
