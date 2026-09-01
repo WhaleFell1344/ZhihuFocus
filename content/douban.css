@@ -152,11 +152,26 @@ html.zhihu-focus-enabled #pt > .zf-douban-home-search > button::after {
   transform-origin: left center;
 }
 
-html.zhihu-focus-enabled #content > :is(h1, .top250) {
+html.zhihu-focus-enabled #content > h1 {
   width: 675px !important;
   margin-right: auto !important;
   margin-left: auto !important;
   box-sizing: border-box !important;
+}
+
+/* Movie Top250 uses a 150px sprite and percentage-width children. Keep the
+   native badge width while aligning the whole badge with the centered title. */
+html.zhihu-focus-enabled:has(.nav-secondary > .movieannual) #content > .top250 {
+  width: 150px !important;
+  margin-right: auto !important;
+  margin-left: calc((100% - 675px) / 2) !important;
+  box-sizing: border-box !important;
+}
+
+/* Leave a small paper margin above movie ranking badges. */
+html.zhihu-focus-enabled:has(.nav-secondary > .movieannual)
+  #wrapper:has(#content > :is(.top250, .rank-label)) {
+  padding-top: 16px !important;
 }
 
 html.zhihu-focus-enabled:has(.nav-secondary > .movieannual) #content > .rank-label {
