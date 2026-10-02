@@ -1,14 +1,56 @@
 :root {
   color-scheme: light;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --popup-background: #ffffff;
+  --popup-text: #1f2329;
+  --popup-secondary: #444b54;
+  --popup-border: #dfe3e8;
+  --popup-divider: #ebedf0;
+  --popup-accent: #1772f6;
+  --popup-selected: #f3f7ff;
+  --popup-hover: #f7f8fa;
+}
+
+:root[data-zf-color-scheme='dark'] {
+  color-scheme: dark;
+  --popup-background: #20242b;
+  --popup-text: #e2e6ed;
+  --popup-secondary: #aeb7c4;
+  --popup-border: #414b59;
+  --popup-divider: #363f4b;
+  --popup-accent: #85b9ff;
+  --popup-selected: #283b53;
+  --popup-hover: #2b313b;
+}
+
+:root[data-zf-reading-background='dark-blue'] {
+  --popup-background: #192735;
+  --popup-text: #dee9f3;
+  --popup-secondary: #a8bdcf;
+  --popup-border: #39546b;
+  --popup-divider: #39546b;
+  --popup-accent: #83c8f4;
+  --popup-selected: #223f55;
+  --popup-hover: #2b4a63;
+}
+
+:root[data-zf-reading-background='dark-warm'] {
+  --popup-background: #29231e;
+  --popup-text: #ece3d6;
+  --popup-secondary: #c2af9a;
+  --popup-border: #5c4d40;
+  --popup-divider: #5c4d40;
+  --popup-accent: #e8bb86;
+  --popup-selected: #463629;
+  --popup-hover: #514030;
 }
 
 body {
   min-width: 300px;
   max-height: 560px;
   margin: 0;
-  color: #1f2329;
-  background: #ffffff;
+  color: var(--popup-text);
+  background: var(--popup-background);
   overflow-y: auto;
 }
 
@@ -35,19 +77,19 @@ input[type='checkbox'] {
   width: 18px;
   height: 18px;
   margin: 0;
-  accent-color: #1772f6;
+  accent-color: var(--popup-accent);
   cursor: pointer;
 }
 
 .appearance-settings {
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid #ebedf0;
+  border-top: 1px solid var(--popup-divider);
 }
 
 h2,
 legend {
-  color: #444b54;
+  color: var(--popup-secondary);
   font-size: 13px;
   font-weight: 600;
 }
@@ -78,15 +120,15 @@ legend {
   align-items: center;
   gap: 6px;
   padding: 7px 8px;
-  border: 1px solid #dfe3e8;
+  border: 1px solid var(--popup-border);
   border-radius: 6px;
   font-size: 12px;
   cursor: pointer;
 }
 
 .background-option:has(input:checked) {
-  border-color: #1772f6;
-  background: #f3f7ff;
+  border-color: var(--popup-accent);
+  background: var(--popup-selected);
 }
 
 .background-option:has(input:focus-visible) {
@@ -109,7 +151,7 @@ legend {
 .font-option {
   position: relative;
   padding: 7px 8px;
-  border: 1px solid #dfe3e8;
+  border: 1px solid var(--popup-border);
   border-radius: 6px;
   font-size: 12px;
   text-align: center;
@@ -117,9 +159,9 @@ legend {
 }
 
 .font-option:has(input:checked) {
-  border-color: #1772f6;
-  color: #1769d2;
-  background: #f3f7ff;
+  border-color: var(--popup-accent);
+  color: var(--popup-accent);
+  background: var(--popup-selected);
 }
 
 .font-option:has(input:focus-visible) {
@@ -165,6 +207,21 @@ legend {
   background: #eeeaf2;
 }
 
+.color-swatch-dark {
+  background: #20242b;
+  border-color: #718096;
+}
+
+.color-swatch-dark-blue {
+  background: #192735;
+  border-color: #69869e;
+}
+
+.color-swatch-dark-warm {
+  background: #29231e;
+  border-color: #9c846d;
+}
+
 .range-setting {
   display: block;
   margin-bottom: 16px;
@@ -174,34 +231,34 @@ legend {
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
-  color: #444b54;
+  color: var(--popup-secondary);
   font-size: 13px;
 }
 
 .range-heading output {
-  color: #1772f6;
+  color: var(--popup-accent);
   font-variant-numeric: tabular-nums;
 }
 
 input[type='range'] {
   width: 100%;
   margin: 0;
-  accent-color: #1772f6;
+  accent-color: var(--popup-accent);
   cursor: pointer;
 }
 
 #restore-defaults {
   width: 100%;
   padding: 7px 12px;
-  border: 1px solid #dfe3e8;
+  border: 1px solid var(--popup-border);
   border-radius: 6px;
-  color: #59636e;
-  background: #ffffff;
+  color: var(--popup-secondary);
+  background: var(--popup-background);
   font: inherit;
   font-size: 13px;
   cursor: pointer;
 }
 
 #restore-defaults:hover {
-  background: #f7f8fa;
+  background: var(--popup-hover);
 }

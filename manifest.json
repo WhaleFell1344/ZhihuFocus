@@ -30,6 +30,7 @@
       "matches": [
         "https://www.zhihu.com/question/*",
         "https://www.zhihu.com/search*",
+        "https://www.zhihu.com/people/*",
         "https://zhuanlan.zhihu.com/p/*"
       ],
       "css": ["content/focus.css"],

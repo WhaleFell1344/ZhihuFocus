@@ -13,7 +13,10 @@ const BACKGROUNDS = new Set([
   'gray',
   'green',
   'blue',
-  'lavender'
+  'lavender',
+  'dark',
+  'dark-blue',
+  'dark-warm'
 ]);
 const FONT_FAMILIES = new Set(['default', 'sans', 'serif', 'kai']);
 
@@ -39,6 +42,11 @@ function updateRangeValue(input, output, suffix = '') {
   output.value = `${input.value}${suffix}`;
 }
 
+function applyPopupTheme(background) {
+  document.documentElement.dataset.zfReadingBackground = background;
+  document.documentElement.dataset.zfColorScheme = background.startsWith('dark') ? 'dark' : 'light';
+}
+
 chrome.storage.sync.get(DEFAULT_SETTINGS, settings => {
   const background = BACKGROUNDS.has(settings.readingBackground)
     ? settings.readingBackground
@@ -62,6 +70,7 @@ chrome.storage.sync.get(DEFAULT_SETTINGS, settings => {
   const savedWidth = clampNumber(settings.readingWidth, 680, 1100, DEFAULT_SETTINGS.readingWidth);
 
   toggle.checked = settings.focusEnabled;
+  applyPopupTheme(background);
   document.querySelector(
     `[name="reading-background"][value="${background}"]`
   ).checked = true;
@@ -85,6 +94,7 @@ toggle.addEventListener('change', () => {
 backgroundOptions.forEach(option => {
   option.addEventListener('change', () => {
     if (option.checked) {
+      applyPopupTheme(option.value);
       chrome.storage.sync.set({ readingBackground: option.value });
     }
   });
@@ -129,6 +139,7 @@ restoreDefaults.addEventListener('click', () => {
   };
 
   chrome.storage.sync.set(appearanceDefaults, () => {
+    applyPopupTheme(appearanceDefaults.readingBackground);
     document.querySelector('[name="reading-background"][value="default"]').checked = true;
     document.querySelector('[name="reading-font-family"][value="default"]').checked = true;
     fontSize.value = appearanceDefaults.readingFontSize;

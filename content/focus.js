@@ -30,6 +30,35 @@ const BACKGROUND_COLORS = {
   lavender: {
     page: '#EEEAF2',
     surface: '#F7F4F9'
+  },
+  dark: {
+    page: '#15181D',
+    surface: '#20242B'
+  },
+  'dark-blue': {
+    page: '#101923',
+    surface: '#192735'
+  },
+  'dark-warm': {
+    page: '#1C1815',
+    surface: '#29231E'
+  }
+};
+const DARK_THEME_COLORS = {
+  dark: {
+    text: '#E2E6ED', secondary: '#AEB7C4', link: '#85B9FF', border: '#414B59',
+    accent: '#283B53', accentBorder: '#45678F', solid: '#286BBA',
+    hover: '#304560', heading: '#91CDA5'
+  },
+  'dark-blue': {
+    text: '#DEE9F3', secondary: '#A8BDCF', link: '#83C8F4', border: '#39546B',
+    accent: '#223F55', accentBorder: '#417594', solid: '#216E9F',
+    hover: '#2B4A63', heading: '#8FD2C4'
+  },
+  'dark-warm': {
+    text: '#ECE3D6', secondary: '#C2AF9A', link: '#E8BB86', border: '#5C4D40',
+    accent: '#463629', accentBorder: '#886747', solid: '#855B32',
+    hover: '#514030', heading: '#BACA97'
   }
 };
 const BACKGROUNDS = new Set(Object.keys(BACKGROUND_COLORS));
@@ -48,6 +77,7 @@ const IS_ZHIHU_HOME =
 const IS_ZHIHU_NON_HOME = IS_ZHIHU && !IS_ZHIHU_HOME;
 const IS_DOUBAN_HOME =
   window.location.hostname === 'www.douban.com' && window.location.pathname === '/';
+const IS_DOUBAN = window.location.hostname.endsWith('.douban.com');
 let lastScrollY = window.scrollY;
 
 function getZhihuFeedSignature() {
@@ -189,6 +219,29 @@ function initializeDoubanHomeSearch() {
   applyWhenReady();
 }
 
+function initializeDoubanReadingSheet() {
+  const wrapper = document.querySelector('#wrapper');
+  const content = wrapper?.querySelector('#content');
+  const footer = wrapper?.querySelector('#footer');
+
+  if (!wrapper || !content || !footer) {
+    return;
+  }
+
+  function updateSheetHeight() {
+    // Keep 24px below the content, leaving the native footer outside the sheet.
+    // Measuring the content also handles wrapped book titles and expanding reviews.
+    const height = content.getBoundingClientRect().bottom
+      - wrapper.getBoundingClientRect().top + 24;
+    wrapper.style.setProperty('--zf-douban-sheet-height', `${Math.max(0, height)}px`);
+  }
+
+  updateSheetHeight();
+  const observer = new ResizeObserver(updateSheetHeight);
+  observer.observe(wrapper);
+  observer.observe(content);
+}
+
 function applyFocusState(enabled) {
   document.documentElement.classList.toggle(FOCUS_CLASS, enabled);
 
@@ -228,6 +281,7 @@ function applyAppearance(settings) {
   const fontStack = FONT_FAMILIES[fontFamily];
 
   root.dataset.zfReadingBackground = background;
+  root.dataset.zfColorScheme = DARK_THEME_COLORS[background] ? 'dark' : 'light';
   root.dataset.zfReadingFontFamily = fontFamily;
   root.style.setProperty('--zf-reading-font-size', `${fontSize}px`);
   root.style.setProperty('--zf-reading-line-height', String(lineHeight));
@@ -247,6 +301,21 @@ function applyAppearance(settings) {
     root.style.removeProperty('--zf-page-background');
     root.style.removeProperty('--zf-surface-background');
   }
+
+  const darkColors = DARK_THEME_COLORS[background];
+  const darkProperties = {
+    text: '--zf-text', secondary: '--zf-secondary-text', link: '--zf-link',
+    border: '--zf-border', accent: '--zf-accent-background',
+    accentBorder: '--zf-accent-border', solid: '--zf-accent-solid',
+    hover: '--zf-hover-background', heading: '--zf-heading'
+  };
+  Object.entries(darkProperties).forEach(([key, property]) => {
+    if (darkColors) {
+      root.style.setProperty(property, darkColors[key]);
+    } else {
+      root.style.removeProperty(property);
+    }
+  });
 }
 
 function updateHeaderVisibility() {
@@ -317,6 +386,14 @@ if (IS_DOUBAN_HOME) {
   document.addEventListener(
     'DOMContentLoaded',
     initializeDoubanHomeSearch,
+    { once: true }
+  );
+}
+
+if (IS_DOUBAN) {
+  document.addEventListener(
+    'DOMContentLoaded',
+    initializeDoubanReadingSheet,
     { once: true }
   );
 }
