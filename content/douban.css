@@ -1,4 +1,16 @@
-/* Loaded only on supported Douban home, search, subject, and review pages. */
+/* Shared Douban layout; authentication pages are excluded in the manifest. */
+html.zhihu-focus-enabled :is(
+    #db-global-nav, [id^="db-nav-"], #anony-nav, body > .nav, .back-to-top
+  ) {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled #wrapper {
+  margin-top: 32px !important;
+  padding-top: 24px !important;
+  box-sizing: border-box !important;
+}
+
 /* Douban inserts these ad slots asynchronously, including after the reviews. */
 html.zhihu-focus-enabled [id^="dale_"],
 html.zhihu-focus-enabled [class^="adjs-qihupc-"],
@@ -18,18 +30,14 @@ html.zhihu-focus-enabled #content > .grid-16-8 > .article {
 }
 
 /* Supported Douban pages: keep the centered wrapper as a reading sheet. */
-html.zhihu-focus-enabled:has(#db-nav-sns) #wrapper,
-html.zhihu-focus-enabled:has(.nav-secondary > .movieannual) #wrapper,
-html.zhihu-focus-enabled:has(.nav-secondary > .bookannual) #wrapper {
+html.zhihu-focus-enabled:has([id^="db-nav-"]) #wrapper {
   position: relative;
   isolation: isolate;
   min-height: calc(100vh - 120px);
   background-color: transparent !important;
 }
 
-html.zhihu-focus-enabled:has(#db-nav-sns) #wrapper::before,
-html.zhihu-focus-enabled:has(.nav-secondary > .movieannual) #wrapper::before,
-html.zhihu-focus-enabled:has(.nav-secondary > .bookannual) #wrapper::before {
+html.zhihu-focus-enabled:has([id^="db-nav-"]) #wrapper::before {
   content: "";
   position: absolute;
   z-index: -1;
@@ -312,7 +320,8 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
     .status-item .block, .status-item .status-saying,
     .review-item .review-short, .review-item .review-full,
     .comment-item h3, .comments .comment-item h3, .search-result .result,
-    .article .bg-img-green, .article .indent .content
+    .article .bg-img-green, .article .indent .content,
+    .artists, .section-switcher, .section-switcher .header, .joined-groups-num
   ) {
   background-color: var(--zf-surface-background) !important;
   color: var(--zf-text) !important;
@@ -704,26 +713,23 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
   outline-offset: 2px;
 }
 
-/* Search-page form: inset it into the sheet and use one rounded field in both modes. */
-html.zhihu-focus-enabled #wrapper:has(.mod-search) {
-  margin-top: 32px !important;
-  padding-top: 24px !important;
-  box-sizing: border-box !important;
-}
-
-html.zhihu-focus-enabled:has(.mod-search) :is(#db-global-nav, #db-nav-sns, .back-to-top) {
+/* Keep the two essential navigation destinations in one unobtrusive dock. */
+.zf-douban-shortcuts {
   display: none !important;
 }
 
-.zf-douban-return-home {
-  display: none !important;
-}
-
-html.zhihu-focus-enabled:has(.mod-search) .zf-douban-return-home {
+html.zhihu-focus-enabled .zf-douban-shortcuts {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
+  right: max(24px, env(safe-area-inset-right));
+  bottom: max(24px, env(safe-area-inset-bottom));
   z-index: 1000;
+  display: flex !important;
+  flex-direction: column;
+  gap: 8px;
+}
+
+html.zhihu-focus-enabled .zf-douban-shortcuts a {
+  position: static !important;
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
@@ -741,7 +747,7 @@ html.zhihu-focus-enabled:has(.mod-search) .zf-douban-return-home {
   box-sizing: border-box;
 }
 
-html.zhihu-focus-enabled:has(.mod-search) .zf-douban-return-home svg {
+html.zhihu-focus-enabled .zf-douban-shortcuts svg {
   width: 18px;
   height: 18px;
   fill: none;
@@ -751,13 +757,91 @@ html.zhihu-focus-enabled:has(.mod-search) .zf-douban-return-home svg {
   stroke-linejoin: round;
 }
 
-html.zhihu-focus-enabled:has(.mod-search) .zf-douban-return-home:is(:hover, :focus-visible) {
+html.zhihu-focus-enabled .zf-douban-shortcuts a:is(:hover, :focus-visible) {
   background: var(--zf-hover-background, #edf2f6) !important;
 }
 
-html.zhihu-focus-enabled:has(.mod-search) .zf-douban-return-home:focus-visible {
+html.zhihu-focus-enabled .zf-douban-shortcuts a:focus-visible {
   outline: 2px solid var(--zf-link, #3377aa);
   outline-offset: 3px;
+}
+
+/* Profile identity and personal tabs stay in the content, below the sheet inset. */
+html.zhihu-focus-enabled #db-usr-profile {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--zf-border, #e5e7eb);
+}
+
+html.zhihu-focus-enabled #db-usr-profile::after {
+  display: none;
+}
+
+html.zhihu-focus-enabled #db-usr-profile > .pic {
+  flex: 0 0 56px;
+  float: none;
+  margin: 0;
+}
+
+html.zhihu-focus-enabled #db-usr-profile .pic img {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+}
+
+html.zhihu-focus-enabled #db-usr-profile > .info {
+  flex: 1;
+  min-width: 0;
+  float: none;
+  padding: 0;
+}
+
+html.zhihu-focus-enabled #db-usr-profile .info ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-top: 12px;
+}
+
+html.zhihu-focus-enabled #db-usr-profile .info li {
+  float: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+html.zhihu-focus-enabled #content:has(#db-usr-profile) .lnk-create {
+  min-height: 28px;
+  padding: 3px 10px;
+  border: 1px solid var(--zf-accent-border, #ddd5cb);
+  border-radius: 6px;
+  background: var(--zf-accent-background, #f5f1eb) !important;
+  color: var(--zf-link, #3377aa) !important;
+  font-size: 12px;
+  line-height: 20px;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled #content:has(#db-usr-profile) .lnk-create i {
+  color: inherit !important;
+}
+
+html.zhihu-focus-enabled #content:has(#db-usr-profile) .lnk-create:is(:hover, :focus-visible) {
+  background: var(--zf-hover-background, #eee6dc) !important;
+}
+
+html.zhihu-focus-enabled #content:has(#db-usr-profile) .lnk-create:focus-visible {
+  outline: 2px solid var(--zf-link, #3377aa);
+  outline-offset: 2px;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    #db-usr-profile #edit_signature, #content:has(#db-usr-profile) .substatus
+  ) {
+  color: var(--zf-secondary-text) !important;
 }
 
 html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search {

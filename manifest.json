@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ZhihuFocus",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "为知乎和豆瓣页面提供简洁、可调节的专注阅读布局。",
   "icons": {
     "16": "icons/icon16.png",
@@ -13,9 +13,7 @@
   "host_permissions": [
     "https://www.zhihu.com/*",
     "https://zhuanlan.zhihu.com/*",
-    "https://www.douban.com/*",
-    "https://movie.douban.com/*",
-    "https://book.douban.com/*"
+    "https://*.douban.com/*"
   ],
   "action": {
     "default_title": "ZhihuFocus",
@@ -48,27 +46,10 @@
       "run_at": "document_start"
     },
     {
-      "matches": [
-        "https://movie.douban.com/subject/*",
-        "https://book.douban.com/subject/*",
-        "https://movie.douban.com/review/*",
-        "https://book.douban.com/review/*"
-      ],
-      "css": ["content/douban.css"],
-      "js": ["shared/theme.js", "content/focus.js"],
-      "run_at": "document_start"
-    },
-    {
-      "matches": ["https://www.douban.com/search*"],
-      "css": ["content/douban.css"],
-      "js": ["shared/theme.js", "content/focus.js"],
-      "run_at": "document_start"
-    },
-    {
-      "matches": ["https://www.douban.com/*"],
-      "include_globs": [
-        "https://www.douban.com/",
-        "https://www.douban.com/?*"
+      "matches": ["https://*.douban.com/*"],
+      "exclude_matches": [
+        "https://accounts.douban.com/*",
+        "https://www.douban.com/accounts/*"
       ],
       "css": ["content/douban.css"],
       "js": ["shared/theme.js", "content/focus.js"],

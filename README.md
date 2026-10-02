@@ -44,7 +44,8 @@ ZhihuFocus 是一个面向知乎与豆瓣的 Chrome 专注阅读扩展。它通�
 - 支持调整正文字体、字号、行距、段距和内容宽度。
 - 知乎首页支持只刷新中间信息流，不刷新整个页面。
 - 知乎非首页页面提供快捷返回首页按钮。
-- 豆瓣搜索页隐藏顶部导航，将全部、电影、书籍、音乐横排显示，并在右下角提供返回首页入口。
+- 豆瓣页面统一隐藏顶部站点导航，右下角保留首页和个人主页入口。
+- 豆瓣搜索页将全部、电影、书籍、音乐横排显示；个人主页保留头像、栏目和收藏内容，并适配主题按钮。
 - 设置保存在 `chrome.storage.sync`，可随同一 Google 账号同步到其他 Chrome 浏览器。
 
 ## 支持页面
@@ -61,12 +62,13 @@ ZhihuFocus 是一个面向知乎与豆瓣的 Chrome 专注阅读扩展。它通�
 
 - 豆瓣首页：`https://www.douban.com/`
 - 豆瓣搜索页：`https://www.douban.com/search*`
+- 豆瓣个人主页及其栏目：`https://www.douban.com/people/*`
 - 豆瓣电影条目页：`https://movie.douban.com/subject/*`
 - 豆瓣图书条目页：`https://book.douban.com/subject/*`
 - 豆瓣影评页：`https://movie.douban.com/review/*`
 - 豆瓣书评页：`https://book.douban.com/review/*`
 
-扩展只针对以上页面进行适配，不保证其他知乎或豆瓣页面的显示效果。
+豆瓣顶部导航隐藏和快捷入口覆盖 `https://*.douban.com/*`，包括音乐、小组等页面；登录及账号验证页面不注入扩展。上述页面经过主要布局适配，其他豆瓣页面使用通用样式。
 
 ## 安装
 

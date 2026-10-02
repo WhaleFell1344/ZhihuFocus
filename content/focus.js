@@ -29,9 +29,8 @@ const IS_ZHIHU_HOME =
 const IS_ZHIHU_NON_HOME = IS_ZHIHU && !IS_ZHIHU_HOME;
 const IS_DOUBAN_HOME =
   window.location.hostname === 'www.douban.com' && window.location.pathname === '/';
-const IS_DOUBAN_SEARCH =
-  window.location.hostname === 'www.douban.com' && window.location.pathname === '/search';
-const IS_DOUBAN = window.location.hostname.endsWith('.douban.com');
+const IS_DOUBAN = window.location.hostname === 'douban.com'
+  || window.location.hostname.endsWith('.douban.com');
 let lastScrollY = window.scrollY;
 
 function getZhihuFeedSignature() {
@@ -196,24 +195,31 @@ function initializeDoubanReadingSheet() {
   observer.observe(content);
 }
 
-function initializeDoubanReturnHome() {
-  if (document.querySelector('.zf-douban-return-home')) {
+function initializeDoubanShortcuts() {
+  if (document.querySelector('.zf-douban-shortcuts')) {
     return;
   }
 
-  const link = document.createElement('a');
-  link.className = 'zf-douban-return-home';
-  link.href = 'https://www.douban.com/';
-  link.setAttribute('aria-label', '返回豆瓣首页');
-  link.title = '返回豆瓣首页';
-  link.innerHTML = `
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M4 10.5 12 3l8 7.5v8.25A1.25 1.25 0 0 1 18.75 20H5.25A1.25 1.25 0 0 1 4 18.75V10.5Z"></path>
-      <path d="M9.5 20v-6h5v6"></path>
-    </svg>
-    <span>返回首页</span>
+  const shortcuts = document.createElement('nav');
+  shortcuts.className = 'zf-douban-shortcuts';
+  shortcuts.setAttribute('aria-label', '豆瓣快捷导航');
+  shortcuts.innerHTML = `
+    <a class="zf-douban-home" href="https://www.douban.com/" aria-label="返回豆瓣首页" title="返回豆瓣首页">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M4 10.5 12 3l8 7.5v8.25A1.25 1.25 0 0 1 18.75 20H5.25A1.25 1.25 0 0 1 4 18.75V10.5Z"></path>
+        <path d="M9.5 20v-6h5v6"></path>
+      </svg>
+      <span>首页</span>
+    </a>
+    <a class="zf-douban-profile" href="https://www.douban.com/mine/" aria-label="打开我的豆瓣个人主页" title="打开我的豆瓣个人主页">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="8" r="4"></circle>
+        <path d="M4 21v-2a8 8 0 0 1 16 0v2"></path>
+      </svg>
+      <span>个人主页</span>
+    </a>
   `;
-  document.body.append(link);
+  document.body.append(shortcuts);
 }
 
 function applyFocusState(enabled) {
@@ -336,10 +342,10 @@ if (IS_DOUBAN_HOME) {
   );
 }
 
-if (IS_DOUBAN_SEARCH) {
+if (IS_DOUBAN) {
   document.addEventListener(
     'DOMContentLoaded',
-    initializeDoubanReturnHome,
+    initializeDoubanShortcuts,
     { once: true }
   );
 }
