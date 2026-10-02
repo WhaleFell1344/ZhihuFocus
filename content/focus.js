@@ -3,65 +3,17 @@ const HEADER_HIDDEN_CLASS = 'zhihu-focus-header-hidden';
 const DEFAULT_SETTINGS = {
   focusEnabled: true,
   readingBackground: 'default',
+  readingColorMode: 'system',
   readingFontFamily: 'default',
   readingFontSize: 16,
   readingLineHeight: 1.7,
   readingParagraphSpacing: 0.6,
   readingWidth: 780
 };
-const BACKGROUND_COLORS = {
-  default: null,
-  warm: {
-    page: '#F1EDE4',
-    surface: '#F8F4EB'
-  },
-  gray: {
-    page: '#E9ECEF',
-    surface: '#F3F4F5'
-  },
-  green: {
-    page: '#E8EFE6',
-    surface: '#F2F6F0'
-  },
-  blue: {
-    page: '#E8EEF4',
-    surface: '#F2F6FA'
-  },
-  lavender: {
-    page: '#EEEAF2',
-    surface: '#F7F4F9'
-  },
-  dark: {
-    page: '#15181D',
-    surface: '#20242B'
-  },
-  'dark-blue': {
-    page: '#101923',
-    surface: '#192735'
-  },
-  'dark-warm': {
-    page: '#1C1815',
-    surface: '#29231E'
-  }
-};
-const DARK_THEME_COLORS = {
-  dark: {
-    text: '#E2E6ED', secondary: '#AEB7C4', link: '#85B9FF', border: '#414B59',
-    accent: '#283B53', accentBorder: '#45678F', solid: '#286BBA',
-    hover: '#304560', heading: '#91CDA5'
-  },
-  'dark-blue': {
-    text: '#DEE9F3', secondary: '#A8BDCF', link: '#83C8F4', border: '#39546B',
-    accent: '#223F55', accentBorder: '#417594', solid: '#216E9F',
-    hover: '#2B4A63', heading: '#8FD2C4'
-  },
-  'dark-warm': {
-    text: '#ECE3D6', secondary: '#C2AF9A', link: '#E8BB86', border: '#5C4D40',
-    accent: '#463629', accentBorder: '#886747', solid: '#855B32',
-    hover: '#514030', heading: '#BACA97'
-  }
-};
-const BACKGROUNDS = new Set(Object.keys(BACKGROUND_COLORS));
+const systemColorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+let currentSettings = { ...DEFAULT_SETTINGS };
+let settingsLoaded = false;
+let startupChanges = {};
 const FONT_FAMILIES = {
   default: null,
   sans: '-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif',
@@ -257,9 +209,7 @@ function clampNumber(value, min, max, fallback) {
 
 function applyAppearance(settings) {
   const root = document.documentElement;
-  const background = BACKGROUNDS.has(settings.readingBackground)
-    ? settings.readingBackground
-    : DEFAULT_SETTINGS.readingBackground;
+  const appearance = ZhihuFocusTheme.resolve(settings, systemColorScheme.matches);
   const fontFamily = FONT_FAMILY_NAMES.has(settings.readingFontFamily)
     ? settings.readingFontFamily
     : DEFAULT_SETTINGS.readingFontFamily;
@@ -277,11 +227,9 @@ function applyAppearance(settings) {
     DEFAULT_SETTINGS.readingParagraphSpacing
   );
   const readingWidth = clampNumber(settings.readingWidth, 680, 1100, DEFAULT_SETTINGS.readingWidth);
-  const colors = BACKGROUND_COLORS[background];
   const fontStack = FONT_FAMILIES[fontFamily];
 
-  root.dataset.zfReadingBackground = background;
-  root.dataset.zfColorScheme = DARK_THEME_COLORS[background] ? 'dark' : 'light';
+  ZhihuFocusTheme.apply(root, appearance);
   root.dataset.zfReadingFontFamily = fontFamily;
   root.style.setProperty('--zf-reading-font-size', `${fontSize}px`);
   root.style.setProperty('--zf-reading-line-height', String(lineHeight));
@@ -293,29 +241,6 @@ function applyAppearance(settings) {
   } else {
     root.style.removeProperty('--zf-reading-font-family');
   }
-
-  if (colors) {
-    root.style.setProperty('--zf-page-background', colors.page);
-    root.style.setProperty('--zf-surface-background', colors.surface);
-  } else {
-    root.style.removeProperty('--zf-page-background');
-    root.style.removeProperty('--zf-surface-background');
-  }
-
-  const darkColors = DARK_THEME_COLORS[background];
-  const darkProperties = {
-    text: '--zf-text', secondary: '--zf-secondary-text', link: '--zf-link',
-    border: '--zf-border', accent: '--zf-accent-background',
-    accentBorder: '--zf-accent-border', solid: '--zf-accent-solid',
-    hover: '--zf-hover-background', heading: '--zf-heading'
-  };
-  Object.entries(darkProperties).forEach(([key, property]) => {
-    if (darkColors) {
-      root.style.setProperty(property, darkColors[key]);
-    } else {
-      root.style.removeProperty(property);
-    }
-  });
 }
 
 function updateHeaderVisibility() {
@@ -338,31 +263,30 @@ function updateHeaderVisibility() {
 applyFocusState(DEFAULT_SETTINGS.focusEnabled);
 applyAppearance(DEFAULT_SETTINGS);
 
-chrome.storage.sync.get(DEFAULT_SETTINGS, settings => {
-  applyFocusState(settings.focusEnabled);
-  applyAppearance(settings);
-});
-
 chrome.storage.onChanged.addListener((changes, areaName) => {
-  if (areaName !== 'sync') {
-    return;
-  }
+  if (areaName !== 'sync') return;
 
-  if (changes.focusEnabled) {
-    applyFocusState(changes.focusEnabled.newValue !== false);
+  for (const [key, change] of Object.entries(changes)) {
+    currentSettings[key] = change.newValue;
+    if (!settingsLoaded) startupChanges[key] = change.newValue;
   }
+  if (changes.focusEnabled) applyFocusState(currentSettings.focusEnabled !== false);
 
-  if (
-    changes.readingBackground ||
-    changes.readingFontFamily ||
-    changes.readingFontSize ||
-    changes.readingLineHeight ||
-    changes.readingParagraphSpacing ||
-    changes.readingWidth
-  ) {
-    chrome.storage.sync.get(DEFAULT_SETTINGS, applyAppearance);
+  if (Object.keys(changes).some(key => key.startsWith('reading'))) {
+    applyAppearance(currentSettings);
   }
 });
+
+chrome.storage.sync.get(DEFAULT_SETTINGS, settings => {
+  // A popup change can arrive before this initial read finishes.
+  currentSettings = { ...DEFAULT_SETTINGS, ...settings, ...startupChanges };
+  settingsLoaded = true;
+  startupChanges = {};
+  applyFocusState(currentSettings.focusEnabled !== false);
+  applyAppearance(currentSettings);
+});
+
+systemColorScheme.addEventListener('change', () => applyAppearance(currentSettings));
 
 window.addEventListener('scroll', updateHeaderVisibility, { passive: true });
 

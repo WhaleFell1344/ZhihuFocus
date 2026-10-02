@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ZhihuFocus",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "为知乎和豆瓣页面提供简洁、可调节的专注阅读布局。",
   "icons": {
     "16": "icons/icon16.png",
@@ -34,7 +34,7 @@
         "https://zhuanlan.zhihu.com/p/*"
       ],
       "css": ["content/focus.css"],
-      "js": ["content/focus.js"],
+      "js": ["shared/theme.js", "content/focus.js"],
       "run_at": "document_start"
     },
     {
@@ -44,7 +44,7 @@
         "https://www.zhihu.com/?*"
       ],
       "css": ["content/focus.css"],
-      "js": ["content/focus.js"],
+      "js": ["shared/theme.js", "content/focus.js"],
       "run_at": "document_start"
     },
     {
@@ -55,13 +55,13 @@
         "https://book.douban.com/review/*"
       ],
       "css": ["content/douban.css"],
-      "js": ["content/focus.js"],
+      "js": ["shared/theme.js", "content/focus.js"],
       "run_at": "document_start"
     },
     {
       "matches": ["https://www.douban.com/search*"],
       "css": ["content/douban.css"],
-      "js": ["content/focus.js"],
+      "js": ["shared/theme.js", "content/focus.js"],
       "run_at": "document_start"
     },
     {
@@ -71,7 +71,7 @@
         "https://www.douban.com/?*"
       ],
       "css": ["content/douban.css"],
-      "js": ["content/focus.js"],
+      "js": ["shared/theme.js", "content/focus.js"],
       "run_at": "document_start"
     }
   ]

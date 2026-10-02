@@ -483,6 +483,74 @@ html.zhihu-focus-enabled[data-zf-reading-background]:not(
   background-color: var(--zf-surface-background) !important;
 }
 
+html.zhihu-focus-enabled[data-zf-color-scheme='light'] {
+  color-scheme: light;
+}
+
+/* Zhihu can keep its own dark preference after the system switches to light.
+   Override its neutral palette without changing the site's saved preference. */
+html.zhihu-focus-enabled[data-zf-color-scheme='light'][data-theme='dark'] {
+  --GBK02A: #191b1f;
+  --GBK02B: #000;
+  --GBK03A: #373a40;
+  --GBK03B: #191b1f;
+  --GBK03C: #535861;
+  --GBK04A: #535861;
+  --GBK04B: #9196a1;
+  --GBK05A: #81858f;
+  --GBK06A: #9196a1;
+  --GBK06B: #9196a1;
+  --GBK07A: #adb0b7;
+  --GBK07B: #adb0b7;
+  --GBK08A: #c4c7ce;
+  --GBK08B: #c4c7ce;
+  --GBK09A: #ebeced;
+  --GBK09B: #ebeced;
+  --GBK09C: #e8e9ed;
+  --GBK10A: #f8f8fa;
+  --GBK10B: #fff;
+  --GBK10C: #f4f6f9;
+  --GBK12A: #f8f8fa;
+  --GBK99A: #fff;
+  --GBK99B: #fff;
+  --GBK99C: #fff;
+  --GBL01A: #1772f6;
+  --GBL03A: #18afff;
+  --GBL05A: #8491a5;
+  --GBL07A: #09408e;
+  --GBL08A: #8491a5;
+  --GBL10A: #f8f8fa;
+  --GBL11A: #384263;
+  --GBL12A: #142457;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='light'][data-theme='dark'] :is(
+    body, h1, h2, h3, h4, .Card, .ContentItem, .ContentItem-title,
+    .QuestionHeader-title, .QuestionHeader-detail, .RichContent-inner, .RichText, .RichText *,
+    .Post-Title, .Post-RichText, .Post-RichText *, .AuthorInfo,
+    .AuthorInfo-name, .CommentContent, .CommentItem, .CommentItemV2,
+    .ProfileHeader, .ProfileMain, .ProfileMain-header, .Tabs-link,
+    .SearchTabs-link, .SearchItem, .SearchItem-title, .SearchResult-Card
+  ) {
+  color: #191b1f !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='light'][data-theme='dark'] :is(
+    a, .RichText a, .RichText a *, .Post-RichText a, .Post-RichText a *
+  ) {
+  color: #056de8 !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='light'][data-theme='dark'] .CornerButton {
+  color: #535861 !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='light'][data-theme='dark']
+  .CornerButton :is(.Zi, .ZDI) {
+  color: inherit !important;
+  fill: currentColor !important;
+}
+
 /* Dark mode uses explicit colors so media and rating icons keep their originals. */
 html.zhihu-focus-enabled[data-zf-color-scheme='dark'] {
   color-scheme: dark;

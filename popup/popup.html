@@ -18,7 +18,26 @@
         <h2 id="appearance-title">阅读外观</h2>
 
         <fieldset>
-          <legend>阅读主题</legend>
+          <legend>颜色模式</legend>
+          <div class="mode-options">
+            <label class="background-option">
+              <input type="radio" name="reading-color-mode" value="system" checked />
+              <span>跟随系统</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-color-mode" value="light" />
+              <span>浅色</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-color-mode" value="dark" />
+              <span>深色</span>
+            </label>
+          </div>
+          <p id="theme-status" class="setting-note" aria-live="polite"></p>
+        </fieldset>
+
+        <fieldset>
+          <legend id="reading-theme-label">阅读主题</legend>
           <div class="background-options">
             <label class="background-option">
               <input type="radio" name="reading-background" value="default" />
@@ -139,6 +158,7 @@
 
       <button id="restore-defaults" type="button">恢复默认</button>
     </main>
+    <script src="../shared/theme.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>

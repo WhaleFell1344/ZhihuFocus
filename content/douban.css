@@ -258,6 +258,10 @@ html.zhihu-focus-enabled:has(.nav-secondary > .bookannual) #wrapper > .rank-labe
   margin-left: calc((100% - 675px) / 2) !important;
 }
 
+html.zhihu-focus-enabled[data-zf-color-scheme='light'] {
+  color-scheme: light;
+}
+
 /* Explicit dark surfaces preserve posters, photos, stars and ranking sprites. */
 html.zhihu-focus-enabled[data-zf-color-scheme='dark'] {
   color-scheme: dark;

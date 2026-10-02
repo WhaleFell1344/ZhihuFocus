@@ -1,26 +1,23 @@
 const DEFAULT_SETTINGS = {
   focusEnabled: true,
   readingBackground: 'default',
+  readingColorMode: 'system',
   readingFontFamily: 'default',
   readingFontSize: 16,
   readingLineHeight: 1.7,
   readingParagraphSpacing: 0.6,
   readingWidth: 780
 };
-const BACKGROUNDS = new Set([
-  'default',
-  'warm',
-  'gray',
-  'green',
-  'blue',
-  'lavender',
-  'dark',
-  'dark-blue',
-  'dark-warm'
-]);
+const systemColorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+let currentSettings = { ...DEFAULT_SETTINGS };
+let settingsLoaded = false;
+let startupChanges = {};
 const FONT_FAMILIES = new Set(['default', 'sans', 'serif', 'kai']);
 
 const toggle = document.querySelector('#focus-enabled');
+const modeOptions = document.querySelectorAll('[name="reading-color-mode"]');
+const themeStatus = document.querySelector('#theme-status');
+const themeLabel = document.querySelector('#reading-theme-label');
 const backgroundOptions = document.querySelectorAll('[name="reading-background"]');
 const fontFamilyOptions = document.querySelectorAll('[name="reading-font-family"]');
 const fontSize = document.querySelector('#reading-font-size');
@@ -42,15 +39,24 @@ function updateRangeValue(input, output, suffix = '') {
   output.value = `${input.value}${suffix}`;
 }
 
-function applyPopupTheme(background) {
-  document.documentElement.dataset.zfReadingBackground = background;
-  document.documentElement.dataset.zfColorScheme = background.startsWith('dark') ? 'dark' : 'light';
+function applyPopupTheme() {
+  const appearance = ZhihuFocusTheme.resolve(currentSettings, systemColorScheme.matches);
+  ZhihuFocusTheme.apply(document.documentElement, appearance);
+  modeOptions.forEach(option => {
+    option.checked = option.value === appearance.readingColorMode;
+  });
+  backgroundOptions.forEach(option => {
+    const dark = ZhihuFocusTheme.isDarkBackground(option.value);
+    option.closest('label').hidden = dark !== (appearance.colorScheme === 'dark');
+    option.checked = option.value === appearance.background;
+  });
+  const label = appearance.colorScheme === 'dark' ? '深色' : '浅色';
+  themeLabel.textContent = `${label}主题`;
+  themeStatus.textContent = appearance.readingColorMode === 'system'
+    ? `跟随系统，当前为${label}。` : `固定使用${label}模式。`;
 }
 
-chrome.storage.sync.get(DEFAULT_SETTINGS, settings => {
-  const background = BACKGROUNDS.has(settings.readingBackground)
-    ? settings.readingBackground
-    : DEFAULT_SETTINGS.readingBackground;
+function renderSettings(settings) {
   const fontFamily = FONT_FAMILIES.has(settings.readingFontFamily)
     ? settings.readingFontFamily
     : DEFAULT_SETTINGS.readingFontFamily;
@@ -69,11 +75,8 @@ chrome.storage.sync.get(DEFAULT_SETTINGS, settings => {
   );
   const savedWidth = clampNumber(settings.readingWidth, 680, 1100, DEFAULT_SETTINGS.readingWidth);
 
-  toggle.checked = settings.focusEnabled;
-  applyPopupTheme(background);
-  document.querySelector(
-    `[name="reading-background"][value="${background}"]`
-  ).checked = true;
+  toggle.checked = settings.focusEnabled !== false;
+  applyPopupTheme();
   document.querySelector(
     `[name="reading-font-family"][value="${fontFamily}"]`
   ).checked = true;
@@ -85,17 +88,56 @@ chrome.storage.sync.get(DEFAULT_SETTINGS, settings => {
   updateRangeValue(lineHeight, lineHeightValue);
   updateRangeValue(paragraphSpacing, paragraphSpacingValue, 'em');
   updateRangeValue(readingWidth, readingWidthValue, 'px');
+}
+
+// Render the system appearance immediately, then load saved palettes.
+applyPopupTheme();
+chrome.storage.onChanged.addListener((changes, areaName) => {
+  if (areaName !== 'sync') return;
+  for (const [key, change] of Object.entries(changes)) {
+    currentSettings[key] = change.newValue;
+    if (!settingsLoaded) startupChanges[key] = change.newValue;
+  }
+  renderSettings(currentSettings);
+});
+chrome.storage.sync.get(DEFAULT_SETTINGS, settings => {
+  currentSettings = { ...DEFAULT_SETTINGS, ...settings, ...startupChanges };
+  settingsLoaded = true;
+  startupChanges = {};
+  renderSettings(currentSettings);
+});
+systemColorScheme.addEventListener('change', applyPopupTheme);
+
+function saveSettings(changes) {
+  currentSettings = { ...currentSettings, ...changes };
+  if (!settingsLoaded) startupChanges = { ...startupChanges, ...changes };
+  chrome.storage.sync.set(changes);
+}
+
+modeOptions.forEach(option => {
+  option.addEventListener('change', () => {
+    if (!option.checked) return;
+    saveSettings({ readingColorMode: option.value });
+    applyPopupTheme();
+  });
 });
 
 toggle.addEventListener('change', () => {
-  chrome.storage.sync.set({ focusEnabled: toggle.checked });
+  saveSettings({ focusEnabled: toggle.checked });
 });
 
 backgroundOptions.forEach(option => {
   option.addEventListener('change', () => {
     if (option.checked) {
-      applyPopupTheme(option.value);
-      chrome.storage.sync.set({ readingBackground: option.value });
+      const key = ZhihuFocusTheme.isDarkBackground(option.value)
+        ? 'readingDarkBackground' : 'readingLightBackground';
+      // Freeze both migrated palettes before updating the legacy key.
+      saveSettings({
+        ...ZhihuFocusTheme.normalize(currentSettings),
+        [key]: option.value,
+        readingBackground: option.value
+      });
+      applyPopupTheme();
     }
   });
 });
@@ -103,34 +145,37 @@ backgroundOptions.forEach(option => {
 fontFamilyOptions.forEach(option => {
   option.addEventListener('change', () => {
     if (option.checked) {
-      chrome.storage.sync.set({ readingFontFamily: option.value });
+      saveSettings({ readingFontFamily: option.value });
     }
   });
 });
 
 fontSize.addEventListener('input', () => {
   updateRangeValue(fontSize, fontSizeValue, 'px');
-  chrome.storage.sync.set({ readingFontSize: Number(fontSize.value) });
+  saveSettings({ readingFontSize: Number(fontSize.value) });
 });
 
 lineHeight.addEventListener('input', () => {
   updateRangeValue(lineHeight, lineHeightValue);
-  chrome.storage.sync.set({ readingLineHeight: Number(lineHeight.value) });
+  saveSettings({ readingLineHeight: Number(lineHeight.value) });
 });
 
 paragraphSpacing.addEventListener('input', () => {
   updateRangeValue(paragraphSpacing, paragraphSpacingValue, 'em');
-  chrome.storage.sync.set({ readingParagraphSpacing: Number(paragraphSpacing.value) });
+  saveSettings({ readingParagraphSpacing: Number(paragraphSpacing.value) });
 });
 
 readingWidth.addEventListener('input', () => {
   updateRangeValue(readingWidth, readingWidthValue, 'px');
-  chrome.storage.sync.set({ readingWidth: Number(readingWidth.value) });
+  saveSettings({ readingWidth: Number(readingWidth.value) });
 });
 
 restoreDefaults.addEventListener('click', () => {
   const appearanceDefaults = {
     readingBackground: DEFAULT_SETTINGS.readingBackground,
+    readingColorMode: 'system',
+    readingLightBackground: 'default',
+    readingDarkBackground: 'dark',
     readingFontFamily: DEFAULT_SETTINGS.readingFontFamily,
     readingFontSize: DEFAULT_SETTINGS.readingFontSize,
     readingLineHeight: DEFAULT_SETTINGS.readingLineHeight,
@@ -138,17 +183,6 @@ restoreDefaults.addEventListener('click', () => {
     readingWidth: DEFAULT_SETTINGS.readingWidth
   };
 
-  chrome.storage.sync.set(appearanceDefaults, () => {
-    applyPopupTheme(appearanceDefaults.readingBackground);
-    document.querySelector('[name="reading-background"][value="default"]').checked = true;
-    document.querySelector('[name="reading-font-family"][value="default"]').checked = true;
-    fontSize.value = appearanceDefaults.readingFontSize;
-    lineHeight.value = appearanceDefaults.readingLineHeight;
-    paragraphSpacing.value = appearanceDefaults.readingParagraphSpacing;
-    readingWidth.value = appearanceDefaults.readingWidth;
-    updateRangeValue(fontSize, fontSizeValue, 'px');
-    updateRangeValue(lineHeight, lineHeightValue);
-    updateRangeValue(paragraphSpacing, paragraphSpacingValue, 'em');
-    updateRangeValue(readingWidth, readingWidthValue, 'px');
-  });
+  saveSettings(appearanceDefaults);
+  renderSettings(currentSettings);
 });

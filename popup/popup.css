@@ -109,13 +109,15 @@ legend {
   padding: 0;
 }
 
-.background-options {
+.background-options,
+.mode-options {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
 
 .background-option {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -124,6 +126,21 @@ legend {
   border-radius: 6px;
   font-size: 12px;
   cursor: pointer;
+}
+
+.background-option[hidden] {
+  display: none;
+}
+
+.mode-options .background-option {
+  justify-content: center;
+}
+
+.setting-note {
+  margin: 8px 0 0;
+  color: var(--popup-secondary);
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .background-option:has(input:checked) {
