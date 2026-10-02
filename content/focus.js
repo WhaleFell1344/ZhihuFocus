@@ -29,6 +29,8 @@ const IS_ZHIHU_HOME =
 const IS_ZHIHU_NON_HOME = IS_ZHIHU && !IS_ZHIHU_HOME;
 const IS_DOUBAN_HOME =
   window.location.hostname === 'www.douban.com' && window.location.pathname === '/';
+const IS_DOUBAN_SEARCH =
+  window.location.hostname === 'www.douban.com' && window.location.pathname === '/search';
 const IS_DOUBAN = window.location.hostname.endsWith('.douban.com');
 let lastScrollY = window.scrollY;
 
@@ -194,6 +196,26 @@ function initializeDoubanReadingSheet() {
   observer.observe(content);
 }
 
+function initializeDoubanReturnHome() {
+  if (document.querySelector('.zf-douban-return-home')) {
+    return;
+  }
+
+  const link = document.createElement('a');
+  link.className = 'zf-douban-return-home';
+  link.href = 'https://www.douban.com/';
+  link.setAttribute('aria-label', '返回豆瓣首页');
+  link.title = '返回豆瓣首页';
+  link.innerHTML = `
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M4 10.5 12 3l8 7.5v8.25A1.25 1.25 0 0 1 18.75 20H5.25A1.25 1.25 0 0 1 4 18.75V10.5Z"></path>
+      <path d="M9.5 20v-6h5v6"></path>
+    </svg>
+    <span>返回首页</span>
+  `;
+  document.body.append(link);
+}
+
 function applyFocusState(enabled) {
   document.documentElement.classList.toggle(FOCUS_CLASS, enabled);
 
@@ -310,6 +332,14 @@ if (IS_DOUBAN_HOME) {
   document.addEventListener(
     'DOMContentLoaded',
     initializeDoubanHomeSearch,
+    { once: true }
+  );
+}
+
+if (IS_DOUBAN_SEARCH) {
+  document.addEventListener(
+    'DOMContentLoaded',
+    initializeDoubanReturnHome,
     { once: true }
   );
 }

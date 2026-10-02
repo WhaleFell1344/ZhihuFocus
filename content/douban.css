@@ -706,8 +706,58 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
 
 /* Search-page form: inset it into the sheet and use one rounded field in both modes. */
 html.zhihu-focus-enabled #wrapper:has(.mod-search) {
+  margin-top: 32px !important;
   padding-top: 24px !important;
   box-sizing: border-box !important;
+}
+
+html.zhihu-focus-enabled:has(.mod-search) :is(#db-global-nav, #db-nav-sns, .back-to-top) {
+  display: none !important;
+}
+
+.zf-douban-return-home {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled:has(.mod-search) .zf-douban-return-home {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1000;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--zf-border, #d5dce3);
+  border-radius: 12px;
+  background: var(--zf-surface-background, #fff) !important;
+  color: var(--zf-link, #3377aa) !important;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 16%);
+  font-size: 14px;
+  line-height: 1;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled:has(.mod-search) .zf-douban-return-home svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+html.zhihu-focus-enabled:has(.mod-search) .zf-douban-return-home:is(:hover, :focus-visible) {
+  background: var(--zf-hover-background, #edf2f6) !important;
+}
+
+html.zhihu-focus-enabled:has(.mod-search) .zf-douban-return-home:focus-visible {
+  outline: 2px solid var(--zf-link, #3377aa);
+  outline-offset: 3px;
 }
 
 html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search {
