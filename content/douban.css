@@ -363,7 +363,7 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .collect_btn span {
 
 /* The native search outline is a light sprite. Replace the complete field,
    including its focus state, instead of removing only the sprite. */
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) fieldset {
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search fieldset {
   display: flex !important;
   width: 100%;
   height: 34px;
@@ -376,12 +376,12 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-sear
   box-sizing: border-box;
 }
 
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) fieldset:focus-within {
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search fieldset:focus-within {
   border-color: var(--zf-link) !important;
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--zf-link) 20%, transparent);
 }
 
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) .inp {
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp {
   flex: 1 1 auto;
   float: none !important;
   width: auto !important;
@@ -393,7 +393,7 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-sear
   background: transparent !important;
 }
 
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) .inp input {
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp input {
   width: 100% !important;
   height: 100% !important;
   padding: 0 12px !important;
@@ -401,7 +401,7 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-sear
   box-sizing: border-box;
 }
 
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) .inp-btn input {
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp-btn input {
   display: block;
   width: 100%;
   height: 100% !important;
@@ -414,7 +414,7 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-sear
   box-sizing: border-box;
 }
 
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) .inp-btn {
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp-btn {
   position: relative !important;
   top: auto !important;
   right: auto !important;
@@ -425,7 +425,7 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-sear
   margin: 0 !important;
 }
 
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) .inp-btn::before {
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp-btn::before {
   content: "";
   position: absolute;
   top: 9px;
@@ -544,7 +544,7 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] #dialog input[type='submit
   border: 1px solid var(--zf-accent-border) !important;
 }
 
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) .inp-btn::after {
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp-btn::after {
   content: "";
   position: absolute;
   top: 21px;
@@ -558,12 +558,6 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-sear
 }
 
 /* Search results use the newer DouWeb components rather than .result. */
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .mod-search {
-  height: auto !important;
-  padding: 0 !important;
-  background: transparent !important;
-}
-
 html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .search-cate li.on a {
   color: var(--zf-link) !important;
   background: var(--zf-accent-background) !important;
@@ -708,4 +702,182 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
   ):focus-visible {
   outline: 2px solid var(--zf-link);
   outline-offset: 2px;
+}
+
+/* Search-page form: inset it into the sheet and use one rounded field in both modes. */
+html.zhihu-focus-enabled #wrapper:has(.mod-search) {
+  padding-top: 24px !important;
+  box-sizing: border-box !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search {
+  height: auto !important;
+  margin-bottom: 16px !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search fieldset {
+  display: flex !important;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  padding: 4px;
+  overflow: hidden;
+  border: 1px solid var(--zf-border, #d5dce3) !important;
+  border-radius: 10px;
+  background: var(--zf-page-background, #fff) !important;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search fieldset:focus-within {
+  border-color: var(--zf-link, #3377aa) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--zf-link, #3377aa) 12%, transparent);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp {
+  flex: 1 1 auto;
+  float: none !important;
+  width: auto !important;
+  min-width: 0;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp input {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 12px !important;
+  border: 0 !important;
+  outline: 0;
+  background: transparent !important;
+  color: var(--zf-text, #253241) !important;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp-btn {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  flex: 0 0 40px;
+  float: none !important;
+  width: 40px !important;
+  height: 100% !important;
+  margin: 0 !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp-btn input {
+  display: block;
+  width: 100%;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0;
+  border: 0 !important;
+  border-radius: 6px;
+  outline: 0;
+  background: var(--zf-accent-background, #edf2f6) !important;
+  color: transparent !important;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 0;
+  background: var(--zf-secondary-text, #607080);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='m15.5 15.5 5 5' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp-btn::after {
+  display: none;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp-btn:is(:hover, :focus-within) input {
+  background: var(--zf-hover-background, #e1eaf2) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp-btn:is(:hover, :focus-within)::before {
+  background: var(--zf-link, #3377aa);
+}
+
+/* Keep the four subject filters under the field and center either result layout. */
+html.zhihu-focus-enabled #wrapper:has(.mod-search) .search-cate {
+  float: none !important;
+  width: 100% !important;
+  margin: 0 0 24px !important;
+}
+
+html.zhihu-focus-enabled #wrapper:has(.mod-search) .search-cate ul {
+  position: static !important;
+  display: flex !important;
+  justify-content: center;
+  gap: 8px;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 0 12px !important;
+  border-bottom: 1px solid var(--zf-border, #e1e6eb);
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled #wrapper:has(.mod-search) .search-cate li {
+  display: none !important;
+  width: auto !important;
+  margin: 0 !important;
+}
+
+html.zhihu-focus-enabled #wrapper:has(.mod-search) .search-cate li:has(> a:is(
+    [href^="/search?q="], [href*="cat=1002&"], [href*="cat=1001&"], [href*="cat=1003&"]
+  )) {
+  display: block !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .search-cate a {
+  padding: 7px 18px !important;
+  border-radius: 6px;
+  background: transparent !important;
+  color: var(--zf-link, #3377aa) !important;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .search-cate li.on a {
+  background: var(--zf-accent-background, #edf2f6) !important;
+  box-shadow: inset 0 0 0 1px var(--zf-accent-border, #cbdbe7);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .search-cate a:is(:hover, :focus-visible) {
+  background: var(--zf-hover-background, #e1eaf2) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .search-cate a:focus-visible {
+  outline: 2px solid var(--zf-link, #3377aa);
+  outline-offset: 2px;
+}
+
+html.zhihu-focus-enabled #wrapper:has(.mod-search) .search-result {
+  float: none !important;
+  clear: both;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .search-result .rating-info {
+  color: var(--zf-secondary-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .search-result .result {
+  border-color: var(--zf-border) !important;
 }

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ZhihuFocus",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "为知乎和豆瓣页面提供简洁、可调节的专注阅读布局。",
   "icons": {
     "16": "icons/icon16.png",
