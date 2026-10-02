@@ -363,7 +363,7 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .collect_btn span {
 
 /* The native search outline is a light sprite. Replace the complete field,
    including its focus state, instead of removing only the sprite. */
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search fieldset {
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) fieldset {
   display: flex !important;
   width: 100%;
   height: 34px;
@@ -376,22 +376,24 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search fieldset {
   box-sizing: border-box;
 }
 
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search fieldset:focus-within {
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) fieldset:focus-within {
   border-color: var(--zf-link) !important;
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--zf-link) 20%, transparent);
 }
 
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp {
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) .inp {
   flex: 1 1 auto;
   float: none !important;
   width: auto !important;
   min-width: 0;
   height: 100% !important;
   margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
   background: transparent !important;
 }
 
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp input {
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) .inp input {
   width: 100% !important;
   height: 100% !important;
   padding: 0 12px !important;
@@ -399,7 +401,7 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp input {
   box-sizing: border-box;
 }
 
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp-btn input {
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) .inp-btn input {
   display: block;
   width: 100%;
   height: 100% !important;
@@ -408,11 +410,14 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp-btn input
   border-left: 1px solid var(--zf-border) !important;
   border-radius: 0;
   color: transparent !important;
+  background-image: none !important;
   box-sizing: border-box;
 }
 
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp-btn {
-  position: relative;
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) .inp-btn {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
   flex: 0 0 38px;
   float: none !important;
   width: 38px !important;
@@ -420,7 +425,7 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp-btn {
   margin: 0 !important;
 }
 
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp-btn::before {
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) .inp-btn::before {
   content: "";
   position: absolute;
   top: 9px;
@@ -539,7 +544,7 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] #dialog input[type='submit
   border: 1px solid var(--zf-accent-border) !important;
 }
 
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp-btn::after {
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.nav-search, .mod-search) .inp-btn::after {
   content: "";
   position: absolute;
   top: 21px;
@@ -550,4 +555,157 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp-btn::afte
   transform: rotate(45deg);
   transform-origin: left center;
   pointer-events: none;
+}
+
+/* Search results use the newer DouWeb components rather than .result. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .mod-search {
+  height: auto !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .search-cate li.on a {
+  color: var(--zf-link) !important;
+  background: var(--zf-accent-background) !important;
+  box-shadow: inset 0 0 0 1px var(--zf-accent-border);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .DouWeb-SR-subject-info-type-name, .DouWeb-SR-subject-info-rating-count,
+    .DouWeb-SR-subject-info-subtitle, .DouWeb-SR-topic-card-reaction
+  ) {
+  color: var(--zf-secondary-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .DouWeb-SR-article-preview-abstract {
+  color: var(--zf-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .DouWeb-SR-topic-card-title-button, .DouWeb-SR-subject-info-line-watch
+  ) {
+  color: var(--zf-link) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .DouWeb-SR-subject-info-line-watch {
+  background: var(--zf-accent-background) !important;
+  box-shadow: inset 0 0 0 1px var(--zf-accent-border);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .DouWeb-SR-subject-card, .DouWeb-SR-search-result-list-card
+  ) {
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .DouWeb-SR-article-preview-more {
+  background: var(--zf-surface-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .DouWeb-SR-article-preview-more::before {
+  background: linear-gradient(to left, var(--zf-surface-background), transparent) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .DouWeb-SR-search-result-list-load-more {
+  color: var(--zf-link) !important;
+  background: var(--zf-accent-background) !important;
+  border: 1px solid var(--zf-border) !important;
+}
+
+/* Book excerpts set their own text color; note headings and toggles use light sprites. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .blockquote-list figure {
+  color: var(--zf-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .blockquote-list figcaption, .blockquote-extra, .blockquote-meta,
+    .reading-notes .user, .reading-note .pl
+  ) {
+  color: var(--zf-secondary-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .reading-notes .nlst h3 {
+  min-height: 28px;
+  padding: 0 8px;
+  border: 1px solid var(--zf-border);
+  border-radius: 4px;
+  background: var(--zf-accent-background) !important;
+  line-height: 28px;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .reading-notes .nlst {
+  background: transparent !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .reading-notes .note-toggle a {
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0 6px;
+  border-radius: 3px;
+  background: transparent !important;
+  color: var(--zf-link) !important;
+  font-size: 12px;
+  line-height: 28px;
+  text-indent: 0;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .reading-notes .inline-tabs {
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .reading-notes .inline-tabs .on {
+  border-color: var(--zf-link) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .reading-notes .redbutt {
+  background: var(--zf-accent-background) !important;
+  box-shadow: inset 0 0 0 1px var(--zf-border);
+}
+
+/* Share is an inline action, alongside the review and list actions. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .ul_subject_menu .bn-sharing {
+  color: var(--zf-link) !important;
+  background: transparent !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .ul_subject_menu .bn-sharing::after {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin: 0 3px 3px 8px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .ul_subject_menu li {
+  color: var(--zf-link) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .ul_subject_menu li > img {
+  filter: brightness(0) invert(0.8);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .lnk-doulist-add i {
+  background-image: none !important;
+  background-color: currentColor !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 2v12M2 8h12' stroke='black' stroke-width='2'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .ul_subject_menu .bn-sharing, .reading-notes .note-toggle a,
+    .reading-notes .redbutt, .DouWeb-SR-search-result-list-load-more
+  ):is(:hover, :focus-visible) {
+  color: var(--zf-link) !important;
+  background: var(--zf-hover-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .ul_subject_menu a, .reading-notes .note-toggle a,
+    .reading-notes .redbutt, .DouWeb-SR-search-result-list-load-more
+  ):focus-visible {
+  outline: 2px solid var(--zf-link);
+  outline-offset: 2px;
 }
