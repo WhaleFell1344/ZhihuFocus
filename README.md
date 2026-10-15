@@ -44,6 +44,7 @@ ZhihuFocus 是一个面向知乎与豆瓣的 Chrome 专注阅读扩展。它通�
 - 支持调整正文字体、字号、行距、段距和内容宽度。
 - 知乎首页支持只刷新中间信息流，不刷新整个页面。
 - 知乎非首页页面提供快捷返回首页按钮。
+- 知乎标签页标题自动隐藏“几封私信”提示，页面跳转及未读数变化后仍保持隐藏。
 - 豆瓣页面统一隐藏顶部站点导航，右下角保留首页和个人主页入口。
 - 豆瓣搜索页将全部、电影、书籍、音乐横排显示；个人主页保留头像、栏目和收藏内容，并适配主题按钮。
 - 设置保存在 `chrome.storage.sync`，可随同一 Google 账号同步到其他 Chrome 浏览器。
@@ -110,8 +111,9 @@ ZhihuFocus 不收集、出售或向外部服务器传输用户数据，也不使
 ```bash
 node --check shared/theme.js
 node --check content/focus.js
+node --check content/title.js
 node --check popup/popup.js
-node --test tests/theme.test.cjs
+node --test tests/*.test.cjs
 python3 -m json.tool manifest.json >/dev/null
 git diff --check
 ```
