@@ -1,0 +1,1035 @@
+/* All page changes are reversible by removing this class from <html>. */
+html.zhihu-focus-enabled .Question-sideColumn,
+html.zhihu-focus-enabled .QuestionHeader-side {
+  display: none !important;
+}
+
+/* Remove the occasional promoted banner inserted between Question answers. */
+html.zhihu-focus-enabled .Question-mainColumn .QuestionAdBanner,
+html.zhihu-focus-enabled .Question-mainColumn .pc-article-answer,
+html.zhihu-focus-enabled .Question-mainColumn .pc-article-answer-big-img,
+html.zhihu-focus-enabled
+  .Question-mainColumn
+  .List-item:has(.QuestionAdBanner) {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled .QuestionHeader-content,
+html.zhihu-focus-enabled .Question-main {
+  width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
+  max-width: var(--zf-content-width, 780px) !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  box-sizing: border-box !important;
+  justify-content: center !important;
+}
+
+html.zhihu-focus-enabled .QuestionHeader-main,
+html.zhihu-focus-enabled .Question-mainColumn {
+  width: 100% !important;
+  max-width: var(--zf-content-width, 780px) !important;
+  min-width: 0 !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  flex: 0 1 var(--zf-content-width, 780px) !important;
+  box-sizing: border-box !important;
+}
+
+/* Collapse the question header's former two-column flex layout only. */
+html.zhihu-focus-enabled .QuestionHeader-content {
+  display: block !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+html.zhihu-focus-enabled .QuestionHeader-main {
+  width: 100% !important;
+  max-width: none !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  padding-right: 20px !important;
+  padding-left: 20px !important;
+  flex: none !important;
+}
+
+html.zhihu-focus-enabled .QuestionHeader-footer-inner {
+  width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
+  max-width: var(--zf-content-width, 780px) !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  padding-right: 20px !important;
+  padding-left: 20px !important;
+  box-sizing: border-box !important;
+}
+
+/* Article pages use their own layout and do not share Question rules. */
+html.zhihu-focus-enabled body.PostIndex-body .Post-content > div:has(.Post-Main) {
+  display: block !important;
+  width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
+  max-width: var(--zf-content-width, 780px) !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  box-sizing: border-box !important;
+}
+
+html.zhihu-focus-enabled body.PostIndex-body
+  .Post-content
+  > div:has(.Post-Main)
+  > div:has(.Post-Main),
+html.zhihu-focus-enabled body.PostIndex-body
+  .Post-content
+  > div:has(.Post-Main)
+  > div:has(.Post-Main)
+  > div:has(> .Post-Main),
+html.zhihu-focus-enabled body.PostIndex-body .Post-Main {
+  width: 100% !important;
+  max-width: var(--zf-content-width, 780px) !important;
+  min-width: 0 !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  box-sizing: border-box !important;
+}
+
+html.zhihu-focus-enabled body.PostIndex-body
+  .Post-content
+  > div:has(.Post-Main)
+  > div:has(.AuthorCard):not(:has(.Post-Main)) {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled body.PostIndex-body .Post-RichText img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+html.zhihu-focus-enabled body.PostIndex-body .KanshanCornerButton {
+  display: none !important;
+}
+
+/* Minimal native header for Home, Question, and Article pages only. */
+html.zhihu-focus-enabled :has(> .AppHeader) {
+  transition: transform 160ms ease !important;
+}
+
+html.zhihu-focus-enabled.zhihu-focus-header-hidden :has(> .AppHeader) {
+  transform: translateY(-100%) !important;
+  pointer-events: none !important;
+}
+
+html.zhihu-focus-enabled .AppHeader :has(.SearchBar) {
+  width: 100% !important;
+  max-width: none !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  box-sizing: border-box !important;
+}
+
+html.zhihu-focus-enabled
+  .AppHeader
+  :has(.SearchBar)
+  > :not(:has(.SearchBar)):not(.SearchBar) {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled .AppHeader :has(> .SearchBar) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+html.zhihu-focus-enabled
+  .AppHeader
+  .SearchBar
+  > :not(.SearchBar-tool) {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled .AppHeader .SearchBar {
+  width: min(420px, calc(100vw - 32px)) !important;
+  max-width: 420px !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+html.zhihu-focus-enabled
+  .AppHeader
+  :is(.SearchBar-tool, .SearchBar-tool > div, .SearchBar-tool .Popover, .SearchBar-input) {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+}
+
+/* Home feed: remove creation surfaces and center the existing-width feed. */
+html.zhihu-focus-enabled .TopstoryHeader,
+html.zhihu-focus-enabled .Topstory-mainColumn > .WriteArea,
+html.zhihu-focus-enabled .Topstory-sideColumn,
+html.zhihu-focus-enabled
+  .Topstory-container
+  > :has(> [aria-label='边栏锚点']) {
+  display: none !important;
+}
+
+/* Keep selectors scoped to concrete cards. The feed wrapper is reused while
+   Home loads and must never be hidden because of one dynamic descendant. */
+html.zhihu-focus-enabled .Topstory-mainColumn .TopstoryItem--advertCard,
+html.zhihu-focus-enabled
+  .Topstory-mainColumn
+  .Pc-Business-Card-PcTopFeedBanner,
+html.zhihu-focus-enabled .Topstory-mainColumn .pc-article-answer,
+html.zhihu-focus-enabled .Topstory-mainColumn .pc-article-answer-big-img,
+html.zhihu-focus-enabled
+  .Topstory-mainColumn
+  .TopstoryItem:has(.pc-article-answer) {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled .Topstory-container {
+  justify-content: center !important;
+}
+
+html.zhihu-focus-enabled .Topstory-mainColumn {
+  width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
+  max-width: var(--zf-content-width, 780px) !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  box-sizing: border-box !important;
+}
+
+html.zhihu-focus-enabled
+  :is(.zf-home-feed-refresh, .zf-return-home) {
+  position: fixed;
+  right: max(
+    16px,
+    calc((100vw - var(--zf-content-width, 780px)) / 2 - 56px)
+  );
+  z-index: 100;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid rgba(132, 145, 165, 0.28);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(18, 18, 18, 0.1);
+  color: #175199;
+  font: 28px/1 system-ui, sans-serif;
+  cursor: pointer;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    color 140ms ease;
+}
+
+html.zhihu-focus-enabled .zf-home-feed-refresh {
+  bottom: 76px;
+}
+
+html.zhihu-focus-enabled .zf-return-home {
+  bottom: 128px;
+}
+
+html.zhihu-focus-enabled .zf-return-home svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+html.zhihu-focus-enabled
+  :is(.zf-home-feed-refresh, .zf-return-home):hover {
+  border-color: rgba(23, 81, 153, 0.42);
+  box-shadow: 0 5px 14px rgba(18, 18, 18, 0.13);
+  color: #056de8;
+}
+
+html.zhihu-focus-enabled
+  :is(.zf-home-feed-refresh, .zf-return-home):not(.is-refreshing):hover {
+  transform: translateY(-1px);
+}
+
+html.zhihu-focus-enabled
+  :is(.zf-home-feed-refresh, .zf-return-home):not(.is-refreshing):active {
+  transform: translateY(0) scale(0.96);
+  box-shadow: 0 2px 7px rgba(18, 18, 18, 0.1);
+}
+
+html.zhihu-focus-enabled
+  :is(.zf-home-feed-refresh, .zf-return-home):focus-visible {
+  outline: 2px solid rgba(5, 109, 232, 0.45);
+  outline-offset: 2px;
+}
+
+html.zhihu-focus-enabled .zf-home-feed-refresh.is-refreshing {
+  cursor: wait;
+  animation: zf-feed-refresh-spin 0.8s linear infinite;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  :is(.zf-home-feed-refresh, .zf-return-home) {
+  border-color: color-mix(
+    in srgb,
+    var(--zf-page-background) 68%,
+    #8491a5 32%
+  );
+  background: var(--zf-surface-background);
+}
+
+html:not(.zhihu-focus-enabled)
+  :is(.zf-home-feed-refresh, .zf-return-home) {
+  display: none;
+}
+
+@keyframes zf-feed-refresh-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* Zhihu offsets feed actions by 20px although feed cards use 16px padding. */
+html.zhihu-focus-enabled
+  .Topstory-mainColumn
+  .TopstoryItem
+  .ContentItem-actions {
+  margin-right: -16px !important;
+  margin-left: -16px !important;
+}
+
+html.zhihu-focus-enabled
+  .Topstory-mainColumn
+  .ContentItem-actions--hasHotComment
+  button.ContentItem-action::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Match the Home feed's inline featured-comment preview to Focus themes. */
+html.zhihu-focus-enabled
+  .Topstory-mainColumn
+  .AnswerItem
+  > [tabindex='0']:has(a[href*='/people/']) {
+  border-radius: 6px !important;
+  box-shadow: inset 0 0 0 1px rgba(132, 145, 165, 0.18) !important;
+  overflow: hidden !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  .Topstory-mainColumn
+  .AnswerItem
+  > [tabindex='0']:has(a[href*='/people/']) {
+  background-color: var(--zf-page-background) !important;
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--zf-page-background) 72%, #8491a5 28%) !important;
+}
+
+/* Search results: the side column has a dynamic class but owns the page footer. */
+html.zhihu-focus-enabled
+  .Search-container
+  > :not(.SearchMain):not(:has(.SearchMain)):has(footer),
+html.zhihu-focus-enabled
+  .Search-container
+  > :not(.SearchMain):not(:has(.SearchMain)):has([role='contentinfo']) {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled .Search-container {
+  justify-content: center !important;
+}
+
+html.zhihu-focus-enabled .Search-container > .SearchMain {
+  width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
+  max-width: var(--zf-content-width, 780px) !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  box-sizing: border-box !important;
+}
+
+/* Profile pages keep the public profile header and activity feed, but remove
+   the supplementary right column and align both surfaces to one reading axis. */
+html.zhihu-focus-enabled .Profile-sideColumn {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled .ProfileHeader,
+html.zhihu-focus-enabled .Profile-main {
+  width: min(
+    calc(var(--zf-content-width, 780px) + 32px),
+    calc(100% - 32px)
+  ) !important;
+  max-width: calc(var(--zf-content-width, 780px) + 32px) !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  padding-right: 16px !important;
+  padding-left: 16px !important;
+  box-sizing: border-box !important;
+}
+
+html.zhihu-focus-enabled .Profile-main {
+  display: block !important;
+}
+
+html.zhihu-focus-enabled .ProfileHeader > .Card,
+html.zhihu-focus-enabled .Profile-mainColumn,
+html.zhihu-focus-enabled .Profile-mainColumn > .Card {
+  width: 100% !important;
+  max-width: var(--zf-content-width, 780px) !important;
+  min-width: 0 !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  box-sizing: border-box !important;
+}
+
+/* Profile activity feeds can receive the same promoted-card variants as Home. */
+html.zhihu-focus-enabled .Profile-mainColumn .TopstoryItem--advertCard,
+html.zhihu-focus-enabled
+  .Profile-mainColumn
+  .Pc-Business-Card-PcTopFeedBanner,
+html.zhihu-focus-enabled .Profile-mainColumn .pc-article-answer,
+html.zhihu-focus-enabled .Profile-mainColumn .pc-article-answer-big-img,
+html.zhihu-focus-enabled
+  .Profile-mainColumn
+  .List-item:has(.pc-article-answer) {
+  display: none !important;
+}
+
+/* Reading backgrounds. The default theme adds no color overrides. */
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  ),
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  ) body {
+  background: var(--zf-page-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  ) :is(
+    .Topstory,
+    .Topstory-container,
+    .Search-container,
+    .Question-main,
+    .Profile-main,
+    body.PostIndex-body .Post-content
+  ) {
+  background-color: var(--zf-page-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  ) :is(
+    .AppHeader,
+    .AppHeader > div,
+    .Topstory-mainColumn,
+    .Topstory-mainColumn > .Card,
+    .TopstoryItem,
+    .Topstory-mainColumn .ContentItem-actions,
+    .SearchTabs,
+    .SearchMain,
+    .SearchMain > .Card,
+    .SearchMain .Card,
+    .SearchResult-Card,
+    .SearchItem,
+    .SearchMain .KfeCollection-PcCollegeCard-wrapper,
+    .SearchMain .KfeCollection-PcCollegeCard-root,
+    .SearchMain .ContentItem-actions,
+    .QuestionHeader,
+    .QuestionHeader-content,
+    .QuestionHeader-footer,
+    .QuestionHeader-footer-inner,
+    .Question-mainColumn,
+    .Question-mainColumn .Card,
+    .AnswerItem,
+    .Question-mainColumn .ContentItem-actions,
+    .Question-mainColumn .Comments-container,
+    .Question-mainColumn .CommentsV2,
+    .Question-mainColumn .CommentItem,
+    .Question-mainColumn .CommentItemV2,
+    .ProfileHeader > .Card,
+    .Profile-mainColumn,
+    .Profile-mainColumn > .Card,
+    .ProfileMain,
+    .ProfileMain-header,
+    .ProfileMain .List-item,
+    .ProfileMain .ContentItem-actions,
+    .ProfileMain .Comments-container,
+    .ProfileMain .CommentsV2,
+    .ProfileMain .CommentItem,
+    .ProfileMain .CommentItemV2,
+    body.PostIndex-body .Post-content > div:has(.Post-Main),
+    body.PostIndex-body .Post-content > div:has(.Post-Main) > div:has(.Post-Main),
+    body.PostIndex-body
+      .Post-content
+      > div:has(.Post-Main)
+      > div:has(.Post-Main)
+      > div:has(> .Post-Main),
+    body.PostIndex-body .Post-Main,
+    body.PostIndex-body .ContentItem-actions
+  ) {
+  background-color: var(--zf-surface-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  ) :has(> .AppHeader) {
+  background-color: var(--zf-surface-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='light'] {
+  color-scheme: light;
+}
+
+/* Zhihu can keep its own dark preference after the system switches to light.
+   Override its neutral palette without changing the site's saved preference. */
+html.zhihu-focus-enabled[data-zf-color-scheme='light'][data-theme='dark'] {
+  --GBK02A: #191b1f;
+  --GBK02B: #000;
+  --GBK03A: #373a40;
+  --GBK03B: #191b1f;
+  --GBK03C: #535861;
+  --GBK04A: #535861;
+  --GBK04B: #9196a1;
+  --GBK05A: #81858f;
+  --GBK06A: #9196a1;
+  --GBK06B: #9196a1;
+  --GBK07A: #adb0b7;
+  --GBK07B: #adb0b7;
+  --GBK08A: #c4c7ce;
+  --GBK08B: #c4c7ce;
+  --GBK09A: #ebeced;
+  --GBK09B: #ebeced;
+  --GBK09C: #e8e9ed;
+  --GBK10A: #f8f8fa;
+  --GBK10B: #fff;
+  --GBK10C: #f4f6f9;
+  --GBK12A: #f8f8fa;
+  --GBK99A: #fff;
+  --GBK99B: #fff;
+  --GBK99C: #fff;
+  --GBL01A: #1772f6;
+  --GBL03A: #18afff;
+  --GBL05A: #8491a5;
+  --GBL07A: #09408e;
+  --GBL08A: #8491a5;
+  --GBL10A: #f8f8fa;
+  --GBL11A: #384263;
+  --GBL12A: #142457;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='light'][data-theme='dark'] :is(
+    body, h1, h2, h3, h4, .Card, .ContentItem, .ContentItem-title,
+    .QuestionHeader-title, .QuestionHeader-detail, .RichContent-inner, .RichText, .RichText *,
+    .Post-Title, .Post-RichText, .Post-RichText *, .AuthorInfo,
+    .AuthorInfo-name, .CommentContent, .CommentItem, .CommentItemV2,
+    .ProfileHeader, .ProfileMain, .ProfileMain-header, .Tabs-link,
+    .SearchTabs-link, .SearchItem, .SearchItem-title, .SearchResult-Card
+  ) {
+  color: #191b1f !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='light'][data-theme='dark'] :is(
+    a, .RichText a, .RichText a *, .Post-RichText a, .Post-RichText a *
+  ) {
+  color: #056de8 !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='light'][data-theme='dark'] .CornerButton {
+  color: #535861 !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='light'][data-theme='dark']
+  .CornerButton :is(.Zi, .ZDI) {
+  color: inherit !important;
+  fill: currentColor !important;
+}
+
+/* Dark mode uses explicit colors so media and rating icons keep their originals. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] {
+  color-scheme: dark;
+  --zf-text: #e2e6ed;
+  --zf-secondary-text: #aeb7c4;
+  --zf-link: #85b9ff;
+  --zf-border: #414b59;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    body, h1, h2, h3, h4, .Card, .ContentItem, .ContentItem-title,
+    .QuestionHeader-title, .QuestionHeader-detail, .RichContent-inner, .RichText, .RichText *,
+    .Post-Title, .Post-RichText, .Post-RichText *, .AuthorInfo,
+    .AuthorInfo-name, .CommentContent, .CommentItem, .CommentItemV2,
+    .ProfileHeader, .ProfileMain, .ProfileMain-header, .Tabs-link,
+    .SearchTabs-link, .SearchItem, .SearchItem-title, .SearchResult-Card
+  ) {
+  color: var(--zf-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .Modal-content :where(h1, h2, h3, h4, p, div, span, label) {
+  color: var(--zf-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .ContentItem-meta, .ContentItem-status, .ContentItem-actions, .ContentItem-action, .ContentItem-time,
+    .AuthorInfo-detail, .AuthorInfo-badgeText, .CommentItem-time,
+    .CommentItemV2-time, .CommentItemV2-meta, .ProfileHeader-info,
+    .ProfileHeader-detail, .SearchItem-meta, .SearchItem-excerpt, .Button--plain
+  ) {
+  color: var(--zf-secondary-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    a, .RichText a, .RichText a *, .Post-RichText a, .Post-RichText a *,
+    .ContentItem-title a, .Tabs-link.is-active, .SearchTabs-link.is-active,
+    .SearchBar-searchButton, .zf-home-feed-refresh, .zf-return-home
+  ) {
+  color: var(--zf-link) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .Card, .AppHeader, .QuestionHeader, .QuestionHeader-footer,
+    .ContentItem-actions, .Comments-container, .CommentsV2, .CommentItem,
+    .CommentItemV2, .ProfileMain-header, .List-item, .SearchTabs,
+    .Tabs, .Input, .InputLike, .Button, .Popover-content, .Modal-content,
+    .zf-home-feed-refresh, .zf-return-home
+  ) {
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .Popover-content, .Menu, .Modal-content, .Modal-inner, .Comments-footer,
+    .CommentEditor, .CommentEditorV2, .RichContent-actions,
+    .RichContent-inner .RichContent-actions, .RichContent-actions.is-fixed
+  ) {
+  color: var(--zf-text) !important;
+  background: var(--zf-surface-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    input, textarea, select, .Input, .InputLike, .SearchBar-input,
+    .RichText pre, .RichText code, .RichText blockquote,
+    .Post-RichText pre, .Post-RichText code, .Post-RichText blockquote
+  ) {
+  color: var(--zf-text) !important;
+  background-color: var(--zf-page-background) !important;
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(input, textarea)::placeholder {
+  color: var(--zf-secondary-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .Button--grey {
+  color: var(--zf-secondary-text) !important;
+  background: var(--zf-surface-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(.VoteButton, .Button--blue) {
+  color: var(--zf-link) !important;
+  background: var(--zf-accent-background) !important;
+  border-color: var(--zf-accent-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .Button--primary.Button--blue {
+  color: #fff !important;
+  background: var(--zf-accent-solid) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .ContentItem-expandButton {
+  color: var(--zf-link) !important;
+  background: var(--zf-surface-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .ContentItem-expandButton::before {
+  background: linear-gradient(transparent, var(--zf-surface-background)) !important;
+}
+
+/* Refresh creates a nested Card before the feed items arrive. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .Card:has(.skeleton), .skeleton
+  ) {
+  background-color: var(--zf-surface-background) !important;
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .skeleton__line {
+  background-color: color-mix(
+    in srgb, var(--zf-surface-background) 75%, var(--zf-border)
+  ) !important;
+  background-image: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--zf-surface-background) 75%, var(--zf-border)) 0%,
+    color-mix(in srgb, var(--zf-surface-background) 50%, var(--zf-border)) 25%,
+    color-mix(in srgb, var(--zf-surface-background) 50%, var(--zf-border)) 75%,
+    color-mix(in srgb, var(--zf-surface-background) 75%, var(--zf-border)) 100%
+  ) !important;
+}
+
+/* Featured comments use separate colors and a right-hand fade outside RichText. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .AnswerItem > [tabindex='0']:has(a[href*='/people/']) {
+  color: var(--zf-text) !important;
+  background-color: var(--zf-page-background) !important;
+  border-color: var(--zf-border) !important;
+  box-shadow: none !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .AnswerItem > [tabindex='0']:has(a[href*='/people/']) :where(div, span) {
+  color: var(--zf-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .AnswerItem > [tabindex='0']:has(a[href*='/people/'])
+  span:has(> div .ZDI--ArrowRight16) > div {
+  background-color: var(--zf-page-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .AnswerItem > [tabindex='0']:has(a[href*='/people/'])
+  span:has(> div .ZDI--ArrowRight16) > span:empty {
+  background: linear-gradient(to left, var(--zf-page-background), transparent) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .AnswerItem > [tabindex='0']:has(a[href*='/people/'])
+  :is(div:has(> .ZDI--ArrowRight16), .ZDI--ArrowRight16) {
+  color: var(--zf-link) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .AnswerItem > [tabindex='0']:has(a[href*='/people/'])
+  :is(button, button span, button svg) {
+  color: var(--zf-secondary-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .CornerButton {
+  color: var(--zf-secondary-text) !important;
+  background: var(--zf-surface-background) !important;
+  border-color: var(--zf-border) !important;
+  box-shadow: 0 2px 14px rgb(0 0 0 / 25%) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .CornerButton :is(.Zi, .ZDI) {
+  color: inherit !important;
+  fill: currentColor !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .CornerButton:is(:hover, :focus-visible) {
+  color: var(--zf-link) !important;
+  background: var(--zf-hover-background) !important;
+  border-color: var(--zf-link) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .CornerButton,
+    .AnswerItem > [tabindex='0']:has(a[href*='/people/'])
+  ):focus-visible {
+  outline: 2px solid var(--zf-link) !important;
+  outline-offset: 2px !important;
+}
+
+/* Keep inline and modal comment sorters distinct but low contrast. */
+html.zhihu-focus-enabled :is(.Comments-container, .Modal-content:has(.CommentContent)) .css-u3vsx3 {
+  overflow: hidden !important;
+  border: 1px solid rgba(132, 145, 165, 0.28) !important;
+  border-radius: 6px !important;
+  background-color: rgba(132, 145, 165, 0.08) !important;
+}
+
+html.zhihu-focus-enabled :is(.Comments-container, .Modal-content:has(.CommentContent)) .css-u3vsx3 > div {
+  box-sizing: border-box !important;
+}
+
+html.zhihu-focus-enabled :is(.Comments-container, .Modal-content:has(.CommentContent)) .css-u3vsx3 > div + div {
+  border-left: 1px solid rgba(132, 145, 165, 0.28) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  :is(.Comments-container, .Modal-content:has(.CommentContent))
+  .css-u3vsx3 {
+  border-color: var(--zf-border, color-mix(
+    in srgb,
+    var(--zf-page-background) 68%,
+    #8491a5 32%
+  )) !important;
+  background-color: var(--zf-page-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  :is(.Comments-container, .Modal-content:has(.CommentContent))
+  .css-u3vsx3
+  > .css-m0zh86 {
+  background-color: var(--zf-accent-background, var(--zf-surface-background)) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  :is(.Comments-container, .Modal-content:has(.CommentContent))
+  .css-u3vsx3
+  > .css-1fjr6cy {
+  background-color: transparent !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  :is(.Comments-container, .Modal-content:has(.CommentContent))
+  .css-u3vsx3
+  > div
+  + div {
+  border-left-color: var(--zf-border, color-mix(
+    in srgb,
+    var(--zf-page-background) 68%,
+    #8491a5 32%
+  )) !important;
+}
+
+/* Comment panels have their own frames, count label, and Draft editor wrapper. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.Comments-container, .Modal-content:has(.CommentContent))
+  :where(div, section),
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.Comments-container, .Modal-content:has(.CommentContent))
+  :where(div, section)::before,
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.Comments-container, .Modal-content:has(.CommentContent))
+  :where(div, section)::after {
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.Comments-container, .Modal-content:has(.CommentContent))
+  div:has(> .css-u3vsx3) > :not(.css-u3vsx3),
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.Comments-container, .Modal-content:has(.CommentContent))
+  div:has(> .css-u3vsx3) > :not(.css-u3vsx3) :where(div, span) {
+  color: var(--zf-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.Comments-container, .Modal-content:has(.CommentContent))
+  .css-u3vsx3 > div {
+  color: var(--zf-secondary-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.Comments-container, .Modal-content:has(.CommentContent))
+  .css-u3vsx3 > .css-m0zh86 {
+  color: var(--zf-link) !important;
+}
+
+/* The bottom composer must stay opaque when sticky, within the reading card. */
+html.zhihu-focus-enabled .TopstoryItem .Comments-container .css-kt4t4n {
+  margin-inline: -16px !important;
+  padding-inline: 16px !important;
+}
+
+html.zhihu-focus-enabled .Comments-container
+  :is(.css-kt4t4n, .css-1fo89v5) .Avatar {
+  align-self: flex-start !important;
+  flex-shrink: 0 !important;
+  width: 40px !important;
+  height: 40px !important;
+  object-fit: cover !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  ) .Comments-container .css-kt4t4n {
+  background-color: var(--zf-surface-background) !important;
+}
+
+/* Use one themed field, rather than a white strip or a second inset rectangle. */
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  :is(.Comments-container, .Modal-content:has(.CommentContent))
+  div:has(> div > div > .InputLike) {
+  background-color: var(--zf-page-background) !important;
+  border-color: var(--zf-border, color-mix(
+    in srgb,
+    var(--zf-page-background) 72%,
+    #8491a5 28%
+  )) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  :is(.Comments-container, .Modal-content:has(.CommentContent))
+  .InputLike {
+  background-color: transparent !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  :is(.Comments-container, .Modal-content:has(.CommentContent))
+  div:has(> div > div > .InputLike):focus-within {
+  border-color: var(--zf-link, #056de8) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--zf-link, #056de8) 20%, transparent) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  :is(.Comments-container, .Modal-content:has(.CommentContent))
+  :is(.public-DraftEditorPlaceholder-root, .public-DraftEditorPlaceholder-inner) {
+  color: var(--zf-secondary-text, #6d7683) !important;
+}
+
+/* Give the inline featured-comment preview a quiet boundary of its own. */
+html.zhihu-focus-enabled
+  .Question-mainColumn
+  .AnswerItem
+  > [tabindex='0']:has(a[href*='/people/']) {
+  border-radius: 6px !important;
+  box-shadow: inset 0 0 0 1px rgba(132, 145, 165, 0.18) !important;
+  overflow: hidden !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  .Question-mainColumn
+  .AnswerItem
+  > [tabindex='0']:has(a[href*='/people/']) {
+  background-color: var(--zf-page-background) !important;
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--zf-page-background) 72%, #8491a5 28%) !important;
+}
+
+/* Continue the preview color through its 4px margin and 16px list padding. */
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  .Question-mainColumn
+  .List-item:has(
+    > div > .AnswerItem > [tabindex='0'] a[href*='/people/']
+  ) {
+  box-shadow: inset 0 -20px 0 var(--zf-page-background) !important;
+}
+
+/* Keep the comment-reply modal calm without recoloring unrelated dialogs. */
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  .Modal-content:has(.CommentContent),
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  )
+  .Modal-content:has(.CommentContent)
+  div:has(> div > .CommentContent) {
+  background-color: var(--zf-surface-background) !important;
+}
+
+html.zhihu-focus-enabled .TopstoryItem .RichContent-inner,
+html.zhihu-focus-enabled .TopstoryItem .RichContent-inner .RichText,
+html.zhihu-focus-enabled .SearchItem .RichContent-inner,
+html.zhihu-focus-enabled .SearchItem .RichContent-inner .RichText,
+html.zhihu-focus-enabled .SearchMain .SearchResult-Card .RichContent-inner,
+html.zhihu-focus-enabled .SearchMain .SearchResult-Card .RichContent-inner .RichText,
+html.zhihu-focus-enabled .Question-mainColumn .AnswerItem .RichContent-inner,
+html.zhihu-focus-enabled .Question-mainColumn .AnswerItem .RichContent-inner .RichText,
+html.zhihu-focus-enabled .ProfileMain .RichContent-inner,
+html.zhihu-focus-enabled .ProfileMain .RichContent-inner .RichText,
+html.zhihu-focus-enabled body.PostIndex-body .Post-RichText {
+  font-size: var(--zf-reading-font-size, 16px) !important;
+  line-height: var(--zf-reading-line-height, 1.7) !important;
+}
+
+html.zhihu-focus-enabled
+  :is(
+    .TopstoryItem .RichContent-inner,
+    .SearchItem .RichContent-inner,
+    .SearchMain .SearchResult-Card .RichContent-inner,
+    .Question-mainColumn .AnswerItem .RichContent-inner,
+    .ProfileMain .RichContent-inner,
+    body.PostIndex-body .Post-RichText
+  )
+  :is(p, blockquote, li, a) {
+  line-height: var(--zf-reading-line-height, 1.7) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-reading-font-family]:not(
+    [data-zf-reading-font-family='default']
+  )
+  :is(
+    .TopstoryItem .RichContent-inner,
+    .TopstoryItem .RichContent-inner .RichText,
+    .SearchItem .RichContent-inner,
+    .SearchItem .RichContent-inner .RichText,
+    .SearchMain .SearchResult-Card .RichContent-inner,
+    .SearchMain .SearchResult-Card .RichContent-inner .RichText,
+    .Question-mainColumn .AnswerItem .RichContent-inner,
+    .Question-mainColumn .AnswerItem .RichContent-inner .RichText,
+    body.PostIndex-body .Post-RichText
+  ),
+html.zhihu-focus-enabled[data-zf-reading-font-family]:not(
+    [data-zf-reading-font-family='default']
+  )
+  :is(
+    .TopstoryItem .RichContent-inner,
+    .SearchItem .RichContent-inner,
+    .SearchMain .SearchResult-Card .RichContent-inner,
+    .Question-mainColumn .AnswerItem .RichContent-inner,
+    body.PostIndex-body .Post-RichText
+  )
+  :is(p, blockquote, li, a) {
+  font-family: var(--zf-reading-font-family) !important;
+}
+
+html.zhihu-focus-enabled
+  :is(
+    .TopstoryItem .RichContent-inner,
+    .SearchItem .RichContent-inner,
+    .SearchMain .SearchResult-Card .RichContent-inner,
+    .Question-mainColumn .AnswerItem .RichContent-inner,
+    body.PostIndex-body .Post-RichText
+  )
+  :is(p, blockquote):not(:last-child) {
+  margin-block-end: var(--zf-paragraph-spacing, 0.6em) !important;
+}
+
+html.zhihu-focus-enabled :is(
+    .Topstory-mainColumn,
+    .SearchMain,
+    .QuestionHeader-content,
+    .QuestionHeader-footer-inner,
+    .Question-mainColumn,
+    body.PostIndex-body .Post-Main
+  ) img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* Known entry points whose sole purpose is to pull readers out of the page. */
+html.zhihu-focus-enabled .OpenInAppButton,
+html.zhihu-focus-enabled .AppBanner,
+html.zhihu-focus-enabled .DownloadApp,
+html.zhihu-focus-enabled [data-za-detail-view-element_name='OpenInApp'],
+html.zhihu-focus-enabled [data-za-detail-view-element_name='FloatingOpenInApp'] {
+  display: none !important;
+}
+
+@media (max-width: 812px) {
+  html.zhihu-focus-enabled .QuestionHeader-content,
+  html.zhihu-focus-enabled .QuestionHeader-footer-inner,
+  html.zhihu-focus-enabled .Question-main,
+  html.zhihu-focus-enabled body.PostIndex-body .Post-content > div:has(.Post-Main) {
+    width: calc(100% - 24px) !important;
+  }
+}

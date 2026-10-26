@@ -1,0 +1,6 @@
+.DS_Store
+build/
+**/xcuserdata/
+**/*.xcuserstate
+**/__pycache__/
+safari/Signing.local.xcconfig

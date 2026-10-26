@@ -1,6 +1,6 @@
 # ZhihuFocus
 
-ZhihuFocus 是一个面向知乎与豆瓣的 Chrome 专注阅读扩展。它通过隐藏侧栏、广告及非核心模块，重新整理内容区域，并提供可同步的阅读外观设置，让页面更适合持续阅读。
+ZhihuFocus 是一个面向知乎与豆瓣的专注阅读扩展，支持 Chrome，并提供 Mac / iPad 的 Safari 自用工程。它通过隐藏侧栏、广告及非核心模块，重新整理内容区域，并提供阅读外观设置，让页面更适合持续阅读。
 
 ## 页面预览
 
@@ -73,6 +73,12 @@ ZhihuFocus 是一个面向知乎与豆瓣的 Chrome 专注阅读扩展。它通�
 
 ## 安装
 
+### Safari（Mac / iPad 自用）
+
+打开 [Safari Xcode 工程](safari/ZhihuFocus/ZhihuFocus.xcodeproj)，使用自己的开发者账号签名并运行，即可在 Mac 或 iPad 的 Safari 设置中开启扩展。无需上架；安装、更新和构建方法见 [Safari 自用说明](safari/README.md)。
+
+Safari 版保留当前桌面布局，支持 macOS 14+、iPadOS 17+；阅读设置分别保存在每台设备上。
+
 ### Chrome Web Store
 
 商店版本正在审核。审核通过后，可通过扩展 ID `gkmgpjmppdcghophgbemamlkobneiogm` 安装并自动接收更新。
@@ -128,6 +134,7 @@ icons/         扩展图标
 popup/         扩展弹窗
 shared/        弹窗与页面共用的主题逻辑
 tests/         系统跟随与设置变更回归检查
+safari/        Mac / iPad Safari 自用工程及资源更新脚本
 store-assets/  Chrome Web Store 商品素材
 manifest.json  Chrome Manifest V3 配置
 PRIVACY.md     隐私说明

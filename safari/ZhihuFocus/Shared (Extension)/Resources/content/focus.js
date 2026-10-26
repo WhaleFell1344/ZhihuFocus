@@ -1,0 +1,359 @@
+const FOCUS_CLASS = 'zhihu-focus-enabled';
+const HEADER_HIDDEN_CLASS = 'zhihu-focus-header-hidden';
+const DEFAULT_SETTINGS = {
+  focusEnabled: true,
+  readingBackground: 'default',
+  readingColorMode: 'system',
+  readingFontFamily: 'default',
+  readingFontSize: 16,
+  readingLineHeight: 1.7,
+  readingParagraphSpacing: 0.6,
+  readingWidth: 780
+};
+const systemColorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+let currentSettings = { ...DEFAULT_SETTINGS };
+let settingsLoaded = false;
+let startupChanges = {};
+const FONT_FAMILIES = {
+  default: null,
+  sans: '-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif',
+  serif: '"Songti SC", "STSong", "SimSun", serif',
+  kai: '"Kaiti SC", "STKaiti", "KaiTi", serif'
+};
+const FONT_FAMILY_NAMES = new Set(Object.keys(FONT_FAMILIES));
+const IS_ZHIHU =
+  window.location.hostname === 'www.zhihu.com' ||
+  window.location.hostname === 'zhuanlan.zhihu.com';
+const IS_ZHIHU_HOME =
+  window.location.hostname === 'www.zhihu.com' && window.location.pathname === '/';
+const IS_ZHIHU_NON_HOME = IS_ZHIHU && !IS_ZHIHU_HOME;
+const IS_DOUBAN_HOME =
+  window.location.hostname === 'www.douban.com' && window.location.pathname === '/';
+const IS_DOUBAN = window.location.hostname === 'douban.com'
+  || window.location.hostname.endsWith('.douban.com');
+let lastScrollY = window.scrollY;
+
+function getZhihuFeedSignature() {
+  const firstItem = document.querySelector('.Topstory-mainColumn .TopstoryItem');
+  const title = firstItem?.querySelector('h2 a')?.getAttribute('href') || '';
+  const itemId = firstItem?.getAttribute('data-za-detail-view-id') || '';
+
+  return `${itemId}|${title}|${firstItem?.textContent?.slice(0, 80) || ''}`;
+}
+
+function refreshZhihuHomeFeed(button) {
+  const recommendationLink = document.querySelector(
+    ".TopstoryHeader a[href='https://www.zhihu.com/'], a.is-active[href='https://www.zhihu.com/']"
+  );
+
+  if (!recommendationLink || button.disabled) {
+    return;
+  }
+
+  const previousSignature = getZhihuFeedSignature();
+  let checks = 0;
+
+  button.disabled = true;
+  button.classList.add('is-refreshing');
+  recommendationLink.click();
+
+  const completionCheck = window.setInterval(() => {
+    checks += 1;
+    const feedChanged = getZhihuFeedSignature() !== previousSignature;
+
+    if (!feedChanged && checks < 25) {
+      return;
+    }
+
+    window.clearInterval(completionCheck);
+    button.disabled = false;
+    button.classList.remove('is-refreshing');
+
+    if (feedChanged) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, 200);
+}
+
+function initializeZhihuHomeRefresh() {
+  let attempts = 0;
+
+  function applyWhenReady() {
+    attempts += 1;
+    const mainColumn = document.querySelector('.Topstory-mainColumn');
+
+    if (!mainColumn && attempts < 30) {
+      window.setTimeout(applyWhenReady, 100);
+      return;
+    }
+
+    if (!mainColumn || document.querySelector('.zf-home-feed-refresh')) {
+      return;
+    }
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'zf-home-feed-refresh';
+    button.setAttribute('aria-label', '刷新中间信息流');
+    button.title = '刷新中间信息流';
+    button.textContent = '↻';
+    button.addEventListener('click', () => refreshZhihuHomeFeed(button));
+    document.body.append(button);
+  }
+
+  applyWhenReady();
+}
+
+function initializeZhihuReturnHome() {
+  if (document.querySelector('.zf-return-home')) {
+    return;
+  }
+
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'zf-return-home';
+  button.setAttribute('aria-label', '回到知乎首页');
+  button.title = '回到知乎首页';
+  button.innerHTML = `
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M4 10.5 12 3l8 7.5v8.25A1.25 1.25 0 0 1 18.75 20H5.25A1.25 1.25 0 0 1 4 18.75V10.5Z"></path>
+      <path d="M9.5 20v-6h5v6"></path>
+    </svg>
+  `;
+  button.addEventListener('click', () => {
+    window.location.assign('https://www.zhihu.com/');
+  });
+  document.body.append(button);
+}
+
+function initializeDoubanHomeSearch() {
+  let attempts = 0;
+
+  function applyWhenReady() {
+    attempts += 1;
+    const container = document.querySelector('#pt');
+    const nativeEditor = container?.querySelector('.DRE-personal-topic-editor');
+
+    if ((!container || !nativeEditor) && attempts < 20) {
+      window.setTimeout(applyWhenReady, 100);
+      return;
+    }
+
+    if (!container || !nativeEditor || container.querySelector('.zf-douban-home-search')) {
+      return;
+    }
+
+    const form = document.createElement('form');
+    const input = document.createElement('input');
+    const source = document.createElement('input');
+    const submit = document.createElement('button');
+
+    form.className = 'zf-douban-home-search';
+    form.action = 'https://www.douban.com/search';
+    form.method = 'get';
+    form.setAttribute('role', 'search');
+
+    input.type = 'search';
+    input.name = 'q';
+    input.placeholder = '搜索你感兴趣的内容和人...';
+    input.setAttribute('aria-label', input.placeholder);
+
+    source.type = 'hidden';
+    source.name = 'source';
+    source.value = 'suggest';
+
+    submit.type = 'submit';
+    submit.setAttribute('aria-label', '搜索');
+
+    form.append(input, source, submit);
+    container.append(form);
+  }
+
+  applyWhenReady();
+}
+
+function initializeDoubanReadingSheet() {
+  const wrapper = document.querySelector('#wrapper');
+  const content = wrapper?.querySelector('#content');
+  const footer = wrapper?.querySelector('#footer');
+
+  if (!wrapper || !content || !footer) {
+    return;
+  }
+
+  function updateSheetHeight() {
+    // Keep 24px below the content, leaving the native footer outside the sheet.
+    // Measuring the content also handles wrapped book titles and expanding reviews.
+    const height = content.getBoundingClientRect().bottom
+      - wrapper.getBoundingClientRect().top + 24;
+    wrapper.style.setProperty('--zf-douban-sheet-height', `${Math.max(0, height)}px`);
+  }
+
+  updateSheetHeight();
+  const observer = new ResizeObserver(updateSheetHeight);
+  observer.observe(wrapper);
+  observer.observe(content);
+}
+
+function initializeDoubanShortcuts() {
+  if (document.querySelector('.zf-douban-shortcuts')) {
+    return;
+  }
+
+  const shortcuts = document.createElement('nav');
+  shortcuts.className = 'zf-douban-shortcuts';
+  shortcuts.setAttribute('aria-label', '豆瓣快捷导航');
+  shortcuts.innerHTML = `
+    <a class="zf-douban-home" href="https://www.douban.com/" aria-label="返回豆瓣首页" title="返回豆瓣首页">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M4 10.5 12 3l8 7.5v8.25A1.25 1.25 0 0 1 18.75 20H5.25A1.25 1.25 0 0 1 4 18.75V10.5Z"></path>
+        <path d="M9.5 20v-6h5v6"></path>
+      </svg>
+      <span>首页</span>
+    </a>
+    <a class="zf-douban-profile" href="https://www.douban.com/mine/" aria-label="打开我的豆瓣个人主页" title="打开我的豆瓣个人主页">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="8" r="4"></circle>
+        <path d="M4 21v-2a8 8 0 0 1 16 0v2"></path>
+      </svg>
+      <span>个人主页</span>
+    </a>
+  `;
+  document.body.append(shortcuts);
+}
+
+function applyFocusState(enabled) {
+  document.documentElement.classList.toggle(FOCUS_CLASS, enabled);
+
+  if (!enabled) {
+    document.documentElement.classList.remove(HEADER_HIDDEN_CLASS);
+  }
+}
+
+function clampNumber(value, min, max, fallback) {
+  const number = Number(value);
+  return Number.isFinite(number) ? Math.min(max, Math.max(min, number)) : fallback;
+}
+
+function applyAppearance(settings) {
+  const root = document.documentElement;
+  const appearance = ZhihuFocusTheme.resolve(settings, systemColorScheme.matches);
+  const fontFamily = FONT_FAMILY_NAMES.has(settings.readingFontFamily)
+    ? settings.readingFontFamily
+    : DEFAULT_SETTINGS.readingFontFamily;
+  const fontSize = clampNumber(settings.readingFontSize, 14, 22, DEFAULT_SETTINGS.readingFontSize);
+  const lineHeight = clampNumber(
+    settings.readingLineHeight,
+    1.4,
+    2.2,
+    DEFAULT_SETTINGS.readingLineHeight
+  );
+  const paragraphSpacing = clampNumber(
+    settings.readingParagraphSpacing,
+    0,
+    1.5,
+    DEFAULT_SETTINGS.readingParagraphSpacing
+  );
+  const readingWidth = clampNumber(settings.readingWidth, 680, 1100, DEFAULT_SETTINGS.readingWidth);
+  const fontStack = FONT_FAMILIES[fontFamily];
+
+  ZhihuFocusTheme.apply(root, appearance);
+  root.dataset.zfReadingFontFamily = fontFamily;
+  root.style.setProperty('--zf-reading-font-size', `${fontSize}px`);
+  root.style.setProperty('--zf-reading-line-height', String(lineHeight));
+  root.style.setProperty('--zf-paragraph-spacing', `${paragraphSpacing}em`);
+  root.style.setProperty('--zf-content-width', `${readingWidth}px`);
+
+  if (fontStack) {
+    root.style.setProperty('--zf-reading-font-family', fontStack);
+  } else {
+    root.style.removeProperty('--zf-reading-font-family');
+  }
+}
+
+function updateHeaderVisibility() {
+  const currentScrollY = window.scrollY;
+  const scrollDelta = currentScrollY - lastScrollY;
+
+  if (!document.documentElement.classList.contains(FOCUS_CLASS)) {
+    document.documentElement.classList.remove(HEADER_HIDDEN_CLASS);
+  } else if (currentScrollY <= 8 || scrollDelta < 0) {
+    document.documentElement.classList.remove(HEADER_HIDDEN_CLASS);
+  } else if (scrollDelta > 3) {
+    document.documentElement.classList.add(HEADER_HIDDEN_CLASS);
+  }
+
+  lastScrollY = currentScrollY;
+}
+
+// The first-run default is enabled. Stored preferences replace it as soon as
+// Chrome returns them.
+applyFocusState(DEFAULT_SETTINGS.focusEnabled);
+applyAppearance(DEFAULT_SETTINGS);
+
+chrome.storage.onChanged.addListener((changes, areaName) => {
+  if (areaName !== 'local') return;
+
+  for (const [key, change] of Object.entries(changes)) {
+    currentSettings[key] = change.newValue;
+    if (!settingsLoaded) startupChanges[key] = change.newValue;
+  }
+  if (changes.focusEnabled) applyFocusState(currentSettings.focusEnabled !== false);
+
+  if (Object.keys(changes).some(key => key.startsWith('reading'))) {
+    applyAppearance(currentSettings);
+  }
+});
+
+chrome.storage.local.get(DEFAULT_SETTINGS, settings => {
+  // A popup change can arrive before this initial read finishes.
+  currentSettings = { ...DEFAULT_SETTINGS, ...settings, ...startupChanges };
+  settingsLoaded = true;
+  startupChanges = {};
+  applyFocusState(currentSettings.focusEnabled !== false);
+  applyAppearance(currentSettings);
+});
+
+systemColorScheme.addEventListener('change', () => applyAppearance(currentSettings));
+
+window.addEventListener('scroll', updateHeaderVisibility, { passive: true });
+
+if (IS_ZHIHU_HOME) {
+  document.addEventListener(
+    'DOMContentLoaded',
+    initializeZhihuHomeRefresh,
+    { once: true }
+  );
+}
+
+if (IS_ZHIHU_NON_HOME) {
+  document.addEventListener(
+    'DOMContentLoaded',
+    initializeZhihuReturnHome,
+    { once: true }
+  );
+}
+
+if (IS_DOUBAN_HOME) {
+  document.addEventListener(
+    'DOMContentLoaded',
+    initializeDoubanHomeSearch,
+    { once: true }
+  );
+}
+
+if (IS_DOUBAN) {
+  document.addEventListener(
+    'DOMContentLoaded',
+    initializeDoubanShortcuts,
+    { once: true }
+  );
+}
+
+if (IS_DOUBAN) {
+  document.addEventListener(
+    'DOMContentLoaded',
+    initializeDoubanReadingSheet,
+    { once: true }
+  );
+}

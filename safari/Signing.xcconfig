@@ -1,0 +1,3 @@
+// Select a Team in Xcode, or put DEVELOPMENT_TEAM in Signing.local.xcconfig.
+// The local file is ignored by Git and never shared with the project.
+#include? "Signing.local.xcconfig"

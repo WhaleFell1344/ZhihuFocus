@@ -1,0 +1,46 @@
+:root {
+    color-scheme: light dark;
+    font: -apple-system-body;
+    color: CanvasText;
+    background: Canvas;
+}
+
+body {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100svh;
+    margin: 0;
+    padding: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right))
+             max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+    text-align: center;
+    line-height: 1.6;
+}
+
+main { max-width: 30rem; }
+h1 { font: -apple-system-title1; }
+.hint { color: GrayText; }
+
+body:not(.platform-mac, .platform-ios) :is(.platform-mac, .platform-ios),
+body.platform-ios .platform-mac,
+body.platform-mac .platform-ios,
+body:not(.state-on, .state-off) :is(.state-on, .state-off),
+body.state-on :is(.state-off, .state-unknown),
+body.state-off :is(.state-on, .state-unknown) {
+    display: none;
+}
+
+button {
+    min-height: 44px;
+    padding: 8px 20px;
+    border: 1px solid GrayText;
+    border-radius: 10px;
+    color: CanvasText;
+    background: ButtonFace;
+    font: inherit;
+    cursor: pointer;
+}
+
+button:hover { border-color: LinkText; }
+button:focus-visible { outline: 2px solid LinkText; outline-offset: 3px; }

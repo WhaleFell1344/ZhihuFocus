@@ -4,7 +4,9 @@ const { join } = require('node:path');
 const { test } = require('node:test');
 const vm = require('node:vm');
 
-const source = path => readFileSync(join(__dirname, '..', path), 'utf8');
+const extensionRoot = process.env.ZF_EXTENSION_ROOT || join(__dirname, '..');
+const storageArea = process.env.ZF_STORAGE_AREA || 'sync';
+const source = path => readFileSync(join(extensionRoot, path), 'utf8');
 
 function reader({ saved = {}, dark = false, delayRead = false } = {}) {
   const properties = new Map();
@@ -35,7 +37,7 @@ function reader({ saved = {}, dark = false, delayRead = false } = {}) {
       addEventListener() {}
     },
     chrome: { storage: {
-      sync: { get(defaults, callback) {
+      [storageArea]: { get(defaults, callback) {
         getCalls++;
         const snapshot = { ...defaults, ...saved };
         completeRead = () => callback(snapshot);
@@ -50,7 +52,7 @@ function reader({ saved = {}, dark = false, delayRead = false } = {}) {
     root, properties, classes,
     getCalls: () => getCalls,
     completeRead: () => completeRead(),
-    update(changes, area = 'sync') {
+    update(changes, area = storageArea) {
       storageListener(Object.fromEntries(Object.entries(changes)
         .map(([key, newValue]) => [key, { newValue }])), area);
     },
@@ -138,9 +140,9 @@ test('late startup read cannot overwrite newer theme or focus changes', () => {
   assert.equal(app.getCalls(), 1);
 });
 
-test('sync preference removal falls back; unrelated storage does not affect the reader', () => {
+test('preference removal falls back; unrelated storage does not affect the reader', () => {
   const app = reader({ dark: true, saved: { readingDarkBackground: 'dark-blue' } });
-  app.update({ readingDarkBackground: 'dark-warm' }, 'local');
+  app.update({ readingDarkBackground: 'dark-warm' }, storageArea === 'sync' ? 'local' : 'sync');
   assert.equal(app.root.dataset.zfReadingBackground, 'dark-blue');
   app.update({ readingDarkBackground: undefined });
   assert.equal(app.root.dataset.zfReadingBackground, 'dark');

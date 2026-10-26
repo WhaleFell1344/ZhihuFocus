@@ -1,0 +1,87 @@
+{
+  "manifest_version": 3,
+  "name": "ZhihuFocus",
+  "version": "0.1.6",
+  "description": "为知乎和豆瓣页面提供简洁、可调节的专注阅读布局。",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.zhihu.com/*",
+    "https://zhuanlan.zhihu.com/*",
+    "https://*.douban.com/*"
+  ],
+  "action": {
+    "default_title": "ZhihuFocus",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.zhihu.com/*",
+        "https://zhuanlan.zhihu.com/*"
+      ],
+      "js": [
+        "content/title.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.zhihu.com/question/*",
+        "https://www.zhihu.com/search*",
+        "https://www.zhihu.com/people/*",
+        "https://zhuanlan.zhihu.com/p/*"
+      ],
+      "css": [
+        "content/focus.css"
+      ],
+      "js": [
+        "shared/theme.js",
+        "content/focus.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.zhihu.com/",
+        "https://www.zhihu.com/?*"
+      ],
+      "css": [
+        "content/focus.css"
+      ],
+      "js": [
+        "shared/theme.js",
+        "content/focus.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.douban.com/*"
+      ],
+      "exclude_matches": [
+        "https://accounts.douban.com/*",
+        "https://www.douban.com/accounts/*"
+      ],
+      "css": [
+        "content/douban.css"
+      ],
+      "js": [
+        "shared/theme.js",
+        "content/focus.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

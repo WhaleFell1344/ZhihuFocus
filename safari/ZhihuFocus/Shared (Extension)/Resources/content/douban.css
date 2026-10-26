@@ -1,0 +1,1017 @@
+/* Shared Douban layout; authentication pages are excluded in the manifest. */
+html.zhihu-focus-enabled :is(
+    #db-global-nav, [id^="db-nav-"], #anony-nav, body > .nav, .back-to-top
+  ) {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled #wrapper {
+  margin-top: 32px !important;
+  padding-top: 24px !important;
+  box-sizing: border-box !important;
+}
+
+/* Douban inserts these ad slots asynchronously, including after the reviews. */
+html.zhihu-focus-enabled [id^="dale_"],
+html.zhihu-focus-enabled [class^="adjs-qihupc-"],
+html.zhihu-focus-enabled [class*=" adjs-qihupc-"] {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled #content > .grid-16-8 > .aside {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled #content > .grid-16-8 > .article {
+  float: none !important;
+  padding-right: 0 !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+/* Supported Douban pages: keep the centered wrapper as a reading sheet. */
+html.zhihu-focus-enabled:has([id^="db-nav-"]) #wrapper {
+  position: relative;
+  isolation: isolate;
+  min-height: calc(100vh - 120px);
+  background-color: transparent !important;
+}
+
+html.zhihu-focus-enabled:has([id^="db-nav-"]) #wrapper::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  height: var(--zf-douban-sheet-height, 100%);
+  left: 50%;
+  width: min(755px, 100%);
+  border-radius: 8px;
+  background-color: var(--zf-douban-sheet-background, #fff);
+  box-shadow:
+    -1px 0 0 rgba(0, 0, 0, 0.1),
+    1px 0 0 rgba(0, 0, 0, 0.1);
+  transform: translateX(-50%);
+}
+
+/* Subject titles, including long multi-line titles, sit inside the sheet. */
+html.zhihu-focus-enabled :is(#db-nav-movie, #db-nav-book) ~ #wrapper:has(
+    #content > h1,
+    > h1.title
+  ) {
+  padding-top: 24px !important;
+  padding-bottom: 24px !important;
+  box-sizing: border-box !important;
+}
+
+/* Review details: leave breathing room between the title and the reading sheet. */
+html.zhihu-focus-enabled #wrapper.review-wrapper {
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+  box-sizing: border-box !important;
+}
+
+/* Community home: separate the search form from the sheet edge and activity list. */
+html.zhihu-focus-enabled #wrapper:has(#pt) {
+  padding-top: 20px !important;
+  box-sizing: border-box !important;
+}
+
+/* Light themes tint the outer page; dark mode also colors the reading sheet. */
+html.zhihu-focus-enabled:not([data-zf-reading-background="default"]),
+html.zhihu-focus-enabled:not([data-zf-reading-background="default"]) body {
+  background-color: var(--zf-page-background) !important;
+}
+
+/* Douban community home and search: center the logo/navigation group. */
+html.zhihu-focus-enabled #db-nav-sns .nav-primary {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 13px !important;
+}
+
+html.zhihu-focus-enabled #db-nav-sns .nav-primary > .nav-search {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled #db-nav-sns .nav-primary > :is(.nav-logo, .nav-items) {
+  position: static !important;
+  float: none !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
+html.zhihu-focus-enabled #db-nav-sns .nav-primary > .nav-logo {
+  flex: 0 0 184px !important;
+}
+
+html.zhihu-focus-enabled #db-nav-sns .nav-primary > .nav-items {
+  flex: 0 0 316px !important;
+}
+
+/* Home only: replace the composer visually with a standard search form. */
+html.zhihu-focus-enabled #pt {
+  position: relative !important;
+  margin-bottom: 20px !important;
+}
+
+.zf-douban-home-search {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled #pt > .DRE-personal-topic-editor {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled #pt > .zf-douban-home-search {
+  display: flex !important;
+  height: 46px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled #pt > .zf-douban-home-search > input[type="search"] {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0 16px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #111;
+  font: inherit;
+}
+
+html.zhihu-focus-enabled #pt > .zf-douban-home-search > button {
+  position: relative;
+  flex: 0 0 44px;
+  width: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+html.zhihu-focus-enabled #pt > .zf-douban-home-search > button::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 13px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #b8b8b8;
+  border-radius: 50%;
+}
+
+html.zhihu-focus-enabled #pt > .zf-douban-home-search > button::after {
+  content: "";
+  position: absolute;
+  top: 27px;
+  left: 25px;
+  width: 7px;
+  height: 2px;
+  background: #b8b8b8;
+  transform: rotate(45deg);
+  transform-origin: left center;
+}
+
+html.zhihu-focus-enabled #content > h1 {
+  width: 675px !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  box-sizing: border-box !important;
+}
+
+/* Movie Top250 uses a 150px sprite and percentage-width children. Keep the
+   native badge width while aligning the whole badge with the centered title. */
+html.zhihu-focus-enabled:has(.nav-secondary > .movieannual) #content > .top250 {
+  width: 150px !important;
+  margin-right: auto !important;
+  margin-left: calc((100% - 675px) / 2) !important;
+  box-sizing: border-box !important;
+}
+
+/* Ranking badges get the same top inset as ordinary subject titles. */
+html.zhihu-focus-enabled:has(.nav-secondary > .movieannual)
+  #wrapper:has(#content > :is(.top250, .rank-label)) {
+  padding-top: 24px !important;
+}
+
+html.zhihu-focus-enabled:has(.nav-secondary > .movieannual) #content > .rank-label {
+  margin-left: calc((100% - 675px) / 2) !important;
+}
+
+/* Movie subject header only: keep the logo and native search form as one centered row. */
+html.zhihu-focus-enabled .nav-primary:has(.nav-logo a[href*="movie.douban.com"]) {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+html.zhihu-focus-enabled .nav-primary:has(.nav-logo a[href*="movie.douban.com"]) > .nav-logo {
+  flex: 0 0 145px !important;
+  float: none !important;
+}
+
+html.zhihu-focus-enabled .nav-primary:has(.nav-logo a[href*="movie.douban.com"]) > .nav-search {
+  flex: 0 1 527px !important;
+  width: 527px !important;
+  margin-left: 0 !important;
+}
+
+html.zhihu-focus-enabled .nav-secondary > .movieannual {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled .nav-secondary:has(> .movieannual) > .nav-items {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+/* Book subject header: mirror the focused movie header without affecting movie rules. */
+html.zhihu-focus-enabled .nav-primary:has(.nav-logo a[href*="book.douban.com"]) {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+html.zhihu-focus-enabled .nav-primary:has(.nav-logo a[href*="book.douban.com"]) > .nav-logo {
+  flex: 0 0 145px !important;
+  float: none !important;
+}
+
+html.zhihu-focus-enabled .nav-primary:has(.nav-logo a[href*="book.douban.com"]) > .nav-search {
+  flex: 0 1 527px !important;
+  width: 527px !important;
+  margin-left: 0 !important;
+}
+
+html.zhihu-focus-enabled .nav-secondary > .bookannual {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled .nav-secondary:has(> .bookannual) > .nav-items {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+html.zhihu-focus-enabled:has(.nav-secondary > .bookannual) #wrapper > h1.title {
+  width: 675px !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  box-sizing: border-box !important;
+}
+
+html.zhihu-focus-enabled:has(.nav-secondary > .bookannual) #wrapper > .rank-label {
+  margin-left: calc((100% - 675px) / 2) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='light'] {
+  color-scheme: light;
+}
+
+/* Explicit dark surfaces preserve posters, photos, stars and ranking sprites. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] {
+  color-scheme: dark;
+  --zf-douban-sheet-background: var(--zf-surface-background);
+  --zf-text: #e2e6ed;
+  --zf-secondary-text: #aeb7c4;
+  --zf-link: #85b9ff;
+  --zf-border: #414b59;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    body, #wrapper, #content, h1, h1 span, h3, #info, #info span,
+    .intro, .related-info, .review-content, .short-content, .full-content,
+    .comment, .comment p, .comment-item, .status-item, .status-item p,
+    .status-item blockquote, .result, .result .content, .result p,
+    .search-result, .rating_num, strong, table, td
+  ) {
+  color: var(--zf-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .pl, .pl2, .pl3, .pl4, .color-gray, .color-grey, .gray, .fleft,
+    .rating_people, .rating_sum, .rating_per, .stars5, .stars4, .stars3,
+    .stars2, .stars1, .comment-time, .comment-info, .review-meta,
+    #interest_sectl .rating_logo, #interest_sectl .rating_betterthan,
+    #mainpic .update-pic, #footer, h1 .year
+  ),
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] #info .pl {
+  color: var(--zf-secondary-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(a, a:visited, a span) {
+  color: var(--zf-link) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] a:hover {
+  color: #fff !important;
+  background-color: var(--zf-hover-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(h2, h2 span) {
+  color: var(--zf-heading) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .nav, .nav-wrap, .nav-secondary, #db-global-nav, #db-global-nav .bd,
+    .nav-search .inp, .nav-search .inp input, .nav-search .inp-btn input,
+    .status-item .block, .status-item .status-saying,
+    .review-item .review-short, .review-item .review-full,
+    .comment-item h3, .comments .comment-item h3, .search-result .result,
+    .article .bg-img-green, .article .indent .content,
+    .artists, .section-switcher, .section-switcher .header, .joined-groups-num
+  ) {
+  background-color: var(--zf-surface-background) !important;
+  color: var(--zf-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .nav-search .inp, .nav-search .inp-btn input, .bg-img-green
+  ) {
+  background-image: none !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    input, textarea, select, .zf-douban-home-search
+  ) {
+  color: var(--zf-text) !important;
+  background-color: var(--zf-page-background) !important;
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(input, textarea)::placeholder {
+  color: var(--zf-secondary-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .nav-wrap, .nav-secondary, #interest_sectl, .rating_betterthan,
+    .comment-item, .review-item, .mod-hd, .mod-bd, #footer, td, th,
+    .tags-body, .subject-others-interests
+  ) {
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .collect_btn, .collect_btn span, .bn-sharing, .bn-recommend, .lnk-sharing,
+    .rr a, .comment-info .comment-vote
+  ) {
+  color: var(--zf-text) !important;
+  background: var(--zf-page-background) !important;
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .a_stars {
+  color: var(--zf-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .collect_btn span {
+  background: transparent !important;
+}
+
+/* The native search outline is a light sprite. Replace the complete field,
+   including its focus state, instead of removing only the sprite. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search fieldset {
+  display: flex !important;
+  width: 100%;
+  height: 34px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--zf-border) !important;
+  border-radius: 5px;
+  background: var(--zf-page-background) !important;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search fieldset:focus-within {
+  border-color: var(--zf-link) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--zf-link) 20%, transparent);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp {
+  flex: 1 1 auto;
+  float: none !important;
+  width: auto !important;
+  min-width: 0;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp input {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 12px !important;
+  background: transparent !important;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp-btn input {
+  display: block;
+  width: 100%;
+  height: 100% !important;
+  padding: 0;
+  border: 0 !important;
+  border-left: 1px solid var(--zf-border) !important;
+  border-radius: 0;
+  color: transparent !important;
+  background-image: none !important;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp-btn {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  flex: 0 0 38px;
+  float: none !important;
+  width: 38px !important;
+  height: 100% !important;
+  margin: 0 !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp-btn::before {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 11px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--zf-secondary-text);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Filled actions below the fold use different classes from collect buttons. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .review-item .action-btn, .review-item .btn, .comment_btn,
+    .episode_list .item, .episode_list .ep_more
+  ) {
+  color: var(--zf-link) !important;
+  background: var(--zf-accent-background) !important;
+  border: 1px solid var(--zf-border) !important;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .review-item .action-btn, .review-item .btn, .comment_btn,
+    .episode_list .item, .episode_list .ep_more,
+    .collect_btn, .lnk-sharing
+  ):is(:hover, :focus-visible) {
+  color: var(--zf-link) !important;
+  background: var(--zf-hover-background) !important;
+  border-color: var(--zf-link) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .review-item .action-btn, .review-item .btn, .comment_btn,
+    .episode_list .item, .episode_list .ep_more,
+    .collect_btn, .lnk-sharing
+  ):focus-visible {
+  outline: 2px solid var(--zf-link);
+  outline-offset: 2px;
+}
+
+/* Reuse the native icon rotations while deriving icon color from each theme. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .review-item .action-btn::before {
+  background-image: none !important;
+  background-color: currentColor !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 5 19 12 7 19Z' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .review-item .action-btn.up::before {
+  transform: rotate(-90deg);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .review-item .action-btn.down::before {
+  transform: rotate(90deg);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .comment_btn::before {
+  background-image: none !important;
+  background-color: currentColor !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m10 2 4 4-8 8-4 1 1-4Z M8 4l4 4' fill='none' stroke='black' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .lnk-doulist-add i {
+  color: currentColor !important;
+  background-color: transparent !important;
+}
+
+/* Native sharing, search suggestions, and collection/short-review dialogs are
+   inserted outside #wrapper and otherwise retain their light surfaces. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    #dialog, #db-div-sharing .bd, #search_suggest
+  ) {
+  color: var(--zf-text) !important;
+  background-color: var(--zf-surface-background) !important;
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] #dialog {
+  border-radius: 8px;
+  box-shadow: 0 12px 40px rgb(0 0 0 / 35%);
+  overflow: hidden;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] #dialog :where(
+    div, span, p, label, legend, fieldset
+  ),
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] #search_suggest :where(
+    div, span, p, li
+  ) {
+  color: var(--zf-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    #dialog .interest-form-hd, #dialog .interest-form-ft,
+    #db-div-sharing .hd, #search_suggest li
+  ) {
+  color: var(--zf-text) !important;
+  background-color: var(--zf-surface-background) !important;
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] #dialog .tagbtn {
+  color: var(--zf-link) !important;
+  background: var(--zf-accent-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    #dialog .tagbtn:hover, #search_suggest li:hover, #search_suggest .over
+  ) {
+  background: var(--zf-hover-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] #dialog input[type='submit'] {
+  color: #fff !important;
+  background: var(--zf-accent-solid) !important;
+  border: 1px solid var(--zf-accent-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .nav-search .inp-btn::after {
+  content: "";
+  position: absolute;
+  top: 21px;
+  left: 23px;
+  width: 7px;
+  height: 2px;
+  background: var(--zf-secondary-text);
+  transform: rotate(45deg);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+/* Search results use the newer DouWeb components rather than .result. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .search-cate li.on a {
+  color: var(--zf-link) !important;
+  background: var(--zf-accent-background) !important;
+  box-shadow: inset 0 0 0 1px var(--zf-accent-border);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .DouWeb-SR-subject-info-type-name, .DouWeb-SR-subject-info-rating-count,
+    .DouWeb-SR-subject-info-subtitle, .DouWeb-SR-topic-card-reaction
+  ) {
+  color: var(--zf-secondary-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .DouWeb-SR-article-preview-abstract {
+  color: var(--zf-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .DouWeb-SR-topic-card-title-button, .DouWeb-SR-subject-info-line-watch
+  ) {
+  color: var(--zf-link) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .DouWeb-SR-subject-info-line-watch {
+  background: var(--zf-accent-background) !important;
+  box-shadow: inset 0 0 0 1px var(--zf-accent-border);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .DouWeb-SR-subject-card, .DouWeb-SR-search-result-list-card
+  ) {
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .DouWeb-SR-article-preview-more {
+  background: var(--zf-surface-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .DouWeb-SR-article-preview-more::before {
+  background: linear-gradient(to left, var(--zf-surface-background), transparent) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .DouWeb-SR-search-result-list-load-more {
+  color: var(--zf-link) !important;
+  background: var(--zf-accent-background) !important;
+  border: 1px solid var(--zf-border) !important;
+}
+
+/* Book excerpts set their own text color; note headings and toggles use light sprites. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .blockquote-list figure {
+  color: var(--zf-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .blockquote-list figcaption, .blockquote-extra, .blockquote-meta,
+    .reading-notes .user, .reading-note .pl
+  ) {
+  color: var(--zf-secondary-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .reading-notes .nlst h3 {
+  min-height: 28px;
+  padding: 0 8px;
+  border: 1px solid var(--zf-border);
+  border-radius: 4px;
+  background: var(--zf-accent-background) !important;
+  line-height: 28px;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .reading-notes .nlst {
+  background: transparent !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .reading-notes .note-toggle a {
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0 6px;
+  border-radius: 3px;
+  background: transparent !important;
+  color: var(--zf-link) !important;
+  font-size: 12px;
+  line-height: 28px;
+  text-indent: 0;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .reading-notes .inline-tabs {
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .reading-notes .inline-tabs .on {
+  border-color: var(--zf-link) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .reading-notes .redbutt {
+  background: var(--zf-accent-background) !important;
+  box-shadow: inset 0 0 0 1px var(--zf-border);
+}
+
+/* Share is an inline action, alongside the review and list actions. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .ul_subject_menu .bn-sharing {
+  color: var(--zf-link) !important;
+  background: transparent !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .ul_subject_menu .bn-sharing::after {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin: 0 3px 3px 8px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .ul_subject_menu li {
+  color: var(--zf-link) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .ul_subject_menu li > img {
+  filter: brightness(0) invert(0.8);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .lnk-doulist-add i {
+  background-image: none !important;
+  background-color: currentColor !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 2v12M2 8h12' stroke='black' stroke-width='2'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .ul_subject_menu .bn-sharing, .reading-notes .note-toggle a,
+    .reading-notes .redbutt, .DouWeb-SR-search-result-list-load-more
+  ):is(:hover, :focus-visible) {
+  color: var(--zf-link) !important;
+  background: var(--zf-hover-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    .ul_subject_menu a, .reading-notes .note-toggle a,
+    .reading-notes .redbutt, .DouWeb-SR-search-result-list-load-more
+  ):focus-visible {
+  outline: 2px solid var(--zf-link);
+  outline-offset: 2px;
+}
+
+/* Keep the two essential navigation destinations in one unobtrusive dock. */
+.zf-douban-shortcuts {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled .zf-douban-shortcuts {
+  position: fixed;
+  right: max(24px, env(safe-area-inset-right));
+  bottom: max(24px, env(safe-area-inset-bottom));
+  z-index: 1000;
+  display: flex !important;
+  flex-direction: column;
+  gap: 8px;
+}
+
+html.zhihu-focus-enabled .zf-douban-shortcuts a {
+  position: static !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--zf-border, #d5dce3);
+  border-radius: 12px;
+  background: var(--zf-surface-background, #fff) !important;
+  color: var(--zf-link, #3377aa) !important;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 16%);
+  font-size: 14px;
+  line-height: 1;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled .zf-douban-shortcuts svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+html.zhihu-focus-enabled .zf-douban-shortcuts a:is(:hover, :focus-visible) {
+  background: var(--zf-hover-background, #edf2f6) !important;
+}
+
+html.zhihu-focus-enabled .zf-douban-shortcuts a:focus-visible {
+  outline: 2px solid var(--zf-link, #3377aa);
+  outline-offset: 3px;
+}
+
+/* Profile identity and personal tabs stay in the content, below the sheet inset. */
+html.zhihu-focus-enabled #db-usr-profile {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--zf-border, #e5e7eb);
+}
+
+html.zhihu-focus-enabled #db-usr-profile::after {
+  display: none;
+}
+
+html.zhihu-focus-enabled #db-usr-profile > .pic {
+  flex: 0 0 56px;
+  float: none;
+  margin: 0;
+}
+
+html.zhihu-focus-enabled #db-usr-profile .pic img {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+}
+
+html.zhihu-focus-enabled #db-usr-profile > .info {
+  flex: 1;
+  min-width: 0;
+  float: none;
+  padding: 0;
+}
+
+html.zhihu-focus-enabled #db-usr-profile .info ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-top: 12px;
+}
+
+html.zhihu-focus-enabled #db-usr-profile .info li {
+  float: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+html.zhihu-focus-enabled #content:has(#db-usr-profile) .lnk-create {
+  min-height: 28px;
+  padding: 3px 10px;
+  border: 1px solid var(--zf-accent-border, #ddd5cb);
+  border-radius: 6px;
+  background: var(--zf-accent-background, #f5f1eb) !important;
+  color: var(--zf-link, #3377aa) !important;
+  font-size: 12px;
+  line-height: 20px;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled #content:has(#db-usr-profile) .lnk-create i {
+  color: inherit !important;
+}
+
+html.zhihu-focus-enabled #content:has(#db-usr-profile) .lnk-create:is(:hover, :focus-visible) {
+  background: var(--zf-hover-background, #eee6dc) !important;
+}
+
+html.zhihu-focus-enabled #content:has(#db-usr-profile) .lnk-create:focus-visible {
+  outline: 2px solid var(--zf-link, #3377aa);
+  outline-offset: 2px;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
+    #db-usr-profile #edit_signature, #content:has(#db-usr-profile) .substatus
+  ) {
+  color: var(--zf-secondary-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search {
+  height: auto !important;
+  margin-bottom: 16px !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search fieldset {
+  display: flex !important;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  padding: 4px;
+  overflow: hidden;
+  border: 1px solid var(--zf-border, #d5dce3) !important;
+  border-radius: 10px;
+  background: var(--zf-page-background, #fff) !important;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search fieldset:focus-within {
+  border-color: var(--zf-link, #3377aa) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--zf-link, #3377aa) 12%, transparent);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp {
+  flex: 1 1 auto;
+  float: none !important;
+  width: auto !important;
+  min-width: 0;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp input {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 12px !important;
+  border: 0 !important;
+  outline: 0;
+  background: transparent !important;
+  color: var(--zf-text, #253241) !important;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp-btn {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  flex: 0 0 40px;
+  float: none !important;
+  width: 40px !important;
+  height: 100% !important;
+  margin: 0 !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp-btn input {
+  display: block;
+  width: 100%;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0;
+  border: 0 !important;
+  border-radius: 6px;
+  outline: 0;
+  background: var(--zf-accent-background, #edf2f6) !important;
+  color: transparent !important;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 0;
+  background: var(--zf-secondary-text, #607080);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='m15.5 15.5 5 5' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp-btn::after {
+  display: none;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp-btn:is(:hover, :focus-within) input {
+  background: var(--zf-hover-background, #e1eaf2) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .mod-search .inp-btn:is(:hover, :focus-within)::before {
+  background: var(--zf-link, #3377aa);
+}
+
+/* Keep the four subject filters under the field and center either result layout. */
+html.zhihu-focus-enabled #wrapper:has(.mod-search) .search-cate {
+  float: none !important;
+  width: 100% !important;
+  margin: 0 0 24px !important;
+}
+
+html.zhihu-focus-enabled #wrapper:has(.mod-search) .search-cate ul {
+  position: static !important;
+  display: flex !important;
+  justify-content: center;
+  gap: 8px;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 0 12px !important;
+  border-bottom: 1px solid var(--zf-border, #e1e6eb);
+  box-sizing: border-box;
+}
+
+html.zhihu-focus-enabled #wrapper:has(.mod-search) .search-cate li {
+  display: none !important;
+  width: auto !important;
+  margin: 0 !important;
+}
+
+html.zhihu-focus-enabled #wrapper:has(.mod-search) .search-cate li:has(> a:is(
+    [href^="/search?q="], [href*="cat=1002&"], [href*="cat=1001&"], [href*="cat=1003&"]
+  )) {
+  display: block !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .search-cate a {
+  padding: 7px 18px !important;
+  border-radius: 6px;
+  background: transparent !important;
+  color: var(--zf-link, #3377aa) !important;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .search-cate li.on a {
+  background: var(--zf-accent-background, #edf2f6) !important;
+  box-shadow: inset 0 0 0 1px var(--zf-accent-border, #cbdbe7);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .search-cate a:is(:hover, :focus-visible) {
+  background: var(--zf-hover-background, #e1eaf2) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme] .search-cate a:focus-visible {
+  outline: 2px solid var(--zf-link, #3377aa);
+  outline-offset: 2px;
+}
+
+html.zhihu-focus-enabled #wrapper:has(.mod-search) .search-result {
+  float: none !important;
+  clear: both;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .search-result .rating-info {
+  color: var(--zf-secondary-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .search-result .result {
+  border-color: var(--zf-border) !important;
+}

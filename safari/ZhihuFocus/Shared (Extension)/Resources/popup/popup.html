@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ZhihuFocus</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main>
+      <h1>ZhihuFocus</h1>
+      <label class="setting-row" for="focus-enabled">
+        <span>启用专注阅读</span>
+        <input id="focus-enabled" type="checkbox" checked />
+      </label>
+
+      <section class="appearance-settings" aria-labelledby="appearance-title">
+        <h2 id="appearance-title">阅读外观</h2>
+
+        <fieldset>
+          <legend>颜色模式</legend>
+          <div class="mode-options">
+            <label class="background-option">
+              <input type="radio" name="reading-color-mode" value="system" checked />
+              <span>跟随系统</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-color-mode" value="light" />
+              <span>浅色</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-color-mode" value="dark" />
+              <span>深色</span>
+            </label>
+          </div>
+          <p id="theme-status" class="setting-note" aria-live="polite"></p>
+        </fieldset>
+
+        <fieldset>
+          <legend id="reading-theme-label">阅读主题</legend>
+          <div class="background-options">
+            <label class="background-option">
+              <input type="radio" name="reading-background" value="default" />
+              <span class="color-swatch color-swatch-default" aria-hidden="true"></span>
+              <span>默认</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-background" value="warm" />
+              <span class="color-swatch color-swatch-warm" aria-hidden="true"></span>
+              <span>暖纸</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-background" value="gray" />
+              <span class="color-swatch color-swatch-gray" aria-hidden="true"></span>
+              <span>柔灰</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-background" value="green" />
+              <span class="color-swatch color-swatch-green" aria-hidden="true"></span>
+              <span>护眼绿</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-background" value="blue" />
+              <span class="color-swatch color-swatch-blue" aria-hidden="true"></span>
+              <span>雾蓝</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-background" value="lavender" />
+              <span class="color-swatch color-swatch-lavender" aria-hidden="true"></span>
+              <span>淡紫灰</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-background" value="dark" />
+              <span class="color-swatch color-swatch-dark" aria-hidden="true"></span>
+              <span>夜墨</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-background" value="dark-blue" />
+              <span class="color-swatch color-swatch-dark-blue" aria-hidden="true"></span>
+              <span>深海</span>
+            </label>
+            <label class="background-option">
+              <input type="radio" name="reading-background" value="dark-warm" />
+              <span class="color-swatch color-swatch-dark-warm" aria-hidden="true"></span>
+              <span>暖夜</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>正文字体</legend>
+          <div class="font-options">
+            <label class="font-option">
+              <input type="radio" name="reading-font-family" value="default" />
+              <span>知乎默认</span>
+            </label>
+            <label class="font-option">
+              <input type="radio" name="reading-font-family" value="sans" />
+              <span>苹方黑体</span>
+            </label>
+            <label class="font-option">
+              <input type="radio" name="reading-font-family" value="serif" />
+              <span>宋体阅读</span>
+            </label>
+            <label class="font-option">
+              <input type="radio" name="reading-font-family" value="kai" />
+              <span>楷体阅读</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <label class="range-setting" for="reading-font-size">
+          <span class="range-heading">
+            <span>正文字号</span>
+            <output id="reading-font-size-value" for="reading-font-size">16px</output>
+          </span>
+          <input id="reading-font-size" type="range" min="14" max="22" step="1" value="16" />
+        </label>
+
+        <label class="range-setting" for="reading-line-height">
+          <span class="range-heading">
+            <span>行间距</span>
+            <output id="reading-line-height-value" for="reading-line-height">1.7</output>
+          </span>
+          <input
+            id="reading-line-height"
+            type="range"
+            min="1.4"
+            max="2.2"
+            step="0.1"
+            value="1.7"
+          />
+        </label>
+
+        <label class="range-setting" for="reading-paragraph-spacing">
+          <span class="range-heading">
+            <span>段间距</span>
+            <output id="reading-paragraph-spacing-value" for="reading-paragraph-spacing">0.6em</output>
+          </span>
+          <input
+            id="reading-paragraph-spacing"
+            type="range"
+            min="0"
+            max="1.5"
+            step="0.1"
+            value="0.6"
+          />
+        </label>
+
+        <label class="range-setting" for="reading-width">
+          <span class="range-heading">
+            <span>内容宽度</span>
+            <output id="reading-width-value" for="reading-width">780px</output>
+          </span>
+          <input id="reading-width" type="range" min="680" max="1100" step="20" value="780" />
+        </label>
+      </section>
+
+      <button id="restore-defaults" type="button">恢复默认</button>
+    </main>
+    <script src="../shared/theme.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
