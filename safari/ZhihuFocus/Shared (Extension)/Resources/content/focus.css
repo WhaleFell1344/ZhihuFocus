@@ -483,6 +483,37 @@ html.zhihu-focus-enabled[data-zf-reading-background]:not(
   background-color: var(--zf-surface-background) !important;
 }
 
+/* On question pages, continue the reading column through the header and
+   leave both outer gutters on the darker page canvas. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']:has(.QuestionHeader)
+  #root :is(.AppHeader, :has(> .AppHeader)) {
+  background-color: var(--zf-page-background) !important;
+  box-shadow: none !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']:has(.QuestionHeader) .AppHeader > div,
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .QuestionHeader {
+  width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
+  max-width: var(--zf-content-width, 780px) !important;
+  min-width: 0 !important;
+  margin-inline: auto !important;
+  box-sizing: border-box !important;
+  background-color: var(--zf-surface-background) !important;
+  box-shadow: none !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .QuestionHeader :is(.QuestionHeader-content, .QuestionHeader-footer-inner) {
+  width: 100% !important;
+}
+
+@media (max-width: 812px) {
+  html.zhihu-focus-enabled[data-zf-color-scheme='dark']:has(.QuestionHeader) .AppHeader > div,
+  html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .QuestionHeader {
+    width: calc(100% - 24px) !important;
+  }
+}
+
 html.zhihu-focus-enabled[data-zf-color-scheme='light'] {
   color-scheme: light;
 }
