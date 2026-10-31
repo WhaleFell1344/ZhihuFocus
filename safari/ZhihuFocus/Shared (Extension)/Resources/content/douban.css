@@ -1015,3 +1015,21 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .search-result .rating-inf
 html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .search-result .result {
   border-color: var(--zf-border) !important;
 }
+
+/* Enable only during a palette change; leave initial paint and native layout
+   animations alone. Shared by the Zhihu and Douban stylesheets. */
+@media (prefers-reduced-motion: no-preference) {
+  html.zhihu-focus-enabled.zf-theme-transitioning,
+  html.zhihu-focus-enabled.zf-theme-transitioning :where(
+    body, div, span, p, a, button, input, textarea, select, label,
+    main, header, footer, nav, aside, section, article, h1, h2, h3, h4,
+    strong, em, small, ul, ol, li, table, td, th, blockquote, pre, code, svg
+  ),
+  html.zhihu-focus-enabled.zf-theme-transitioning :where(div, span, a, button)::before,
+  html.zhihu-focus-enabled.zf-theme-transitioning :where(div, span, a, button)::after {
+    transition-property: background-color, color, border-color, box-shadow !important;
+    transition-duration: 220ms !important;
+    transition-timing-function: ease-out !important;
+    transition-delay: 0s !important;
+  }
+}

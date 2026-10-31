@@ -558,6 +558,32 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] {
   --zf-secondary-text: #aeb7c4;
   --zf-link: #85b9ff;
   --zf-border: #414b59;
+  /* Native components (including portals outside the feed) share these tokens.
+     Keep GBK99* alone: they also supply white foregrounds on solid buttons. */
+  --GBK02A: var(--zf-text);
+  --GBK03A: var(--zf-text);
+  --GBK03B: var(--zf-text);
+  --GBK03C: var(--zf-secondary-text);
+  --GBK04A: var(--zf-secondary-text);
+  --GBK04B: var(--zf-secondary-text);
+  --GBK05A: var(--zf-secondary-text);
+  --GBK06A: var(--zf-secondary-text);
+  --GBK06B: var(--zf-secondary-text);
+  --GBK07A: var(--zf-border);
+  --GBK07B: var(--zf-border);
+  --GBK08A: var(--zf-border);
+  --GBK08B: var(--zf-border);
+  --GBK09A: var(--zf-border);
+  --GBK09B: var(--zf-border);
+  --GBK09C: var(--zf-border);
+  --GBK10A: var(--zf-page-background);
+  --GBK10B: var(--zf-surface-background);
+  --GBK10C: var(--zf-page-background);
+  --GBK12A: var(--zf-page-background);
+  --GBL01A: var(--zf-link);
+  --GBL05A: var(--zf-secondary-text);
+  --GBL07A: var(--zf-link);
+  --GBL08A: var(--zf-secondary-text);
 }
 
 html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
@@ -613,7 +639,7 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
 }
 
 html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
-    input, textarea, select, .Input, .InputLike, .SearchBar-input,
+    input, textarea, select, .Input, .InputLike, .Input-wrapper, .SearchBar-input,
     .RichText pre, .RichText code, .RichText blockquote,
     .Post-RichText pre, .Post-RichText code, .Post-RichText blockquote
   ) {
@@ -936,6 +962,62 @@ html.zhihu-focus-enabled[data-zf-reading-background]:not(
   background-color: var(--zf-surface-background) !important;
 }
 
+/* Portaled user cards have an Emotion wrapper, not .Popover-content. Anchor
+   to the stable child class so a new generated wrapper name still works. */
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  ) :is(.HoverCard, div:has(> .HoverCard-item), div:has(> .Modal-content)) {
+  background-color: var(--zf-surface-background) !important;
+  border-color: var(--zf-border, #d7dce2) !important;
+}
+
+/* Highlight-comment quotes use a hard-coded white Emotion surface. This is
+   the quote only, not arbitrary paragraphs in comments or other dialogs. */
+html.zhihu-focus-enabled[data-zf-reading-background]:not(
+    [data-zf-reading-background='default']
+  ) .Modal-content .css-198t1v3 {
+  background-color: var(--zf-page-background) !important;
+  border-color: var(--zf-border, #d7dce2) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.HoverCard, div:has(> .HoverCard-item)) {
+  color: var(--zf-text) !important;
+  box-shadow: 0 5px 20px rgb(0 0 0 / 30%) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.HoverCard, div:has(> .HoverCard-item))
+  :where(div, a, .Avatar) {
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .NumberBoard-itemValue {
+  color: var(--zf-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .NumberBoard-itemName {
+  color: var(--zf-secondary-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .NumberBoard-item:is(:hover, :focus-visible)
+  :is(.NumberBoard-itemName, .NumberBoard-itemValue) {
+  color: var(--zf-link) !important;
+}
+
+/* The general modal text rule must not override muted placeholders, link
+   labels or the white label/icon inside a primary action. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .Modal-content :is(.Button, a) :where(span, div) {
+  color: inherit !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .Modal-content :is(.public-DraftEditorPlaceholder-root, .public-DraftEditorPlaceholder-inner) {
+  color: var(--zf-secondary-text) !important;
+}
+
 html.zhihu-focus-enabled .TopstoryItem .RichContent-inner,
 html.zhihu-focus-enabled .TopstoryItem .RichContent-inner .RichText,
 html.zhihu-focus-enabled .SearchItem .RichContent-inner,
@@ -1031,5 +1113,23 @@ html.zhihu-focus-enabled [data-za-detail-view-element_name='FloatingOpenInApp'] 
   html.zhihu-focus-enabled .Question-main,
   html.zhihu-focus-enabled body.PostIndex-body .Post-content > div:has(.Post-Main) {
     width: calc(100% - 24px) !important;
+  }
+}
+
+/* Enable only during a palette change; leave initial paint and native layout
+   animations alone. Shared by the Zhihu and Douban stylesheets. */
+@media (prefers-reduced-motion: no-preference) {
+  html.zhihu-focus-enabled.zf-theme-transitioning,
+  html.zhihu-focus-enabled.zf-theme-transitioning :where(
+    body, div, span, p, a, button, input, textarea, select, label,
+    main, header, footer, nav, aside, section, article, h1, h2, h3, h4,
+    strong, em, small, ul, ol, li, table, td, th, blockquote, pre, code, svg
+  ),
+  html.zhihu-focus-enabled.zf-theme-transitioning :where(div, span, a, button)::before,
+  html.zhihu-focus-enabled.zf-theme-transitioning :where(div, span, a, button)::after {
+    transition-property: background-color, color, border-color, box-shadow !important;
+    transition-duration: 220ms !important;
+    transition-timing-function: ease-out !important;
+    transition-delay: 0s !important;
   }
 }

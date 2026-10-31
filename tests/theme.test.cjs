@@ -8,10 +8,13 @@ const extensionRoot = process.env.ZF_EXTENSION_ROOT || join(__dirname, '..');
 const storageArea = process.env.ZF_STORAGE_AREA || 'sync';
 const source = path => readFileSync(join(extensionRoot, path), 'utf8');
 
-function reader({ saved = {}, dark = false, delayRead = false } = {}) {
+function reader({ saved = {}, dark = false, delayRead = false, reducedMotion = false } = {}) {
   const properties = new Map();
   const classes = new Set();
+  const timers = new Map();
+  let nextTimer = 0;
   const root = {
+    getBoundingClientRect() { return {}; },
     dataset: {},
     style: {
       setProperty: (key, value) => properties.set(key, value),
@@ -31,7 +34,9 @@ function reader({ saved = {}, dark = false, delayRead = false } = {}) {
   const context = vm.createContext({
     document: { documentElement: root, addEventListener() {} },
     window: {
-      matchMedia: () => media,
+      matchMedia: query => query.includes('reduced-motion') ? { matches: reducedMotion } : media,
+      setTimeout: callback => { timers.set(++nextTimer, callback); return nextTimer; },
+      clearTimeout: id => timers.delete(id),
       location: { hostname: 'www.zhihu.com', pathname: '/question/1' },
       scrollY: 0,
       addEventListener() {}
@@ -50,6 +55,8 @@ function reader({ saved = {}, dark = false, delayRead = false } = {}) {
   vm.runInContext(source('content/focus.js'), context);
   return {
     root, properties, classes,
+    finishTransitions() { for (const callback of timers.values()) callback(); timers.clear(); },
+    pendingTransitions: () => timers.size,
     getCalls: () => getCalls,
     completeRead: () => completeRead(),
     update(changes, area = storageArea) {
@@ -67,6 +74,27 @@ test('first paint follows dark system before storage resolves', () => {
   const app = reader({ dark: true, delayRead: true });
   assert.equal(app.root.dataset.zfColorScheme, 'dark');
   assert.equal(app.properties.get('--zf-page-background'), '#15181D');
+});
+
+test('palette transitions skip startup, coalesce rapid changes and respect reduced motion', () => {
+  const app = reader({ dark: true, delayRead: true, saved: { readingDarkBackground: 'dark-blue' } });
+  app.completeRead();
+  assert.equal(app.pendingTransitions(), 0);
+  app.systemDark(false);
+  assert.equal(app.classes.has('zf-theme-transitioning'), true);
+  app.systemDark(true);
+  assert.equal(app.pendingTransitions(), 1);
+  app.finishTransitions();
+  assert.equal(app.classes.has('zf-theme-transitioning'), false);
+  app.update({ readingFontSize: 18 });
+  assert.equal(app.pendingTransitions(), 0);
+  const quiet = reader({ reducedMotion: true });
+  quiet.systemDark(true);
+  assert.equal(quiet.root.dataset.zfColorScheme, 'dark');
+  assert.equal(quiet.pendingTransitions(), 0);
+  app.update({ focusEnabled: false });
+  app.systemDark(false);
+  assert.equal(app.pendingTransitions(), 0);
 });
 
 test('system events restore each selected palette and clear dark variables', () => {

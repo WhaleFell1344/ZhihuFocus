@@ -14,6 +14,8 @@ const systemColorScheme = window.matchMedia('(prefers-color-scheme: dark)');
 let currentSettings = { ...DEFAULT_SETTINGS };
 let settingsLoaded = false;
 let startupChanges = {};
+let appearanceReady = false;
+let appearanceTransitionTimer;
 const FONT_FAMILIES = {
   default: null,
   sans: '-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif',
@@ -238,6 +240,17 @@ function clampNumber(value, min, max, fallback) {
 function applyAppearance(settings) {
   const root = document.documentElement;
   const appearance = ZhihuFocusTheme.resolve(settings, systemColorScheme.matches);
+  const paletteChanged = root.dataset.zfReadingBackground !== appearance.background;
+  if (appearanceReady && paletteChanged && root.classList.contains(FOCUS_CLASS)
+      && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    root.classList.toggle('zf-theme-transitioning', true);
+    // Commit the old colors with transitions enabled before setting new tokens.
+    root.getBoundingClientRect();
+    window.clearTimeout(appearanceTransitionTimer);
+    appearanceTransitionTimer = window.setTimeout(() => {
+      root.classList.remove('zf-theme-transitioning');
+    }, 280);
+  }
   const fontFamily = FONT_FAMILY_NAMES.has(settings.readingFontFamily)
     ? settings.readingFontFamily
     : DEFAULT_SETTINGS.readingFontFamily;
@@ -312,6 +325,7 @@ chrome.storage.local.get(DEFAULT_SETTINGS, settings => {
   startupChanges = {};
   applyFocusState(currentSettings.focusEnabled !== false);
   applyAppearance(currentSettings);
+  appearanceReady = true;
 });
 
 systemColorScheme.addEventListener('change', () => applyAppearance(currentSettings));
