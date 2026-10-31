@@ -1033,6 +1033,77 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark']
   color: var(--zf-secondary-text) !important;
 }
 
+/* Search suggestions and popup options need their interactive states themed,
+   not just the menu surface. Keep keyboard selection and pointer hover equal. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .Menu-item:is(:hover, :focus-visible, .is-active, [aria-selected='true']) {
+  color: var(--zf-text) !important;
+  background-color: var(--zf-hover-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .SearchBar-menu :is(.blueFont, .blueFont *, .SearchBar-searchLink) {
+  color: var(--zf-link) !important;
+}
+
+/* Zhida is a React Native Web island with inline light colors, separate from
+   Zhihu's palette tokens. These two outer shells exist before content loads:
+   the search summary and the expanded AI panel. Keep overrides inside them
+   so illustrations, avatars, QR codes and ordinary content keep their colors. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.css-9x92ah, .css-114cdez) {
+  color: var(--zf-text) !important;
+  background: var(--zf-surface-background) !important;
+  border-color: var(--zf-border) !important;
+  color-scheme: dark;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.css-9x92ah, .css-114cdez) :where(div, span, p, strong, em, label) {
+  color: var(--zf-text) !important;
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.css-9x92ah, .css-114cdez)
+  :is([style*='background-color: rgb(255, 255, 255)'], .r-14lw9ot) {
+  background-color: var(--zf-surface-background) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.css-9x92ah, .css-114cdez)
+  [style*='background-color: rgb(248, 248, 250)'] {
+  background-color: var(--zf-page-background) !important;
+}
+
+/* Loading bars and dividers share this neutral inline color. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.css-9x92ah, .css-114cdez)
+  [style*='background-color: rgb(235, 236, 237)'] {
+  background-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.css-9x92ah, .css-114cdez) [style*='linear-gradient'] {
+  background-image: linear-gradient(transparent, var(--zf-surface-background)) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.css-9x92ah, .css-114cdez)
+  :is(a, [data-testid^='Button:zhida_message_'],
+    [data-testid='Button:Share:zhida_message_share_btn']) :where(div, span),
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.css-9x92ah, .css-114cdez) a {
+  color: var(--zf-link) !important;
+}
+
+/* Recolor monochrome UI glyphs, leaving purple branding and artwork intact. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is(.css-9x92ah, .css-114cdez)
+  svg:is([fill='#191B1F' i], [fill='#535861' i], [fill='#373a40' i]) {
+  fill: var(--zf-secondary-text) !important;
+}
+
 html.zhihu-focus-enabled .TopstoryItem .RichContent-inner,
 html.zhihu-focus-enabled .TopstoryItem .RichContent-inner .RichText,
 html.zhihu-focus-enabled .SearchItem .RichContent-inner,
