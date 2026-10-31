@@ -966,7 +966,11 @@ html.zhihu-focus-enabled[data-zf-reading-background]:not(
    to the stable child class so a new generated wrapper name still works. */
 html.zhihu-focus-enabled[data-zf-reading-background]:not(
     [data-zf-reading-background='default']
-  ) :is(.HoverCard, div:has(> .HoverCard-item), div:has(> .Modal-content)) {
+  ) :is(
+    .HoverCard, div:has(> .HoverCard-item), div:has(> .Modal-content),
+    .css-1rd6ukm > div:has(> .BounceLoading),
+    .MoreAnswers .List-headerText
+  ) {
   background-color: var(--zf-surface-background) !important;
   border-color: var(--zf-border, #d7dce2) !important;
 }
@@ -981,9 +985,20 @@ html.zhihu-focus-enabled[data-zf-reading-background]:not(
 }
 
 html.zhihu-focus-enabled[data-zf-color-scheme='dark']
-  :is(.HoverCard, div:has(> .HoverCard-item)) {
+  :is(.HoverCard, div:has(> .HoverCard-item), .css-1rd6ukm > div:has(> .BounceLoading)) {
   color: var(--zf-text) !important;
   box-shadow: 0 5px 20px rgb(0 0 0 / 30%) !important;
+}
+
+/* The portal renders this small spinner before it has any .HoverCard-item.
+   Theme it from the first frame, including slow or failed member requests. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .css-1rd6ukm > div:has(> .BounceLoading) .BounceLoading-child {
+  background-color: var(--zf-link) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .MoreAnswers .List-headerText {
+  color: var(--zf-secondary-text) !important;
 }
 
 html.zhihu-focus-enabled[data-zf-color-scheme='dark']
