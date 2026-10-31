@@ -698,6 +698,13 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .skeleton__line {
   ) !important;
 }
 
+/* The featured-comment preview needs no decorative pointer above its frame. */
+html.zhihu-focus-enabled .ContentItem-actions--hasHotComment
+  .ContentItem-action:has(.ZDI--ChatBubbleFill24)::after {
+  content: none !important;
+  display: none !important;
+}
+
 /* Featured comments use separate colors and a right-hand fade outside RichText. */
 html.zhihu-focus-enabled[data-zf-color-scheme='dark']
   .AnswerItem > [tabindex='0']:has(a[href*='/people/']) {
