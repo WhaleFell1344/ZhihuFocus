@@ -1047,11 +1047,11 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark']
 }
 
 /* Zhida is a React Native Web island with inline light colors, separate from
-   Zhihu's palette tokens. These two outer shells exist before content loads:
-   the search summary and the expanded AI panel. Keep overrides inside them
+   Zhihu's palette tokens. These outer shells exist before content loads:
+   the search summary, expanded AI panel and animated Kanshan portal. Keep overrides inside them
    so illustrations, avatars, QR codes and ordinary content keep their colors. */
 html.zhihu-focus-enabled[data-zf-color-scheme='dark']
-  :is(.css-9x92ah, .css-114cdez) {
+  :is(.css-9x92ah, .css-114cdez, [class*='KanshanPanel-'], .css-i9srcr) {
   color: var(--zf-text) !important;
   background: var(--zf-surface-background) !important;
   border-color: var(--zf-border) !important;
@@ -1059,49 +1059,99 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark']
 }
 
 html.zhihu-focus-enabled[data-zf-color-scheme='dark']
-  :is(.css-9x92ah, .css-114cdez) :where(div, span, p, strong, em, label) {
+  :is(.css-9x92ah, .css-114cdez, [class*='KanshanPanel-'], .css-i9srcr) :where(div, span, p, strong, em, label) {
   color: var(--zf-text) !important;
   border-color: var(--zf-border) !important;
 }
 
 html.zhihu-focus-enabled[data-zf-color-scheme='dark']
-  :is(.css-9x92ah, .css-114cdez)
+  :is(.css-9x92ah, .css-114cdez, [class*='KanshanPanel-'], .css-i9srcr)
   :is([style*='background-color: rgb(255, 255, 255)'], .r-14lw9ot) {
   background-color: var(--zf-surface-background) !important;
 }
 
 html.zhihu-focus-enabled[data-zf-color-scheme='dark']
-  :is(.css-9x92ah, .css-114cdez)
+  :is(.css-9x92ah, .css-114cdez, [class*='KanshanPanel-'], .css-i9srcr)
   [style*='background-color: rgb(248, 248, 250)'] {
   background-color: var(--zf-page-background) !important;
 }
 
 /* Loading bars and dividers share this neutral inline color. */
 html.zhihu-focus-enabled[data-zf-color-scheme='dark']
-  :is(.css-9x92ah, .css-114cdez)
+  :is(.css-9x92ah, .css-114cdez, [class*='KanshanPanel-'], .css-i9srcr)
   [style*='background-color: rgb(235, 236, 237)'] {
   background-color: var(--zf-border) !important;
 }
 
 html.zhihu-focus-enabled[data-zf-color-scheme='dark']
-  :is(.css-9x92ah, .css-114cdez) [style*='linear-gradient'] {
+  :is(.css-9x92ah, .css-114cdez, [class*='KanshanPanel-'], .css-i9srcr) [style*='linear-gradient'] {
   background-image: linear-gradient(transparent, var(--zf-surface-background)) !important;
 }
 
 html.zhihu-focus-enabled[data-zf-color-scheme='dark']
-  :is(.css-9x92ah, .css-114cdez)
+  :is(.css-9x92ah, .css-114cdez, [class*='KanshanPanel-'], .css-i9srcr)
   :is(a, [data-testid^='Button:zhida_message_'],
     [data-testid='Button:Share:zhida_message_share_btn']) :where(div, span),
 html.zhihu-focus-enabled[data-zf-color-scheme='dark']
-  :is(.css-9x92ah, .css-114cdez) a {
+  :is(.css-9x92ah, .css-114cdez, [class*='KanshanPanel-'], .css-i9srcr) a {
   color: var(--zf-link) !important;
 }
 
 /* Recolor monochrome UI glyphs, leaving purple branding and artwork intact. */
 html.zhihu-focus-enabled[data-zf-color-scheme='dark']
-  :is(.css-9x92ah, .css-114cdez)
+  :is(.css-9x92ah, .css-114cdez, [class*='KanshanPanel-'], .css-i9srcr)
   svg:is([fill='#191B1F' i], [fill='#535861' i], [fill='#373a40' i]) {
   fill: var(--zf-secondary-text) !important;
+}
+
+/* Scope the white-surface token to Kanshan only: its welcome overlay and
+   animation canvas also consume it. The history popup is a separate portal. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  :is([class*='KanshanPanel-'], .css-i9srcr) {
+  --GBK99C: var(--zf-surface-background);
+  --MapUIFrame99A: var(--zf-surface-background);
+  --MapUIFrame10A: var(--zf-hover-background);
+  --MapText01A: var(--zf-text);
+  --MapText02A: var(--zf-text);
+  --MapText03A: var(--zf-secondary-text);
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  [class*='KanshanPanel-'] svg[fill='#81858f' i] {
+  fill: var(--zf-secondary-text) !important;
+}
+
+/* Kanshan's header uses site tokens, while its editor and generated answer
+   use the inline RN palette above. Include enter/exit classes to avoid flashes. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  [class*='KanshanPanel-'] :is([data-custom-placeholder], [data-custom-placeholder] *) {
+  color: var(--zf-secondary-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  [class*='KanshanPanel-'] [data-testid='Block']:has([contenteditable]) {
+  background-color: var(--zf-page-background) !important;
+  border-color: var(--zf-border) !important;
+  box-shadow: none !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  [class*='KanshanPanel-'] [data-testid='Block']:has([contenteditable]:focus) {
+  border-color: var(--zf-accent-border) !important;
+}
+
+/* The sticky bottom collapse control has neither Button--grey nor --plain. */
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .Comments-container .Button:has(.ZDI--ArrowUpSmall24) {
+  color: var(--zf-secondary-text) !important;
+  background: var(--zf-surface-background) !important;
+  border-color: var(--zf-border) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark']
+  .Comments-container .Button:has(.ZDI--ArrowUpSmall24):is(:hover, :focus-visible) {
+  color: var(--zf-link) !important;
+  background: var(--zf-hover-background) !important;
 }
 
 html.zhihu-focus-enabled .TopstoryItem .RichContent-inner,
