@@ -128,6 +128,28 @@ function initializeZhihuReturnHome() {
   document.body.append(button);
 }
 
+function initializeZhihuBackToTop() {
+  if (document.querySelector('.zf-back-to-top')) return;
+
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'zf-back-to-top';
+  button.setAttribute('aria-label', '回到顶部');
+  button.title = '回到顶部';
+  button.innerHTML = `
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 20V5M5.5 11.5 12 5l6.5 6.5"></path>
+    </svg>
+  `;
+  button.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
+    });
+  });
+  document.body.append(button);
+}
+
 function initializeDoubanHomeSearch() {
   let attempts = 0;
 
@@ -331,6 +353,10 @@ chrome.storage.sync.get(DEFAULT_SETTINGS, settings => {
 systemColorScheme.addEventListener('change', () => applyAppearance(currentSettings));
 
 window.addEventListener('scroll', updateHeaderVisibility, { passive: true });
+
+if (IS_ZHIHU) {
+  document.addEventListener('DOMContentLoaded', initializeZhihuBackToTop, { once: true });
+}
 
 if (IS_ZHIHU_HOME) {
   document.addEventListener(

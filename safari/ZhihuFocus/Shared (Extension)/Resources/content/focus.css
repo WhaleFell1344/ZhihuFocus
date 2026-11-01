@@ -246,6 +246,49 @@ html.zhihu-focus-enabled
   box-sizing: border-box !important;
 }
 
+/* Only the search field has a surface; the full-width navigation stays clear. */
+html.zhihu-focus-enabled #root :is(.AppHeader, :has(> .AppHeader), .AppHeader > div) {
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html.zhihu-focus-enabled #root .AppHeader .SearchBar-input {
+  background: color-mix(in srgb, var(--zf-surface-background, #fff) 88%,
+    var(--zf-page-background, #f6f6f6)) !important;
+  border: 1px solid var(--zf-border, #c6cbd2) !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+  color: var(--zf-text, #303640) !important;
+}
+
+html.zhihu-focus-enabled #root .AppHeader .SearchBar-input input,
+html.zhihu-focus-enabled #root .AppHeader .SearchBar-searchButton {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html.zhihu-focus-enabled #root .AppHeader .SearchBar-input input {
+  color: var(--zf-text, #303640) !important;
+}
+
+html.zhihu-focus-enabled #root .AppHeader .SearchBar-input input::placeholder {
+  color: var(--zf-secondary-text, #707987) !important;
+}
+
+html.zhihu-focus-enabled #root .AppHeader .SearchBar-searchButton {
+  color: var(--zf-link, #175199) !important;
+  border-left: 1px solid var(--zf-border, #c6cbd2) !important;
+}
+
+html.zhihu-focus-enabled #root .AppHeader .SearchBar-input:focus-within {
+  border-color: var(--zf-link, #175199) !important;
+}
+
 /* Home feed: remove creation surfaces and center the existing-width feed. */
 html.zhihu-focus-enabled .TopstoryHeader,
 html.zhihu-focus-enabled .Topstory-mainColumn > .WriteArea,
@@ -282,13 +325,6 @@ html.zhihu-focus-enabled .Topstory-mainColumn {
   box-sizing: border-box !important;
 }
 
-/* Home uses the same centered reading canvas as answer pages. */
-html.zhihu-focus-enabled:has(.Topstory-mainColumn)
-  #root :is(.AppHeader, :has(> .AppHeader)) {
-  background: var(--zf-page-background, #f6f6f6) !important;
-  box-shadow: none !important;
-}
-
 html.zhihu-focus-enabled:has(.Topstory-mainColumn) #root .AppHeader {
   padding-top: 12px !important;
   height: auto !important;
@@ -296,17 +332,6 @@ html.zhihu-focus-enabled:has(.Topstory-mainColumn) #root .AppHeader {
 
 html.zhihu-focus-enabled .Topstory-container {
   margin-top: 22px !important;
-}
-
-html.zhihu-focus-enabled:has(.Topstory-mainColumn) #root .AppHeader > div {
-  width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
-  max-width: var(--zf-content-width, 780px) !important;
-  min-width: 0 !important;
-  margin-inline: auto !important;
-  box-sizing: border-box !important;
-  border-radius: 14px !important;
-  background: var(--zf-surface-background, #fff) !important;
-  box-shadow: inset 0 0 0 1px var(--zf-border, #dfe2e7) !important;
 }
 
 html.zhihu-focus-enabled #root .Topstory-mainColumn,
@@ -332,11 +357,13 @@ html.zhihu-focus-enabled #root .TopstoryItem .ContentItem-title {
 
 /* Zhihu's 1.4em top margin used to override the chosen paragraph spacing.
    Only normalize article paragraphs, never comment inputs or their content. */
-html.zhihu-focus-enabled #root .TopstoryItem .RichContent-inner .RichText p {
+html.zhihu-focus-enabled #root :is(.TopstoryItem, .Question-mainColumn, .SearchMain, .ProfileMain) .RichContent-inner .RichText p,
+html.zhihu-focus-enabled body.PostIndex-body .Post-RichText p {
   margin-block-start: 0 !important;
 }
 
-html.zhihu-focus-enabled #root .TopstoryItem .RichContent-inner .RichText p:empty {
+html.zhihu-focus-enabled #root :is(.TopstoryItem, .Question-mainColumn, .SearchMain, .ProfileMain) .RichContent-inner .RichText p:empty,
+html.zhihu-focus-enabled body.PostIndex-body .Post-RichText p:empty {
   display: none !important;
 }
 
@@ -371,7 +398,7 @@ html.zhihu-focus-enabled #root .Comments-container .css-u3vsx3 > .css-m0zh86 {
 }
 
 html.zhihu-focus-enabled
-  :is(.zf-home-feed-refresh, .zf-return-home) {
+  :is(.zf-home-feed-refresh, .zf-return-home, .zf-back-to-top) {
   position: fixed;
   right: max(
     16px,
@@ -402,10 +429,18 @@ html.zhihu-focus-enabled .zf-home-feed-refresh {
 }
 
 html.zhihu-focus-enabled .zf-return-home {
-  bottom: 128px;
+  bottom: 76px;
 }
 
-html.zhihu-focus-enabled .zf-return-home svg {
+html.zhihu-focus-enabled .zf-back-to-top {
+  bottom: 24px;
+}
+
+html.zhihu-focus-enabled:has(.zf-back-to-top) .CornerButton[aria-label='回到顶部'] {
+  display: none !important;
+}
+
+html.zhihu-focus-enabled :is(.zf-return-home, .zf-back-to-top) svg {
   width: 21px;
   height: 21px;
   fill: none;
@@ -416,25 +451,25 @@ html.zhihu-focus-enabled .zf-return-home svg {
 }
 
 html.zhihu-focus-enabled
-  :is(.zf-home-feed-refresh, .zf-return-home):hover {
+  :is(.zf-home-feed-refresh, .zf-return-home, .zf-back-to-top):hover {
   border-color: rgba(23, 81, 153, 0.42);
   box-shadow: 0 5px 14px rgba(18, 18, 18, 0.13);
   color: #056de8;
 }
 
 html.zhihu-focus-enabled
-  :is(.zf-home-feed-refresh, .zf-return-home):not(.is-refreshing):hover {
+  :is(.zf-home-feed-refresh, .zf-return-home, .zf-back-to-top):not(.is-refreshing):hover {
   transform: translateY(-1px);
 }
 
 html.zhihu-focus-enabled
-  :is(.zf-home-feed-refresh, .zf-return-home):not(.is-refreshing):active {
+  :is(.zf-home-feed-refresh, .zf-return-home, .zf-back-to-top):not(.is-refreshing):active {
   transform: translateY(0) scale(0.96);
   box-shadow: 0 2px 7px rgba(18, 18, 18, 0.1);
 }
 
 html.zhihu-focus-enabled
-  :is(.zf-home-feed-refresh, .zf-return-home):focus-visible {
+  :is(.zf-home-feed-refresh, .zf-return-home, .zf-back-to-top):focus-visible {
   outline: 2px solid rgba(5, 109, 232, 0.45);
   outline-offset: 2px;
 }
@@ -447,7 +482,7 @@ html.zhihu-focus-enabled .zf-home-feed-refresh.is-refreshing {
 html.zhihu-focus-enabled[data-zf-reading-background]:not(
     [data-zf-reading-background='default']
   )
-  :is(.zf-home-feed-refresh, .zf-return-home) {
+  :is(.zf-home-feed-refresh, .zf-return-home, .zf-back-to-top) {
   border-color: color-mix(
     in srgb,
     var(--zf-page-background) 68%,
@@ -457,7 +492,7 @@ html.zhihu-focus-enabled[data-zf-reading-background]:not(
 }
 
 html:not(.zhihu-focus-enabled)
-  :is(.zf-home-feed-refresh, .zf-return-home) {
+  :is(.zf-home-feed-refresh, .zf-return-home, .zf-back-to-top) {
   display: none;
 }
 
@@ -601,8 +636,6 @@ html.zhihu-focus-enabled[data-zf-reading-background]:not(
 html.zhihu-focus-enabled[data-zf-reading-background]:not(
     [data-zf-reading-background='default']
   ) :is(
-    .AppHeader,
-    .AppHeader > div,
     .Topstory-mainColumn,
     .Topstory-mainColumn > .Card,
     .TopstoryItem,
@@ -650,50 +683,6 @@ html.zhihu-focus-enabled[data-zf-reading-background]:not(
     body.PostIndex-body .ContentItem-actions
   ) {
   background-color: var(--zf-surface-background) !important;
-}
-
-html.zhihu-focus-enabled[data-zf-reading-background]:not(
-    [data-zf-reading-background='default']
-  ) :has(> .AppHeader) {
-  background-color: var(--zf-surface-background) !important;
-}
-
-/* On question pages, continue the reading column through the header and
-   leave both outer gutters on the darker page canvas. */
-html.zhihu-focus-enabled[data-zf-color-scheme='dark']:has(.QuestionHeader)
-  #root :is(.AppHeader, :has(> .AppHeader)) {
-  background-color: var(--zf-page-background) !important;
-  box-shadow: none !important;
-}
-
-html.zhihu-focus-enabled[data-zf-color-scheme='dark']:has(.QuestionHeader) .AppHeader > div,
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .QuestionHeader {
-  width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
-  max-width: var(--zf-content-width, 780px) !important;
-  min-width: 0 !important;
-  margin-inline: auto !important;
-  box-sizing: border-box !important;
-  background-color: var(--zf-surface-background) !important;
-  box-shadow: none !important;
-}
-
-html.zhihu-focus-enabled[data-zf-color-scheme='dark']
-  .QuestionHeader :is(.QuestionHeader-content, .QuestionHeader-footer-inner) {
-  width: 100% !important;
-}
-
-/* Preserve the header's geometry while separating it from the reading canvas.
-   The inner header owns the edge so dark outer gutters stay uninterrupted. */
-html.zhihu-focus-enabled #root .AppHeader > div,
-html.zhihu-focus-enabled #root .QuestionHeader {
-  box-shadow: inset 0 -1px var(--zf-border, rgba(100, 110, 125, 0.24)) !important;
-}
-
-html.zhihu-focus-enabled[data-zf-color-scheme='dark']:has(.QuestionHeader)
-  #root .AppHeader > div,
-html.zhihu-focus-enabled[data-zf-color-scheme='dark'] #root .QuestionHeader {
-  box-shadow: inset 1px 0 var(--zf-border), inset -1px 0 var(--zf-border),
-    inset 0 -1px var(--zf-border) !important;
 }
 
 /* A separate question card, aligned with the answer list in every palette. */
@@ -750,7 +739,6 @@ html.zhihu-focus-enabled #root .QuestionHeaderActions > * {
 }
 
 @media (max-width: 812px) {
-  html.zhihu-focus-enabled[data-zf-color-scheme='dark']:has(.QuestionHeader) .AppHeader > div,
   html.zhihu-focus-enabled #root .QuestionHeader {
     width: calc(100% - 24px) !important;
   }
@@ -887,7 +875,7 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
 html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
     a, .RichText a, .RichText a *, .Post-RichText a, .Post-RichText a *,
     .ContentItem-title a, .Tabs-link.is-active, .SearchTabs-link.is-active,
-    .SearchBar-searchButton, .zf-home-feed-refresh, .zf-return-home
+    .SearchBar-searchButton, .zf-home-feed-refresh, .zf-return-home, .zf-back-to-top
   ) {
   color: var(--zf-link) !important;
 }
@@ -897,7 +885,7 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] :is(
     .ContentItem-actions, .Comments-container, .CommentsV2, .CommentItem,
     .CommentItemV2, .ProfileMain-header, .List-item, .SearchTabs,
     .Tabs, .Input, .InputLike, .Button, .Popover-content, .Modal-content,
-    .zf-home-feed-refresh, .zf-return-home
+    .zf-home-feed-refresh, .zf-return-home, .zf-back-to-top
   ) {
   border-color: var(--zf-border) !important;
 }
