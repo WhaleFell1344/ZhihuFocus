@@ -8,10 +8,46 @@ html.zhihu-focus-enabled .QuestionHeader-side {
 html.zhihu-focus-enabled .Question-mainColumn .QuestionAdBanner,
 html.zhihu-focus-enabled .Question-mainColumn .pc-article-answer,
 html.zhihu-focus-enabled .Question-mainColumn .pc-article-answer-big-img,
+html.zhihu-focus-enabled .Question-mainColumn .Pc-word-new,
 html.zhihu-focus-enabled
   .Question-mainColumn
   .List-item:has(.QuestionAdBanner) {
   display: none !important;
+}
+
+/* Each answer owns its surface; transparent list wrappers reveal the gutters.
+   Keep overflow visible so sticky actions and author popovers still work. */
+html.zhihu-focus-enabled #root .Question-mainColumn,
+html.zhihu-focus-enabled #root .Question-mainColumn .AnswersNavWrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+html.zhihu-focus-enabled .QuestionAnswers-answers .List-item:has(.AnswerItem) {
+  margin-block: 16px !important;
+  padding: 20px !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  background-color: var(--zf-surface-background, #fff) !important;
+  box-sizing: border-box !important;
+}
+
+html.zhihu-focus-enabled .QuestionAnswers-answers .List-item:has(.AnswerItem)::before {
+  display: none !important;
+  content: none !important;
+}
+
+html.zhihu-focus-enabled .QuestionAnswers-answers .List-header {
+  border: 0 !important;
+  border-radius: 14px !important;
+  background-color: var(--zf-surface-background, #fff) !important;
+}
+
+html.zhihu-focus-enabled .QuestionAnswers-answers .AnswerItem
+  > [tabindex='0']:has(a[href*='/people/']) {
+  margin-top: 8px !important;
+  border-radius: 10px !important;
 }
 
 html.zhihu-focus-enabled .QuestionHeader-content,
