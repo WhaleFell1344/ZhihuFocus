@@ -40,9 +40,38 @@ html.zhihu-focus-enabled .QuestionAnswers-answers .List-item:has(.AnswerItem)::b
 }
 
 html.zhihu-focus-enabled .QuestionAnswers-answers .List-header {
+  margin: 0 !important;
+  padding: 12px 20px !important;
+  min-height: 64px !important;
+  height: auto !important;
+  gap: 16px !important;
+  box-sizing: border-box !important;
   border: 1px solid var(--zf-border, rgba(100, 110, 125, 0.24)) !important;
   border-radius: 14px !important;
   background-color: var(--zf-surface-background, #fff) !important;
+}
+
+html.zhihu-focus-enabled #root .QuestionAnswers-answers .List-header .Select-button {
+  min-height: 36px !important;
+  padding: 6px 12px !important;
+  gap: 8px !important;
+  border: 1px solid var(--zf-border, rgba(100, 110, 125, 0.24)) !important;
+  border-radius: 8px !important;
+  background: var(--zf-page-background, #f6f7f9) !important;
+  color: var(--zf-secondary-text, #596575) !important;
+  font-size: 14px !important;
+  line-height: 22px !important;
+  white-space: nowrap !important;
+}
+
+html.zhihu-focus-enabled #root .QuestionAnswers-answers .List-header .Select-button:hover {
+  border-color: var(--zf-link, #056de8) !important;
+  color: var(--zf-link, #056de8) !important;
+}
+
+html.zhihu-focus-enabled #root .QuestionAnswers-answers .List-header .Select-button:focus-visible {
+  outline: 2px solid var(--zf-link, #056de8) !important;
+  outline-offset: 2px !important;
 }
 
 html.zhihu-focus-enabled .QuestionAnswers-answers .AnswerItem
@@ -64,6 +93,22 @@ html.zhihu-focus-enabled .Question-main {
   margin-left: auto !important;
   box-sizing: border-box !important;
   justify-content: center !important;
+}
+
+/* New question pages replaced .Question-main with generated wrapper classes. */
+html.zhihu-focus-enabled .QuestionPage > :has(> .Question-sideColumn) {
+  width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
+  min-width: 0 !important;
+  margin: 16px auto !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+html.zhihu-focus-enabled .QuestionPage > :has(> .Question-sideColumn)
+  > :has(> .Question-mainColumn) {
+  width: 100% !important;
+  min-width: 0 !important;
+  padding: 0 !important;
 }
 
 html.zhihu-focus-enabled .QuestionHeader-main,
@@ -563,9 +608,62 @@ html.zhihu-focus-enabled[data-zf-color-scheme='dark'] #root .QuestionHeader {
     inset 0 -1px var(--zf-border) !important;
 }
 
+/* A separate question card, aligned with the answer list in every palette. */
+html.zhihu-focus-enabled #root .QuestionHeader {
+  width: min(var(--zf-content-width, 780px), calc(100% - 32px)) !important;
+  max-width: var(--zf-content-width, 780px) !important;
+  min-width: 0 !important;
+  margin: 16px auto !important;
+  padding: 20px 0 !important;
+  box-sizing: border-box !important;
+  border: 1px solid var(--zf-border, rgba(100, 110, 125, 0.24)) !important;
+  border-radius: 14px !important;
+  background: var(--zf-surface-background, #fff) !important;
+}
+
+html.zhihu-focus-enabled #root .QuestionHeader,
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] #root .QuestionHeader {
+  box-shadow: none !important;
+}
+
+html.zhihu-focus-enabled #root .QuestionHeader :is(
+  .QuestionHeader-content, .QuestionHeader-footer, .QuestionHeader-footer-inner
+) {
+  width: 100% !important;
+  background: transparent !important;
+}
+
+html.zhihu-focus-enabled #root .QuestionHeader-footer {
+  margin: 16px 0 0 !important;
+  padding: 0 !important;
+}
+
+html.zhihu-focus-enabled #root .QuestionHeader-footer-main {
+  padding: 0 !important;
+  margin: 0 !important;
+  flex-wrap: wrap !important;
+  gap: 12px 16px !important;
+}
+
+html.zhihu-focus-enabled #root .QuestionButtonGroup {
+  width: auto !important;
+  gap: 10px !important;
+  flex-shrink: 0 !important;
+}
+
+html.zhihu-focus-enabled #root .QuestionHeaderActions {
+  margin: 0 !important;
+  flex-wrap: wrap !important;
+  gap: 12px 16px !important;
+}
+
+html.zhihu-focus-enabled #root .QuestionHeaderActions > * {
+  margin: 0 !important;
+}
+
 @media (max-width: 812px) {
   html.zhihu-focus-enabled[data-zf-color-scheme='dark']:has(.QuestionHeader) .AppHeader > div,
-  html.zhihu-focus-enabled[data-zf-color-scheme='dark'] .QuestionHeader {
+  html.zhihu-focus-enabled #root .QuestionHeader {
     width: calc(100% - 24px) !important;
   }
 }
@@ -1330,6 +1428,7 @@ html.zhihu-focus-enabled [data-za-detail-view-element_name='FloatingOpenInApp'] 
   html.zhihu-focus-enabled .QuestionHeader-content,
   html.zhihu-focus-enabled .QuestionHeader-footer-inner,
   html.zhihu-focus-enabled .Question-main,
+  html.zhihu-focus-enabled .QuestionPage > :has(> .Question-sideColumn),
   html.zhihu-focus-enabled body.PostIndex-body .Post-content > div:has(.Post-Main) {
     width: calc(100% - 24px) !important;
   }
