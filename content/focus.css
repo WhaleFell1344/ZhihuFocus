@@ -562,6 +562,54 @@ html.zhihu-focus-enabled .Search-container > .SearchMain {
   box-sizing: border-box !important;
 }
 
+/* Hot-search summaries use a separate palette from regular search results. */
+html.zhihu-focus-enabled #root .HotLanding {
+  border: 1px solid var(--zf-border, #c6cbd2) !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+}
+
+html.zhihu-focus-enabled #root .HotLanding :is(.HotLanding-content, .HotLanding-subItem,
+    .HotLanding-contentItem, .SearchResult-questionHotLanding) {
+  border-color: var(--zf-border, #c6cbd2) !important;
+}
+
+html.zhihu-focus-enabled #root .HotLanding .HotLanding-title {
+  line-height: 1.5 !important;
+}
+
+html.zhihu-focus-enabled #root .HotLanding .css-1tzednl {
+  min-height: 40px !important;
+  padding: 8px 12px !important;
+  border: 1px solid var(--zf-border, #c6cbd2) !important;
+  border-radius: 8px !important;
+  background: var(--zf-page-background, #f6f6f6) !important;
+  color: var(--zf-text, #303640) !important;
+}
+
+html.zhihu-focus-enabled #root .HotLanding .css-1tzednl:hover {
+  border-color: var(--zf-link, #1772f6) !important;
+  opacity: 1 !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] #root .HotLanding .css-16530x8 {
+  /* This is decorative artwork, not the topic's cover image. */
+  background: linear-gradient(110deg,
+    color-mix(in srgb, var(--zf-surface-background) 92%, #ff6d5d),
+    color-mix(in srgb, var(--zf-surface-background) 94%, #a077ff)) !important;
+  border-radius: 14px 14px 0 0 !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] #root .HotLanding
+  :is(.HotLanding-title, .HotLanding-description, .css-ef95jr, .css-ge61j7) {
+  color: var(--zf-text) !important;
+}
+
+html.zhihu-focus-enabled[data-zf-color-scheme='dark'] #root .HotLanding
+  :is(.HotLanding-contentItemCount, .HotLanding-descriptionMore) {
+  color: var(--zf-secondary-text) !important;
+}
+
 /* Profile pages keep the public profile header and activity feed, but remove
    the supplementary right column and align both surfaces to one reading axis. */
 html.zhihu-focus-enabled .Profile-sideColumn {
