@@ -8,10 +8,12 @@ const extensionRoot = process.env.ZF_EXTENSION_ROOT || join(__dirname, '..');
 const storageArea = process.env.ZF_STORAGE_AREA || 'sync';
 const source = path => readFileSync(join(extensionRoot, path), 'utf8');
 
-function reader({ saved = {}, dark = false, delayRead = false, reducedMotion = false } = {}) {
+function reader({ saved = {}, dark = false, delayRead = false, reducedMotion = false, actions = [] } = {}) {
   const properties = new Map();
   const classes = new Set();
   const timers = new Map();
+  const frames = [];
+  const events = new Map();
   let nextTimer = 0;
   const root = {
     getBoundingClientRect() { return {}; },
@@ -32,14 +34,19 @@ function reader({ saved = {}, dark = false, delayRead = false, reducedMotion = f
   let completeRead;
   let getCalls = 0;
   const context = vm.createContext({
-    document: { documentElement: root, addEventListener() {} },
+    document: { documentElement: root, addEventListener() {}, querySelectorAll: () => actions },
+    getComputedStyle: () => ({ borderLeftWidth: "1px" }),
     window: {
       matchMedia: query => query.includes('reduced-motion') ? { matches: reducedMotion } : media,
       setTimeout: callback => { timers.set(++nextTimer, callback); return nextTimer; },
       clearTimeout: id => timers.delete(id),
       location: { hostname: 'www.zhihu.com', pathname: '/question/1' },
       scrollY: 0,
-      addEventListener() {}
+      requestAnimationFrame(callback) { frames.push(callback); return frames.length; },
+      addEventListener(name, callback) {
+        if (!events.has(name)) events.set(name, []);
+        events.get(name).push(callback);
+      }
     },
     chrome: { storage: {
       [storageArea]: { get(defaults, callback) {
@@ -55,6 +62,8 @@ function reader({ saved = {}, dark = false, delayRead = false, reducedMotion = f
   vm.runInContext(source('content/focus.js'), context);
   return {
     root, properties, classes,
+    frame() { const batch = frames.splice(0); batch.forEach(callback => callback()); },
+    event(name) { events.get(name)?.forEach(callback => callback()); },
     finishTransitions() { for (const callback of timers.values()) callback(); timers.clear(); },
     pendingTransitions: () => timers.size,
     getCalls: () => getCalls,
@@ -183,4 +192,32 @@ test('disabled focus stays disabled across a system transition and can be restor
   app.update({ focusEnabled: true });
   assert.equal(app.classes.has('zhihu-focus-enabled'), true);
   assert.equal(app.root.dataset.zfColorScheme, 'dark');
+});
+
+// Native fixed coordinates stay stale after a horizontal pan or card resize.
+test('fixed actions follow the card after horizontal scrolling and resizing', () => {
+  const geometry = { left: 120, width: 880 };
+  const applied = new Map();
+  const card = { getBoundingClientRect: () => geometry };
+  const holder = {
+    classList: { contains: value => value === 'Sticky--holder' },
+    getBoundingClientRect: () => ({ left: 120, width: 880 })
+  };
+  const action = {
+    nextElementSibling: holder, closest: () => card,
+    style: { setProperty: (key, value) => applied.set(key, value) }
+  };
+  const app = reader({ actions: [action] });
+  app.frame();
+  assert.equal(applied.get('--zf-actions-left'), '121px');
+  geometry.left = -40;
+  app.event('scroll'); app.frame();
+  assert.equal(applied.get('--zf-actions-left'), '-39px');
+  geometry.width = 700;
+  app.event('resize'); app.frame();
+  assert.equal(applied.get('--zf-actions-width'), '698px');
+  app.update({ focusEnabled: false });
+  geometry.left = 200;
+  app.event('scroll'); app.frame();
+  assert.equal(applied.get('--zf-actions-left'), '-39px');
 });

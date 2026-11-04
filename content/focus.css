@@ -315,6 +315,9 @@ html.zhihu-focus-enabled
 
 html.zhihu-focus-enabled .Topstory-container {
   justify-content: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
 }
 
 html.zhihu-focus-enabled .Topstory-mainColumn {
@@ -367,14 +370,35 @@ html.zhihu-focus-enabled body.PostIndex-body .Post-RichText p:empty {
   display: none !important;
 }
 
+/* Separate discussions with spacing; the comment list owns the only frame. */
+html.zhihu-focus-enabled #root .Comments-container,
 html.zhihu-focus-enabled #root .TopstoryItem .Comments-container {
-  margin-top: 12px !important;
-  padding-top: 16px !important;
-  border-top: 1px solid var(--zf-border, rgba(100, 110, 125, 0.24)) !important;
+  margin-top: 20px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
 }
 
-html.zhihu-focus-enabled #root .TopstoryItem .Comments-container .css-u76jt1 {
+html.zhihu-focus-enabled #root .Comments-container .css-u76jt1 {
   border-radius: 10px !important;
+  background: var(--zf-surface-background, #fff) !important;
+}
+
+html.zhihu-focus-enabled #root .Comments-container .css-1onritu {
+  border-radius: 9px 9px 0 0 !important;
+  background: color-mix(in srgb, var(--zf-surface-background, #fff) 86%, var(--zf-border, #c6cbd2) 14%) !important;
+}
+
+html.zhihu-focus-enabled #root .Comments-container .css-kt4t4n {
+  margin-inline: 0 !important;
+  padding-inline: 0 !important;
+  background: var(--zf-surface-background, #fff) !important;
+}
+
+html.zhihu-focus-enabled #root .Comments-container div:has(> div > div > .InputLike) {
+  border-radius: 8px !important;
+  background: var(--zf-page-background, #f4f5f7) !important;
 }
 
 /* Native light-mode comment outlines are almost white on paper palettes. */
@@ -502,13 +526,34 @@ html:not(.zhihu-focus-enabled)
   }
 }
 
-/* Keep native sticky actions aligned with the card's 20px content inset. */
+/* Only in-flow actions need to cancel the card's 20px content inset.
+   Fixed actions already receive their absolute left/width from Zhihu. */
 html.zhihu-focus-enabled
   .Topstory-mainColumn
   .TopstoryItem
-  .ContentItem-actions {
+  .ContentItem-actions:not(.is-fixed) {
   margin-right: -20px !important;
   margin-left: -20px !important;
+}
+
+html.zhihu-focus-enabled #root .ContentItem-actions.is-fixed[style*='--zf-actions-left'] {
+  left: var(--zf-actions-left) !important;
+  width: var(--zf-actions-width) !important;
+}
+
+/* Native placeholders retain the previous desktop width after a resize. */
+html.zhihu-focus-enabled #root .ContentItem-actions + .Sticky--holder {
+  width: auto !important;
+}
+
+html.zhihu-focus-enabled #root .ContentItem-actions.is-fixed {
+  box-sizing: border-box !important;
+  margin-inline: 0 !important;
+  border: 1px solid var(--zf-border, #c6cbd2) !important;
+  border-bottom: 0 !important;
+  border-radius: 12px 12px 0 0 !important;
+  background: var(--zf-surface-background, #fff) !important;
+  box-shadow: 0 -4px 16px rgba(18, 24, 32, 0.08) !important;
 }
 
 html.zhihu-focus-enabled

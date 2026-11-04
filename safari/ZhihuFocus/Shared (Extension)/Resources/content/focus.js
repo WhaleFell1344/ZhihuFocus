@@ -304,6 +304,7 @@ function applyAppearance(settings) {
   } else {
     root.style.removeProperty('--zf-reading-font-family');
   }
+  alignStickyActions();
 }
 
 function updateHeaderVisibility() {
@@ -319,6 +320,34 @@ function updateHeaderVisibility() {
   }
 
   lastScrollY = currentScrollY;
+}
+
+// Zhihu caches viewport coordinates when its toolbar becomes fixed. Track the
+// in-flow placeholder instead, including horizontal scrolling and resizing.
+let stickyActionsFrame = 0;
+function alignStickyActions() {
+  if (!IS_ZHIHU || stickyActionsFrame) return;
+  stickyActionsFrame = window.requestAnimationFrame(() => {
+    stickyActionsFrame = 0;
+    if (!document.documentElement.classList.contains(FOCUS_CLASS)) return;
+    const positions = [...document.querySelectorAll('.ContentItem-actions.is-fixed')]
+      .map(actions => {
+        const holder = actions.nextElementSibling;
+        if (!holder?.classList.contains('Sticky--holder')) return null;
+        const card = actions.closest('.TopstoryItem');
+        const rect = holder.getBoundingClientRect();
+        if (card) {
+          const bounds = card.getBoundingClientRect();
+          const border = parseFloat(getComputedStyle(card).borderLeftWidth) || 0;
+          return { actions, rect: { left: bounds.left + border, width: bounds.width - border * 2 } };
+        }
+        return { actions, rect };
+      }).filter(position => position && position.rect.width > 0);
+    for (const { actions, rect } of positions) {
+      actions.style.setProperty('--zf-actions-left', `${rect.left}px`);
+      actions.style.setProperty('--zf-actions-width', `${rect.width}px`);
+    }
+  });
 }
 
 // The first-run default is enabled. Stored preferences replace it as soon as
@@ -353,6 +382,10 @@ chrome.storage.local.get(DEFAULT_SETTINGS, settings => {
 systemColorScheme.addEventListener('change', () => applyAppearance(currentSettings));
 
 window.addEventListener('scroll', updateHeaderVisibility, { passive: true });
+window.addEventListener('scroll', alignStickyActions, { passive: true });
+window.addEventListener('resize', alignStickyActions, { passive: true });
+window.visualViewport?.addEventListener('scroll', alignStickyActions, { passive: true });
+window.visualViewport?.addEventListener('resize', alignStickyActions, { passive: true });
 
 if (IS_ZHIHU) {
   document.addEventListener('DOMContentLoaded', initializeZhihuBackToTop, { once: true });
